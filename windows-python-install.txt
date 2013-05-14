@@ -28,6 +28,7 @@ Install distribute
 http://python-distribute.org/distribute_setup.py
 
 Then install pip::
+
   easy_install pip
 
 pip is a package manager. From here on out, you can install python
