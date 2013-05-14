@@ -1,0 +1,22 @@
+.. -*- mode: rst -*-
+
+=================
+ Install IPython
+=================
+
+This is an enhanced interactive shell::
+
+  pip install ipython
+
+
+One you have this, type ``ipython`` in your terminal (or command prompt)
+to enter into the shell.
+
+
+=================
+ Install py.test
+=================
+
+This is a program for testing your code::
+
+  pip install pytest
