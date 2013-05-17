@@ -11,7 +11,7 @@ Some of the major types of variables in python include
 5. lists
 6. dictionaries
 
-.. note:: The ``>>>`` below indicate that this is happening at an
+.. note:: The ``>>>`` below indicates that this is happening at an
           interactive shell. Although ``>>>`` is for the standard python
           shell, you should use IPython instead (type ``ipython`` in a
           terminal).
@@ -32,8 +32,7 @@ produced by comparison operations.
 Integers
 ========
 
-Pretty much what you would expect (although integer division may be
-surprising)
+Pretty much what you would expect
 
 .. code-block:: python
 

@@ -2,9 +2,9 @@
  Install homebrew
 ==================
 
-homebrew is a package manager for Mac Os X. It is the easiest way to
+homebrew is a package manager for Mac OS X. It is the easiest way to
 install python, but it requires that you have Xcode installed. For
-earlier versions of Os X, this should come with your install
+earlier versions of OS X, this should come with your install
 disk. Otherwise, you can get it from the app store for free.
 
 
