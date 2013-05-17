@@ -1,12 +1,15 @@
-==========================================
- Download main python exe and run install
-==========================================
+================================
+ Python installation on Windows
+================================
+
+
+Download main python exe and run install
+========================================
 
 Download python 3:
 http://www.python.org/download
 
 
-====================
  Add python to Path
 ====================
 
@@ -22,7 +25,6 @@ Select ``Path`` variables and append::
 You know this is working if you open up command prompt and type "python".
 
 
-==========================
 Install distribute and pip
 ==========================
 
@@ -32,7 +34,7 @@ Download and install `distribute
 
 These will allow you to install other python packages from the command prompt.
 
-=================
+
  Install IPython
 =================
 

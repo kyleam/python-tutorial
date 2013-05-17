@@ -1,6 +1,10 @@
-==================
- Install homebrew
-==================
+=================================
+ Python installation on Mac OS X
+=================================
+
+
+Install homebrew
+================
 
 homebrew is a package manager for Mac OS X. It is the easiest way to
 install python, but it requires that you have Xcode installed. For
@@ -18,9 +22,8 @@ After that, install python3 by running this in the terminal::
   brew install python3
 
 
-=================
- Install IPython
-=================
+Install IPython
+===============
 
 This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run::
