@@ -1,6 +1,6 @@
-================================
+===============================
  Python installation on Windows
-================================
+===============================
 
 
 Download main python exe and run install
@@ -10,7 +10,7 @@ Download python 3:
 http://www.python.org/download
 
 
- Add python to Path
+Add python to Path
 ====================
 
 Go here::
@@ -20,7 +20,7 @@ Go here::
 
 Select ``Path`` variables and append::
 
-  ;C:\Python27;C:\Python27/Scripts;
+  ;C:\Python33;C:\Python33\Scripts;
 
 You know this is working if you open up command prompt and type "python".
 
@@ -35,14 +35,13 @@ Download and install `distribute
 These will allow you to install other python packages from the command prompt.
 
 
- Install IPython
+Install IPython
 =================
 
 This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run::
 
   pip install ipython
-
 
 One you have this, type ``ipython`` in your terminal
 to enter into the ipython shell.
