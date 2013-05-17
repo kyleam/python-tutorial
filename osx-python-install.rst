@@ -25,8 +25,13 @@ After that, install python3 by running this in the terminal::
 This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run::
 
-  pip install ipython
+  pip3 install ipython
 
 
-One you have this, type ``ipython`` in your terminal
-to enter into the ipython shell.
+Now you need to add the newly install ipython to your path. To do this,
+open a terminal and enter::
+
+  echo 'export PATH=/usr/local/share/python3:$PATH' >> $HOME/.bash_profile
+
+One you have this, open a new terminal and type ``ipython3`` to enter
+into the ipython shell.
