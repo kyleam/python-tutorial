@@ -1,5 +1,3 @@
-.. -*- mode: rst -*-
-
 =================
  Types in Python
 =================
@@ -7,18 +5,22 @@
 Some of the major types of variables in python include
 
 1. Boolean
-2. intergers
+2. integers
 3. floats
 4. strings
 5. lists
 6. dictionaries
 
+.. note:: The ``>>>`` below indicate that this is happening at an
+          interactive shell. Although ``>>>`` is for the standard python
+          shell, you should use IPython instead (type ``ipython`` in a
+          terminal).
 
 Boolean
 =======
 
-Boolean values are represented by ``True`` and ``False`` (no
-quotes). The often are produced by comparison operations.
+Boolean values are represented by ``True`` and ``False``. The often are
+produced by comparison operations.
 
 .. code-block:: python
 
@@ -73,6 +75,10 @@ Strings have some convenient methods associated with them. For example:
   >>> name.capitalize()
   'John'
 
+.. note:: To discover the methods available for an object (like the
+          string ``name`` above), type the object and a period and then
+          hit tab. So, in this case, ``name.<TAB>`` will show you all
+          the available methods.
 
 Lists
 =====
@@ -83,7 +89,7 @@ A list is a sequence of values
 
   >>> primes = [2, 3, 5]
 
-Each value can be accessed indiviudally
+Each value can be accessed individually
 
 .. code-block:: python
 
@@ -99,7 +105,7 @@ Lists can also be iterated over one-by-one
 .. code-block:: python
 
   >>> for prime in primes:
-  ...     print prime
+  ...     print(prime)
   2
   3
   5
@@ -108,7 +114,7 @@ Lists can also be iterated over one-by-one
 Dicts
 =====
 
-Provides key-value lookup.
+Provides key-value look up.
 
 .. code-block:: python
 
