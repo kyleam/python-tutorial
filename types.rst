@@ -11,16 +11,17 @@ Some of the major types of variables in python include
 5. lists
 6. dictionaries
 
-.. note:: The ``>>>`` below indicates that this is happening at an
-          interactive shell. Although ``>>>`` is for the standard python
-          shell, you should use IPython instead (type ``ipython`` in a
-          terminal).
+.. note:: The ``>>>`` below indicates that
+          this is happening at an interactive shell.
+          Although ``>>>`` is for the standard python shell,
+          you should use IPython instead
+          (type ``ipython`` in a terminal).
 
 Boolean
 =======
 
-Boolean values are represented by ``True`` and ``False``. The often are
-produced by comparison operations.
+Boolean values are represented by ``True`` and ``False``.
+The often are produced by comparison operations.
 
 .. code-block:: python
 
@@ -58,14 +59,15 @@ If you add an integer to a float, the result will be a float.
 Strings
 =======
 
-These are characters and words. They must be surrounded by either single
-or double quotes.
+These are characters and words.
+They must be surrounded by either single or double quotes.
 
 .. code-block:: python
 
    >>> name = 'john'
 
-Strings have some convenient methods associated with them. For example:
+Strings have some convenient methods associated with them.
+For example:
 
 .. code-block:: python
 
@@ -74,10 +76,11 @@ Strings have some convenient methods associated with them. For example:
   >>> name.capitalize()
   'John'
 
-.. note:: To discover the methods available for an object (like the
-          string ``name`` above), type the object and a period and then
-          hit tab. So, in this case, ``name.<TAB>`` will show you all
-          the available methods.
+.. note:: To discover the methods available for an object
+          (like the string ``name`` above),
+          type the object and a period and then hit tab.
+          So, in this case, ``name.<TAB>``
+          will show you all the available methods.
 
 Lists
 =====

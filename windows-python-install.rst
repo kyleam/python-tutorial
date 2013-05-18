@@ -38,10 +38,10 @@ These will allow you to install other python packages from the command prompt.
 Install IPython
 =================
 
-This is an enhanced interactive shell. To install it, open up command
-prompt or terminal and run::
+This is an enhanced interactive shell.
+To install it, open up command prompt or terminal and run::
 
   pip install ipython
 
-One you have this, type ``ipython`` in your terminal
-to enter into the ipython shell.
+One you have this,
+type ``ipython`` in your terminal to enter into the ipython shell.
