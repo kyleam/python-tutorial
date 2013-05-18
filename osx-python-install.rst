@@ -36,5 +36,5 @@ open a terminal and enter::
 
   echo 'export PATH=/usr/local/share/python3:$PATH' >> $HOME/.bash_profile
 
-One you have this, open a new terminal and type ``ipython3`` to enter
+Once you have this, open a new terminal and type ``ipython3`` to enter
 into the ipython shell.
