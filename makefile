@@ -1,14 +1,15 @@
 RSTS := $(wildcard *.rst)
 PDFS := $(patsubst %.rst, %.pdf, $(RSTS))
 CMD = rst2pdf
-OPTS = -s tutorial.style
+STYLE = tutorial.style
+OPTS = -s $(STYLE)
 TEST = python3 -m doctest
 
 all: pdf
 
 pdf: $(PDFS)
 
-%.pdf: %.rst
+%.pdf: %.rst $(STYLE)
 	$(TEST) $<
 	$(CMD) $(OPTS) $<
 
