@@ -13,9 +13,9 @@ pdf: $(PDFS)
 	$(CMD) $(OPTS) $<
 
 help:
-	@echo "All rst files are converted to pdf files"
+	@echo "Convert rst files to pdf files"
 	@echo
-	@echo "pdf          make pdf files from tex files"
+	@echo "pdf          make pdf files from rst files"
 	@echo "checkall     run tests on all rst files"
 	@echo "clean        remove pdfs"
 
