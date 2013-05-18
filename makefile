@@ -2,6 +2,10 @@ RSTS := $(wildcard *.rst)
 PDFS := $(patsubst %.rst, %.pdf, $(RSTS))
 CMD = rst2pdf
 OPTS = -s tutorial.style
+
+
+all: pdf check
+
 pdf: $(PDFS)
 
 %.pdf: %.rst
@@ -13,6 +17,9 @@ help:
 	@echo "pdf          make pdf files from tex files"
 	@echo "clean        remove pdfs"
 
+
+check: $(RSTS)
+	python3 -m doctest *.rst
 
 clean:
 	-rm -f $(PDFS)
