@@ -8,14 +8,14 @@
 Reading in files
 ================
 
-First, we'll define the filename as a string. The specifies where the
+First, we'll define the file name as a string. The specifies where the
 file exists on the system.
 
 .. code-block:: python
 
   >>> infile = '../data/weights.csv'
 
-.. note:: In the path of the filename,
+.. note:: In the path of the file name,
           ``..`` stands for go one directory up
           from the current directory.
           So in the above case,
@@ -71,7 +71,7 @@ We could separate these lines into a list by using ``split``.
   ['person,weight', 'John,201', 'Sue,120', 'Paul,150', '']
 
 While this works fine,
-this is such a common operation that there is a builtin method for it.
+this is such a common operation that there is a built-in method for it.
 
 
 readlines
