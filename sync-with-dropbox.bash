@@ -2,12 +2,10 @@
 src="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 dest=$HOME/dropbox-gmail/Dropbox/public/python-tutorials
 
-for pdf in *.pdf; do
-    if ! [[ -e "$dest/$pdf" ]]; then
-        ln -s  $src/$pdf $dest/$pdf
+srcdirs=( doc data code )
+
+for dir in ${srcdirs[@]}; do
+    if ! [[ -e "$dest/$dir" ]]; then
+        ln -s "$src/$dir" "$dest/$dir"
     fi
 done
-
-if ! [[ -e "$dest/data" ]]; then
-    ln -s "$src/data" "$dest/data"
-fi
