@@ -14,11 +14,11 @@ all: pdf
 pdf: $(pdffiles)
 
 $(builddir)/%.pdf: $(srcdir)/%.rst $(style) | $(builddir)
-	$(test) $<
+	cd $(srcdir) && $(test) `basename $<`
 	$(cmd) $(cflags) -o $@ $<
 
 checkall:
-	$(test) $(srcdir)/*.rst
+	cd $(srcdir) && $(test) *.rst
 
 clean:
 	-rm -f $(pdffiles)
