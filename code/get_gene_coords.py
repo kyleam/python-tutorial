@@ -12,7 +12,7 @@ filecontent = filecontent.strip()  # remove trailing new line
 genes = filecontent.split('\n')
 
 ## now we have genes of interest in list `genes`
-## need to read in gtf file, find matching lines with matching genes,
+## need to read in gtf file, find lines with matching genes,
 ## and extract coordinates
 
 gencode_file = '../data/gencode-v10-50random.gtf'
@@ -25,7 +25,9 @@ with open(gencode_file) as genfh:
         geneinfo = fields[8]
 
         for desired_gene in genes:
+            ## Add quotes around desired gene name to ensure unique
+            ## match
             genematch = '"' + desired_gene + '"'  ## REV
             if genematch in geneinfo:
-                print(desired_gene, chrm, start, stop)
+                print(desired_gene, chrm, start, stop)  ## REV
                 break  ## "continue" goes to next iteration
