@@ -242,6 +242,9 @@ when the function is called.
   ...         start coordinate of gene
   ...     strand : str
   ...         strand direction indicated by + or -
+  ...     upstream, downstream : int
+  ...         number of bases upstream/downstream of start used to
+  ...         define promoter
   ...     """
   ...     if strand == '+':
   ...         promstart = start - upstream
