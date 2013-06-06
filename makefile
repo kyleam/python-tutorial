@@ -7,7 +7,7 @@ cmd = rst2pdf
 style = $(srcdir)/tutorial.style
 cflags = -s $(style)
 
-test = python3 -m doctest
+test = python3.3 -m doctest
 
 all: pdf
 

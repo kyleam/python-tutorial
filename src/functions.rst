@@ -219,7 +219,7 @@ we get an error.
   >>> get_promoter(genestart)
   Traceback (most recent call last):
   ...
-  TypeError: get_promoter() takes exactly 2 arguments (1 given)
+  TypeError: get_promoter() missing 1 required positional argument: 'strand'
 
 Required arguments are a good thing,
 but in some cases,
