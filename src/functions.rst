@@ -81,8 +81,8 @@ Next, we should declare what arguments the function receives.
   >>> def get_promoter(start, strand):
   ...     """Return promoter of gene
   ...
-  ...     Arguments
-  ...     ---------
+  ...     Parameters
+  ...     ----------
   ...     start : int
   ...         start coordinate of gene
   ...     strand : str
@@ -113,8 +113,8 @@ Let's add in the calculation.
   >>> def get_promoter(start, strand):
   ...     """Return promoter of gene
   ...
-  ...     Arguments
-  ...     ---------
+  ...     Parameters
+  ...     ----------
   ...     start : int
   ...         start coordinate of gene
   ...     strand : str
@@ -159,8 +159,8 @@ we can modify the function to include a return statement.
   >>> def get_promoter(start, strand):
   ...     """Return promoter of gene
   ...
-  ...     Arguments
-  ...     ---------
+  ...     Parameters
+  ...     ----------
   ...     start : int
   ...         start coordinate of gene
   ...     strand : str
@@ -236,8 +236,8 @@ when the function is called.
   >>> def get_promoter(start, strand, upstream=1000, downstream=500):
   ...     """Return promoter of gene
   ...
-  ...     Arguments
-  ...     ---------
+  ...     Parameters
+  ...     ----------
   ...     start : int
   ...         start coordinate of gene
   ...     strand : str
