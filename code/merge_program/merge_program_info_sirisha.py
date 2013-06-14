@@ -18,7 +18,7 @@ with open(datesfile) as datefh:
 
 outfile = 'task3.txt'
 outfh = open(outfile,'w')
-verfile = '../data/program-versions.csv'
+verfile = '../../data/program-versions.csv'
 with open(verfile) as verfh:
     for line in verfh:
         program, version = line.strip().split(',')

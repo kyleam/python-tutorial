@@ -6,8 +6,8 @@ REV: how could this script be generalized?
 """
 from collections import defaultdict
 
-dates_file = '../data/program-dates.csv'
-version_file = '../data/program-versions.csv'
+dates_file = '../../data/program-dates.csv'
+version_file = '../../data/program-versions.csv'
 
 # prog_dates = {}  # dictionary of dates keyed by program name
 proginfo = defaultdict(list)
