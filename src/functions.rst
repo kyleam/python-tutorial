@@ -228,7 +228,7 @@ For example,
 the 1,000 bases upstream/500 bases downstream
 used to define the promoter are parameters
 that should probably be tunable,
-so we can provide then as default values that can be overridden
+so we can provide them as default values that can be overridden
 when the function is called.
 
 .. code-block:: python
