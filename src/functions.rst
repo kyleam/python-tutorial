@@ -71,7 +71,7 @@ which serves as documentation for what the function does.
 .. code-block:: python
 
   >>> def get_promoter():
-  ...     """Return promoter for given coordinates and strand"""
+  ...     """Return promoter of gene"""
   ...     pass  ## placeholder until we fill in the code
 
 Next, we should declare what arguments the function receives.
