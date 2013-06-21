@@ -26,7 +26,7 @@ def calculate_gc_ratio(sequence, precision=2):
     # Python 3 versus Python 2 difference in division
     # -----------------------------------------------
     # In python 2, dividing an int by an int does not include the
-    # remainder, so 3/2 results in 1, not 1.5. In order to get a float
+    # remainder, so 3/2 results is 1, not 1.5. In order to get a float
     # as the result, at least on of the numbers in the calculation needs
     # to be a float. The return statement could be rewritten like this
     # to be compatible with python 2:
