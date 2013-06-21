@@ -1,4 +1,22 @@
 #!/usr/bin/env python3
+"""Functions for working with nucleotide sequences
+"""
+
+def reverse_complement(sequence):
+    """Return the reverse complement of `sequence`
+
+    Parameters
+    ----------
+    sequence : iterable  ## REV: why not just call this a `str`?
+        can consist of G, C, A, or T
+    """
+    basemap = {
+        'A': 'T',
+        'T': 'A',
+        'G': 'C',
+        'C': 'G',
+    }
+    return ''.join([basemap[base] for base in reversed(sequence)])
 
 
 def calculate_gc_ratio(sequence, precision=2):
@@ -35,6 +53,15 @@ def calculate_gc_ratio(sequence, precision=2):
 
 if __name__ == '__main__':
     ## tests (only executed if you run this script, not if you import it)
+
+    ## reverse complement tests ##
+
+    assert reverse_complement('ATGC') == 'GCAT'
+    ## a list works, too
+    assert  reverse_complement(['A', 'T', 'G', 'C']) == 'GCAT'
+
+    ## gc ratio tests ##
+
     assert calculate_gc_ratio('GGCC') == 1
     assert calculate_gc_ratio('GGAA') == 0.5
     assert calculate_gc_ratio('AAAA') == 0

@@ -1,1 +1,0 @@
-/home/kyle/projects/tutorials/python/code/gc_content/README.txt
