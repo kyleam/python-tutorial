@@ -6,5 +6,5 @@ that your function works as you expect.
 
 ::
 
-  In [1]: calculate_gc_content('GCAA')
+  In [1]: calculate_gc_ratio('GCAA')
   0.5
