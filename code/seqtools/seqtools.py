@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Functions for working with nucleotide sequences
 """
+from codon_mapping import codon_to_aminoacid
+
 
 def reverse_complement(sequence):
     """Return the reverse complement of `sequence`
@@ -50,6 +52,47 @@ def calculate_gc_ratio(sequence, precision=2):
     # to be compatible with python 2:
     #
     #   return round(float(len(gc_bases)) / len(sequence), precision)
+
+
+def translate(sequence, codon_table=None):
+    """Translate DNA sequence into amino acid sequence
+
+    Parameters
+    ----------
+    sequence : iterable
+        elements must be either A, T, C, or G. Gapped sequence is not
+        permitted. Should be a multiple of 3.
+    codon_table : dict or None
+        mappings of codon strings to amino acids. If None, standard
+        mappings are used.
+
+    Returns
+    -------
+    amino acid sequence (str)
+    """
+    if len(sequence) % 3 != 0:
+        raise ValueError('Sequence is not multiple of 3')
+    if codon_table is None:
+        codon_table = codon_to_aminoacid
+
+    aaseq = []
+    for codon in _by_codon(sequence):
+        aaseq.append(codon_table[codon])
+    return ''.join(aaseq)
+
+
+def _by_codon(sequence):
+    """Return sequence elements by codon (i.e., by 3)
+
+    If sequence is not a multiple of 3, elements extra tail elements are
+    discarded.
+    """
+    codon = []
+    for base in sequence:
+        codon.append(base)
+        if len(codon) == 3:
+            yield ''.join(codon)
+            codon = []
 
 if __name__ == '__main__':
     ## tests (only executed if you run this script, not if you import it)
