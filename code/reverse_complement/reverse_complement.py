@@ -22,3 +22,5 @@ if __name__ == '__main__':
 
     ## a list works, too
     assert  reverse_complement(['A', 'T', 'G', 'C']) == 'GCAT'
+
+    print('All tests passed')

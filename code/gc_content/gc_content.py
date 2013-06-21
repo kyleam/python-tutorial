@@ -48,3 +48,5 @@ if __name__ == '__main__':
 
     ## lowercase given instead of capital letters
     assert calculate_gc_ratio('gggg') != 1
+
+    print('All tests passed')
