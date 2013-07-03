@@ -1,36 +1,50 @@
-srcdir = src
-builddir = doc
-rstfiles := $(wildcard $(srcdir)/*.rst)
-pdffiles := $(patsubst $(srcdir)/%.rst, $(builddir)/%.pdf, $(rstfiles))
+base_dir=$(CURDIR)
 
-cmd = rst2pdf
-style = $(srcdir)/tutorial.style
-cflags = -s $(style)
+less_dir=$(base_dir)/css/less
+less_files:=$(wildcard $(less_dir)/bootstrap/*.less)
+less_files+=$(wildcard $(less_dir)/*.less)
 
-test = python3.3 -m doctest
+src_dir=$(base_dir)/src
+src_files:=$(wildcard $(src_dir)/*.org)
+src_files+=$(wildcard $(base_dir)/doc/*.org)
 
-all: pdf
+output_dir=output
+html_index:=$(output_dir)/index.html
 
-pdf: $(pdffiles)
+css_dir=$(base_dir)/css
+css_file=$(css_dir)/theme.css
 
-$(builddir)/%.pdf: $(srcdir)/%.rst $(style) | $(builddir)
-	cd $(srcdir) && $(test) `basename $<`
-	$(cmd) $(cflags) -o $@ $<
-
-checkall:
-	cd $(srcdir) && $(test) *.rst
-
-clean:
-	-rm -f $(pdffiles)
-
-$(builddir):
-	mkdir $(builddir)
-
-.PHONY: clean help checkall
+github_remote=github
 
 help:
-	@echo "Convert rst files to pdf files"
-	@echo
-	@echo "pdf          make pdf files from rst files in $(srcdir)"
-	@echo "checkall     run tests on all rst files in $(srcdir)"
-	@echo "clean        remove pdfs"
+	@echo "site         build site files in output directory"
+	@echo "github       build site and push to github pages"
+	@echo "html         update site html without updating css"
+	@echo "css          update site css without updating html"
+	@echo "clean        remove output directory"
+
+site: css html
+
+github: site
+	./import-to-ghpages.sh && git push -f $(github_remote) gh-pages
+
+html: $(html_index)
+
+$(html_index): $(css_file) $(src_files)
+	./publish.sh
+
+css: |$(css_dir) $(css_file)
+
+$(output_dir):
+	mkdir -p $(output_dir)
+
+$(css_dir):
+	mkdir -p $(css_dir)
+
+$(css_file): $(less_files)
+	lessc -x $(less_dir)/theme.less $(css_file)
+
+clean:
+	-rm -rf $(output_dir)
+
+.PHONY: clean help

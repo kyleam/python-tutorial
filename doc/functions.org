@@ -1,0 +1,310 @@
+#+TITLE: Functions
+#+SETUPFILE: setup.org
+
+* The advantage of functions
+
+Functions are reusable pieces of code that do something (that's not a
+strict enough definition, but it works). In their purest form, functions
+take some input, do some calculation, and then return an output.
+
+Let's write a function that, given a gene's start position, returns a
+set of "promoter" coordinates. We'll coarsely define this as 1,000 bases
+upstream and 500 based downstream of the start position.
+
+So, if we have a set of coordinates for a gene of interest
+(chr7:73,095,248-73,097,781), we can get the start of the promoter by
+subtracting 1,000 from 73,095,248 and the end the promoter by adding 500
+to the same value. But we also need to consider the strand. Because this
+gene is on the negative strand, we should add 1,000 to 73,097,781 to get
+the start position of the promoter and subtract 500 from the same value
+to get the stop position.
+
+In code, this would look like this:
+
+#+BEGIN_SRC python :session
+  ## details for the specific gene
+  genestart = 73097781
+  ## promoter calculation (for case of negative strand)
+  promstart = genestart - 1000
+  promend = genestart + 500
+#+END_SRC
+
+#+RESULTS[3a193bb5afe8a4596d3be219a128c59822df9f0e]:
+
+If we have one set of gene coordinates, we might be tempted to do this,
+but it doesn't lead to good code. It is mixing the details of a specific
+case (the gene coordinates) with general calculation logic (finding the
+promoter). Functions allow us to separate out this calculation logic,
+give a name to it, and then apply it throughout the code by the name.
+
+* Defining functions
+
+Let's create a function named =get_promoter=. This is done using =def=.
+
+#+BEGIN_SRC python :session
+  def get_promoter():
+      pass  ## placeholder until we fill in the code
+#+END_SRC
+
+#+RESULTS[f885ed9b7d742294967315c2b81646d9415f74e8]:
+
+At this point, the function doesn't do anything. It doesn't take any
+arguments and it doesn't return any values.
+
+A good place to start when defining a function is the docstring, which
+serves as documentation for what the function does.
+
+#+BEGIN_SRC python :session
+  def get_promoter():
+      """Return promoter of gene"""
+      pass  ## placeholder until we fill in the code
+#+END_SRC
+
+#+RESULTS[dad3099f18fd65c7d494e4ba2a6329b9c2cd307a]:
+
+Next, we should declare what arguments the function receives.
+
+#+BEGIN_SRC python :session
+def get_promoter(start, strand):
+    """Return promoter of gene
+
+    Parameters
+    ----------
+    start : int
+        start coordinate of gene
+    strand : str
+        strand direction indicated by + or -
+    """
+    pass
+#+END_SRC
+
+#+RESULTS[6b13d014923cd323aa12831374215ed59ae1b246]:
+
+The arguments are specified between the parentheses (everything added
+between the triple quotes is documentation that, while often helpful, is
+not required).
+
+* Calling functions
+
+We can use the genestart defined above and the strand as input to our
+new function.
+
+#+BEGIN_SRC python :session
+  get_promoter(genestart, '-')
+#+END_SRC
+
+#+RESULTS[913d4268323b8a547cbfc614f4704dd8efcd6ede]:
+
+We have called the function, but it doesn't do anything yet. Let's add
+in the calculation.
+
+#+BEGIN_SRC python :session
+  def get_promoter(start, strand):
+      """Return promoter of gene
+
+      Parameters
+      ----------
+      start : int
+          start coordinate of gene
+      strand : str
+          strand direction indicated by + or -
+      """
+      if strand == '+':
+          promstart = start - 1000
+          promend = start + 500
+      elif strand == '-':
+          promstart = start + 1000
+          promend = start - 500
+      else:
+          print('strand not recognized')
+      print(promstart, promend)
+
+  # now call it
+  promoter = get_promoter(genestart, '-')
+  print(promoter)
+#+END_SRC
+
+#+RESULTS[22fbef9ce0fea1bacfdd1db416441674c203c2be]:
+:
+: 73098781 73097281
+: None
+
+Looks like it is performing the calculation, but at this point it is
+only printing out the values. We know this because when we print the
+return value (=promoter=), it is =None=.
+
+To get back the result, we can modify the function to include a return
+statement.
+
+#+BEGIN_SRC python :session
+  def get_promoter(start, strand):
+      """Return promoter of gene
+
+      Parameters
+      ----------
+      start : int
+          start coordinate of gene
+      strand : str
+          strand direction indicated by + or -
+      """
+      if strand == '+':
+          promstart = start - 1000
+          promend = start + 500
+      elif strand == '-':
+          promstart = start + 1000
+          promend = start - 500
+      else:
+          print('strand not recognized')
+      return promstart, promend
+
+  # now call it
+  promoter = get_promoter(genestart, '-')
+  print(promoter)
+#+END_SRC
+
+#+RESULTS[bb980bff341af2d6a711f0b999f945e9d37eafc8]:
+:
+: (73098781, 73097281)
+
+When we call the new function, the result is returned (because we've
+added the return statement at the end) and no longer printed out
+(because we removed the print statement).
+
+The variable =promoter= now contains the returned results.
+
+#+BEGIN_NOTE
+  *Note:* Due to how the return statement was specified, a tuple has
+  been returned. Any type can be returned. If square brackets were given
+  around the results (=return [promstart, promend]=), a list would have
+  been returned instead. For now, tuples can be thought of as very
+  similar to lists, though there are some very important differences
+  (particularly in terms of mutability, which we have not discussed).
+#+END_NOTE
+
+* Keyword arguments
+
+In the above example, we have two required arguments: =start= and
+=strand= must be given. If we call the function without an argument, we
+get an error.
+
+#+BEGIN_SRC python :eval never
+  get_promoter(genestart)
+#+END_SRC
+
+#+BEGIN_EXAMPLE
+  Traceback (most recent call last):
+  ...
+  TypeError: get_promoter() missing 1 required positional argument: 'strand'
+#+END_EXAMPLE
+
+Required arguments are a good thing, but in some cases, it is useful to
+allow optional arguments. For example, the 1,000 bases upstream/500
+bases downstream used to define the promoter are parameters that should
+probably be tunable, so we can provide them as default values that can
+be overridden when the function is called.
+
+#+BEGIN_SRC python :session
+  def get_promoter(start, strand, upstream=1000, downstream=500):
+      """Return promoter of gene
+
+      Parameters
+      ----------
+      start : int
+          start coordinate of gene
+      strand : str
+          strand direction indicated by + or -
+      upstream, downstream : int
+          number of bases upstream/downstream of start used to
+          define promoter
+      """
+      if strand == '+':
+          promstart = start - upstream
+          promend = start + downstream
+      elif strand == '-':
+          promstart = start + upstream
+          promend = start - downstream
+      else:
+          print('strand not recognized')
+      return promstart, promend
+#+END_SRC
+
+#+RESULTS[802ea61564de02f6f18b57564c7b719b776e6475]:
+
+Now we can call the function as before and get the same results, as we
+do in the fisrt call. If we choose to, we can override the default
+values. For example, in the second call, we bring the upstream bases down to 500.
+In the third call, both optional arguments are tweaked at the same time.
+
+#+BEGIN_SRC python :session
+  print(get_promoter(genestart, '-'))
+  print(get_promoter(genestart, '-', upstream=500))
+  print(get_promoter(genestart, '-', upstream=500, downstream=400))
+#+END_SRC
+
+#+RESULTS[2f0276d30c1c467a4266e4e3ed7f3c9f9a3d8edf]:
+: (73098781, 73097281)
+: (73098281, 73097281)
+: (73098281, 73097381)
+
+In the above examples, we provide the keywords with the value, but they
+can also be given without the keywords as long as the order is
+preserved.
+
+#+BEGIN_SRC python :session
+  print(get_promoter(genestart, '-', 500, 400))
+#+END_SRC
+
+#+RESULTS[019e84b9947120cc4b53bf80dacedabf6a2f301c]:
+: (73098281, 73097381)
+
+In this case, however, leaving out the keywords makes the function less
+readable.
+
+* Done
+
+We now have a function that is reusable throughout the code. In addition
+to simplifying our code, this makes it easier to modify the code later
+if needed because the code only has to be changed in one place. This
+function can also be shared with other python files. We'll talk about
+this more when we go over modules.
+
+* Tasks
+
+** GC content
+
+Write a function that calculates the GC content of a sequence. Then
+explore how to use =assert= to demonstrate that your function works as
+you expect.
+
+#+BEGIN_EXAMPLE
+    In [1]: calculate_gc_ratio('GCAA')
+    0.5
+#+END_EXAMPLE
+
+** Reverse complement function
+
+Write a function that takes the reverse complement of a DNA sequence.
+
+It should work something like this:
+
+#+BEGIN_EXAMPLE
+    In [1]: reverse_complement('ATAATCG')
+    CGATTAT
+#+END_EXAMPLE
+
+** Amino acid translation function
+
+Write a function that translates a DNA sequence to an amino acid
+sequence.
+
+#+BEGIN_EXAMPLE
+    In [1]: translate('GTACCC')
+    VP
+#+END_EXAMPLE
+
+It's up to you to decide how you want to deal with stop codons. I've
+already added a codon to amino acid dictionary in =codon_mapping.py=.
+You can access this in your script by importing it.
+
+Write tests (either with plain assert statements or py.test) to show
+that your code is working properly.

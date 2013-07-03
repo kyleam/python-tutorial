@@ -1,0 +1,60 @@
+#+TITLE: Python tutorial
+#+HTML_HEAD: <link rel="stylesheet" href="css/theme.css" type="text/css"/>
+
+* Basics
+  :PROPERTIES:
+  :HTML_CONTAINER_CLASS: topic-list-def
+  :END:
+
+- [[file:doc/installation.org][Installation]] :: Instructions for Mac OS X and Windows
+- [[file:doc/types.org][Types]] :: Some of the major types of objects
+- [[file:doc/control_constructs.org][Control constructs]] :: Controlling what code is executed
+- [[file:doc/commandline_input.org][Command line input]] :: Specifying values at the command line
+- [[file:doc/file_io.org][File input and output]] :: Reading and writing to files
+- [[file:doc/functions.org][Functions]] :: Creating reusable operations
+- Mutability :: Mutable versus immutable objects
+- List comprehensions :: Conveniently filter and operate on lists
+- Regular expressions :: Matching operations
+- Testing :: Tools for making sure your code is correct
+
+* Packages
+  :PROPERTIES:
+  :HTML_CONTAINER_CLASS: topic-list-def
+  :END:
+
+- Pandas :: Data analysis library
+- Matplotlib :: Plotting library
+
+------------------------------------------------------------------------
+
+* Other packages
+  :PROPERTIES:
+  :HTML_CONTAINER_CLASS: topic-list-def
+  :END:
+
+Some interesting packages that we probably won't cover directly.
+
+- [[http://biopython.org/wiki/Main_Page][Biopython]] :: Wide collection of tools for biology
+- [[https://bitbucket.org/james_taylor/bx-python/wiki/Home][bx-python]] :: Genome analysis tools
+- [[http://docs.python.org/3.3/library/collections.html][collections]] :: Some useful datatypes, especially =defaultdict= and
+                 =namedtuple=
+- [[http://docs.python.org/3.3/library/csv.html][csv]] :: Reading and writing of delimited files
+- [[http://docopt.org/][docopt]] :: Convenient and fast way to write command line program
+- [[http://docs.python.org/3.3/library/fileinput.html][fileinput]] :: A good solution for handling standard input and multiple
+               input files
+- [[http://docs.python.org/3.3/library/itertools.html][itertools]] :: Handy functions for working with iterators
+- [[http://ipython.org/notebook.html][IPython notebook]] ::  IPython session within a text document
+- [[https://en.wikipedia.org/wiki/NumPy][NumPy]] :: Multi-dimensional arrays (Pandas is built on top of this)
+- [[http://statsmodels.sourceforge.net/][statsmodels]] :: Statistical library
+
+
+* A few other resources
+  :PROPERTIES:
+  :HTML_CONTAINER_CLASS: topic-list
+  :END:
+
+- [[http://docs.python.org/2/tutorial/][The Python tutorial]]
+- [[http://python.net/~goodger/projects/pycon/2007/idiomatic/][Idiomatic python]]
+- [[http://www.youtube.com/watch?v%3DtKTZoB2Vjuk][Google's Python class (video)]]
+- [[http://learnpythonthehardway.org/book/intro.html][Learn python the hard way]]
+- [[http://wiki.python.org/moin/BeginnersGuide/Programmers][List of other tutorials]]

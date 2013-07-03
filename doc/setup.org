@@ -1,0 +1,3 @@
+#+PROPERTY: exports both
+#+PROPERTY: results output
+#+PROPERTY: cache yes
