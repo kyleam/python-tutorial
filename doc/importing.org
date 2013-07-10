@@ -152,8 +152,8 @@ This allows you to group related code in one file and access it with
 many files, without having to duplicate the code in each file.
 
 One example is the =codon_to_aminoacid= dictionary that is in
-code/seqtools/[[../code/seqtools/codon_mapping.py][codon_mapping.py]]. If we wanted to use this dictionary in
-another file, without copying it over, we could import it.
+code/[[../code/codon_mapping.py][codon_mapping.py]]. If we wanted to use this dictionary in another
+file, without copying it over, we could import it.
 
 #+BEGIN_SRC python :eval never
   from codon_mapping import codon_to_aminoacid
