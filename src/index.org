@@ -1,6 +1,9 @@
 #+TITLE: Python tutorial
 #+HTML_HEAD: <link rel="stylesheet" href="css/theme.css" type="text/css"/>
 
+Instructions for setting up and staying up-to-date with these tutorials
+can be found [[./doc/syncing-tutorial.org][here]].
+
 * Basics
   :PROPERTIES:
   :HTML_CONTAINER_CLASS: topic-list-def

@@ -1,0 +1,61 @@
+#+TITLE: Getting the tutorial and staying up-to-date
+
+The content of this tutorial, as well as the code from our meetings, are
+stored in a [[http://git-scm.com/][git]] repository. git is a fantastic tool, with great
+[[http://git-scm.com/documentation][documentation]] online, but the commands below are all you need to stay
+get and stay up-to-date with changes.
+
+* Downloading the tutorials for the first time
+
+Open up a terminal window (or "Git Bash" on Windows) to a folder were
+you want to store the tutorial (you can change folders by typing =cd=,
+which stands for "change directory"). Then enter this command:
+
+: git clone https://github.com/kyleam/python-tutorial.git
+
+This will result in a folder called "python-tutorial".
+
+** With the GUI
+
+If you prefer a GUI instead, open up the Git GUI program and click
+"Clone Existing Repository". Paste in
+https://github.com/kyleam/python-tutorial.git as the source and choose a
+target directory where you want to store the tutorials.
+
+* Syncing changes to the tutorials
+
+Open up terminal (or "Git Bash" on Windows) and go to the python
+tutorial folder.
+
+To download the changes, run:
+
+: git fetch origin
+
+If changes were found, the command will print out a message.
+
+Those downloaded changes are present on a branch called =origin/master=.
+
+To merge them into your current branch (=master=), run
+
+: git merge origin/master
+
+Now you are up-to-date (and you see a message describing what has
+changed).
+
+The above two commands can be achieved in one command:
+
+: git pull origin master
+
+** With the GUI
+
+Load up the Git GUI program. To fetch a branch, go to the menu "Remote"
+and click on "fetch from > origin".
+
+To merge, go to the menu "Merge" and select "Local Merge". Then select
+=origin/master= and click "Merge".
+
+#+BEGIN_NOTE
+  *Note:* The first time you do this you may get an error saying you
+  need to set up your name and email. Just open up a terminal to the
+  tutorial directory and follow the instructions.
+#+END_NOTE
