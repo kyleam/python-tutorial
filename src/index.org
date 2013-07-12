@@ -52,7 +52,7 @@ Some interesting packages that we probably won't cover directly.
 - [[http://statsmodels.sourceforge.net/][statsmodels]] :: Statistical library
 
 
-* A few other resources
+* A few other Python resources
   :PROPERTIES:
   :HTML_CONTAINER_CLASS: topic-list
   :END:
@@ -62,3 +62,12 @@ Some interesting packages that we probably won't cover directly.
 - [[http://www.youtube.com/watch?v%3DtKTZoB2Vjuk][Google's Python class (video)]]
 - [[http://learnpythonthehardway.org/book/intro.html][Learn python the hard way]]
 - [[http://wiki.python.org/moin/BeginnersGuide/Programmers][List of other tutorials]]
+
+------------------------------------------------------------------------
+
+* Useful non-Python stuff
+  :PROPERTIES:
+  :HTML_CONTAINER_CLASS: topic-list-def
+  :END:
+
+- [[./doc/bash.org][Bash cheat sheet]] :: Important commands for working from the terminal

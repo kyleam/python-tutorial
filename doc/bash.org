@@ -1,0 +1,60 @@
+#+TITLE: Bash cheat sheet
+
+* getting information on command
+
+Access the manual:
+
+: man <command of interest>
+
+If this doesn't work (the program doesn't have a manual), usually it is
+safe to try running the command with typical help flags:
+
+#+BEGIN_EXAMPLE
+  <command of interest> --help
+  <command of interest> -h
+#+END_EXAMPLE
+
+* Directory (folder) operations
+
+** listing the contents of a directory
+
+: ls
+
+** change directories
+
+: cd <directory>
+
+=~= stands for your home directory. So this would take you to your home
+directory:
+
+: cd ~
+
+And this would take you to your downloads folder under you home
+directory:
+
+: cd ~/downloads
+
+** show your current (present) directory
+
+: pwd
+
+* File operations
+
+** copying a file
+
+: cp <file name> <new file name>
+
+** rename (move) a file
+
+: mv <file name> <new file name>
+
+** deleting (removing) a file
+
+: rm <file>
+
+** viewing the contents of a text file
+
+: less <file>
+
+When viewing a file with less, move down with =j=, up with =k=, and
+leave the file with =q=.
