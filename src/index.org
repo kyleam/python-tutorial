@@ -15,6 +15,7 @@ can be found [[./doc/syncing-tutorial.org][here]].
 - [[file:doc/commandline_input.org][Command line input]] :: Specifying values at the command line
 - [[file:doc/file_io.org][File input and output]] :: Reading and writing to files
 - [[file:doc/functions.org][Functions]] :: Creating reusable operations
+- [[./doc/importing.org][Importing]] :: Accessing code from other files
 - Mutability :: Mutable versus immutable objects
 - List comprehensions :: Conveniently filter and operate on lists
 - Regular expressions :: Matching operations
