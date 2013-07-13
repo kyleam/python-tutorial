@@ -1,0 +1,177 @@
+#+TITLE: Regular expressions
+#+SETUPFILE: setup.org
+
+* When regular expressions are useful
+
+We've already encountered a situation when regular expressions would
+have been very useful. Remember when we wanted to get the gene name from
+a line in a GTF file? The line with the gene name had a bunch of fields
+separated by ";".
+
+#+BEGIN_EXAMPLE
+  gene_id "ENSG00000081386.8"; [ ... ] gene_name "ZNF510"; [ ... ]
+#+END_EXAMPLE
+
+At the time, we approached this using splitting. (I'm going to snip out
+a lot of the other fields to make it more readable, but the process was
+the same.)
+
+#+BEGIN_SRC python :session
+  info = 'gene_id "ENSG00000081386.8"; gene_name "ZNF510"'
+  gene_name_field = info.split(';')[1]
+  gene_name = gene_name_field.split()[1]
+  gene_name = gene_name[1:-1]  # strip out quotes
+  print(gene_name)
+#+END_SRC
+
+#+RESULTS[b8b91f3cbaa72a2a406adc423ec748121b98396a]:
+:
+: ZNF510
+
+That's a lot of work just to get to the gene name. Regular expressions
+provide a nice solution to this problem because they allow you match a
+pattern and pull out the information that you're interested in.
+
+* Defining a regular expression
+
+In order to pull out the gene name, we need to define that pattern to
+match with. Defining regular expressions can be a little confusing
+because the [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][syntax for creating]] them is dense. We are not going to go
+into the details of the syntax; we'll just cover what we need to extract
+out the gene name. This will give you an idea for what regular
+expression can do, so that you recognize situations where they may be
+helpful.
+
+If we look at the string above, the thing that distinguishes the gene
+name is the text "gene_name". We will create a pattern that matches
+this.
+
+#+BEGIN_SRC python :session
+  pattern = r'gene_name "\w+"'
+#+END_SRC
+
+#+RESULTS[c95c44d1c86c9a5489c4edbd23b3712b87d50981]:
+
+The first part of that pattern should make sense: we creating a match
+for "gene_name". Everything in the pattern should look similar to what
+we are trying to match, except for what's between the double quotes.
+=\w= is a special character that means match a word character, which is
+defined as upper and lower case letters as well as digits (see [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][here]] for
+a list of possible characters). This should cover the possible elements
+of a gene name (except for maybe a hyphen). The =+= means match one or
+more instances of the thing it follows (in this case, =\w=). A related
+symbol is =*=, which means match *zero* or more instances of the thing
+it follows.
+
+The only thing left to explain in the pattern is the =r= that comes
+before the string. This classifies the string as a raw string and makes
+it so that Python does not interpret =\= as special. For example, recall
+that a new line is represented as "\n". Even though you type two
+characters, the =\= indicates that Python should treat the =n= as a new
+line, so the string consists of one new line character. If instead, you
+wrote an =r= before the string, the =\= would no longer have its special
+meaning, and the string would consist of two characters: a =\= and a
+=n=. This is useful with regular expressions because the [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][syntax]] makes
+heavy use of =\=. Putting =r= before the string prevents Python from
+trying to do anything special to the =\= characters before they are
+passed to the regular expression function, which will then interpret
+them and apply any special meaning to the characters.
+
+* Matching patterns
+
+Now that we have defined that pattern, we can search for it in the
+string.
+
+#+BEGIN_SRC python :session
+  import re
+
+  match = re.search(pattern, info)
+  print(match)
+#+END_SRC
+
+#+RESULTS[c4d8df0978866b29299a2f7bacc460457300a3d6]:
+:
+: <_sre.SRE_Match object at 0x7f0ceca5a8b8
+
+<<nogroup>>The =search= function returns a match object (if a match is
+found). From the output, we see that we have an object, but how do we
+access the match? If you are in IPython, you can type =match.<TAB>= to
+see your options. Use a =?= after some of them to get more information.
+The description of =match.group?= seems promising. It tells us that
+giving =0= as an argument will return the entire match. Let's try.
+
+#+BEGIN_SRC python :session
+  print(match.group(0))
+#+END_SRC
+
+#+RESULTS[ccb46e58999a1761c4136f10973f4295eb8ef08e]:
+: gene_name "ZNF510"
+
+Well, still not exactly what we want. It would be nice to get the gene
+name that is inside the quotes (or else we haven't done much better than
+our original splitting approach).
+
+* Pulling out groups
+
+The trick is putting parentheses around the text we want to capture.
+
+#+BEGIN_SRC python :session
+  pattern = r'gene_name "(\w+)"'
+#+END_SRC
+
+#+RESULTS[b8af2f2949905bd3ea69660389e9c381b9f3268d]:
+
+Now we can access the captured text as a group. We know from the
+[[nogroup][previous matching example]] that passing =0= to =match.group= gives that
+entire match string. After this default group, there are as many
+additional groups as parentheses sets in the pattern. So in the first
+example, there were no more groups. In the second pattern we created, we
+defined a group with parentheses, so there is one more group in addition
+to the default group that corresponds to the entire match.
+
+#+BEGIN_SRC python :session
+  match = re.search(pattern, info)
+  print(match.group(0))
+  print(match.group(1))
+#+END_SRC
+
+#+RESULTS[ba34d09323c96d21150c33154bdbd740f28b4687]:
+:
+: gene_name "ZNF510"
+: ZNF510
+
+Here is the complete example extracting out the gene name.
+
+#+BEGIN_SRC python
+  import re
+
+  info = 'gene_id "ENSG00000081386.8"; gene_name "ZNF510"'
+  pattern = r'gene_name "(\w+)"'
+  gene_name = re.search(pattern, info).group(1)
+  print(gene_name)
+#+END_SRC
+
+#+RESULTS[6e6177ffd240696448b6e5f5ea5d9836df7e2530]:
+: ZNF510
+
+* Tasks
+
+** Extract Ensembl IDs from a GTF file
+
+Write a program that uses a regular expression to extract the gene ID
+from the lines in data/[[../data/gencode-v10-50random.gtf][gencode-v10-50random.gtf]]. Only extract the part
+of the gene ID before the decimal point. You should wrap the ID
+extraction in a function and write tests to show that it works. You can
+decide whether you would prefer to print the extracted gene IDs to the
+screen or write them to an output file.
+
+** Find each base that follows an insertion
+
+Write a function that uses a regular expression to find each base that
+follows an insertion in the sequence. Write tests to demonstrate that
+your function works.
+
+#+BEGIN_EXAMPLE
+  In [1]: bases_after_insert('AACT-CGGCA-AGAT')
+  ['C', 'A']
+#+END_EXAMPLE

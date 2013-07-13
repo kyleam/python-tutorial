@@ -18,7 +18,7 @@ can be found [[./doc/syncing-tutorial.org][here]].
 - [[./doc/importing.org][Importing]] :: Accessing code from other files
 - Mutability :: Mutable versus immutable objects
 - List comprehensions :: Conveniently filter and operate on lists
-- Regular expressions :: Matching operations
+- [[./doc/regex.org][Regular expressions]] :: Matching operations
 - Exceptions :: Raising and catching exceptions
 - Testing :: Tools for making sure your code is correct
 
