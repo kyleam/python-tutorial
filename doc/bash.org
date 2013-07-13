@@ -1,6 +1,6 @@
 #+TITLE: Bash cheat sheet
 
-* getting information on command
+* Getting information on commands
 
 Access the manual:
 

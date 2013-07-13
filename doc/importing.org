@@ -40,7 +40,7 @@ typing =math.<TAB>=. You will see =sqrt= there, along with many others.
 Notice that to access something that belongs to the imported module, we
 need to use a =.= after the module name.
 
-** Defaultdict
+** defaultdict
 
 Another example is =defaultdict=, which is available in the [[http://docs.python.org/3.3/library/collections.html][collections]]
 module. Let's see what functionality it adds to normal dictionaries.
