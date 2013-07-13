@@ -179,26 +179,27 @@ method can be used for writing files.
 
 ** Getting gene coordinates from a gencode file
 
-The file [[../data/gencode-v10-50random.gtf][gencode-v10-50random.gtf]] contains 50 random protein-coding
-genes from gencode version 10. Another file, [[../data/genes-5random.txt][genes-5random.txt]], lists
-the names of 5 genes. Write a python script that reads in these genes of
-interest and finds the coordinates using the gencode gtf file.
+The file data/[[../data/gencode-v10-50random.gtf][gencode-v10-50random.gtf]] contains 50 random protein-coding
+genes from gencode version 10. Another file, data/[[../data/genes-5random.txt][genes-5random.txt]],
+lists the names of 5 genes. Write a python script that reads in these
+genes of interest and finds the coordinates using the gencode gtf file.
 
 ** Filter gene coordinates by size
 
-Write a script that prints out all genes in [[../data/gencode-v10-50random.gtf][gencode-v10-50random.gtf]]
-that span more than 100 kb. If this is too easy, use =write= instead of
-print to save the gene coordinates to a file. If this gives you 14
-genes, you're probably in good shape.
+Write a script that prints out all genes in
+data/[[../data/gencode-v10-50random.gtf][gencode-v10-50random.gtf]] that span more than 100 kb. If this is too
+easy, use =write= instead of print to save the gene coordinates to a
+file. If this gives you 14 genes, you're probably in good shape.
 
 ** Merge program information
 
 (from Sirisha)
 
-[[../data/program-versions.csv][program-versions.csv]] lists the names of a few programs and their current
-version. [[../data/program-dates.csv][program-dates.csv]] lists the names of the same programs and
-their release date. Write a script that merges this information into a
-single file that has three columns. It would look something like this:
+data/[[../data/program-versions.csv][program-versions.csv]] lists the names of a few programs and their
+current version. data/[[../data/program-dates.csv][program-dates.csv]] lists the names of the same
+programs and their release date. Write a script that merges this
+information into a single file that has three columns. It would look
+something like this:
 
 #+BEGIN_EXAMPLE
   Program,Date,Version
