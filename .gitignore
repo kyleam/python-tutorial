@@ -1,2 +1,4 @@
 output
 *.css
+__pycache__
+*.pyc
