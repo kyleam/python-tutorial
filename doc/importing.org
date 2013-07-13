@@ -178,7 +178,7 @@ There is also a way to do during the import.
 * Preventing code from running at import
 
 Frequently, you have code that you only want to execute if you run the
-command from the command line (=python <scriptname=), but not if you
+command from the command line (=python <script name>=), but not if you
 import it.
 
 This is done using this special line:
