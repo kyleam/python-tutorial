@@ -1,0 +1,125 @@
+#+TITLE: List comprehensions
+#+SETUPFILE: setup.org
+
+* A common pattern
+
+In the code you've written so far, you may have noticed some command
+patterns. One of these looks something like this<<first-example>>:
+
+#+BEGIN_SRC python :eval never
+  new_list = []
+  for element in old_list:
+      if some_condition:
+          new_list.append(element)
+#+END_SRC
+
+Let's revisit the GC content calculation for a specific example:
+
+#+BEGIN_SRC python
+  def calculate_gc_ratio(sequence):
+      gcs = []
+      for base in sequence:
+          if base in ['G', 'C']:
+              gcs.append(base)
+      return len(gcs)/len(sequence)
+#+END_SRC
+
+#+RESULTS[c216df3109263fda1b4a7f6a04fba82fdf0ca1e1]:
+
+Do you see the pattern?
+
+This is the pattern that is coveniently wrapped up in list
+comprehensions.
+
+* List comprehension syntax
+
+Here is the general pattern from above, transformed to a list
+comprehension.
+
+#+BEGIN_SRC python :eval never
+  new_list = [element for element in old_list if some_condition]
+#+END_SRC
+
+It looks a little backwards, so compare this to the [[first-example][first example]] and
+try to match up parts. It says to check if each =element= in =old_list=
+meets some condition; if it does, store it in a list, which is being
+assigned to =new_list=. Notice that all of this is happening in between
+the list notation =[ ... ]=.
+
+Here is the gc function that uses a list comprehension:
+
+#+BEGIN_SRC python
+  def calculate_gc_ratio(sequence):
+      gcs = [base for base in sequence if base in ['G', 'C']]
+      return len(gcs)/len(sequence)
+#+END_SRC
+
+#+RESULTS[70f38187e7c990c581978626490817b74f04b762]:
+
+Below are a few examples of the kind of things that are commonly done
+with list comprehensions.
+
+* Filtering values in a list
+
+=calculate_gc_ratio= is an example of filtering a list to remove values
+that don't fit a certain condition (in this case, bases that aren't a
+"G" or "C").
+
+Here's one more example that filters a list of numbers for even numbers.
+
+#+BEGIN_SRC python
+  numbers = list(range(1, 11))
+  evens = [num for num in numbers if num % 2 == 0]
+  print(evens)
+#+END_SRC
+
+#+RESULTS[439d0f0930dfc24028bd67a368ab6682e8493ab4]:
+: [2, 4, 6, 8, 10]
+
+With the old pattern, this would look like this:
+
+#+BEGIN_SRC python
+  numbers = list(range(1, 11))
+  evens = []
+  for num in numbers:
+      if num % 2 == 0:
+          evens.append(num)
+#+END_SRC
+
+#+RESULTS[c0bc768282811c9e88d8f2008553c2d2686d934b]:
+
+* Transforming values in a list
+
+Instead of (or in combination with) filtering a list, we can perform a
+tranformation on all the list values.
+
+As example, we can take a list of percentages and transform them into
+ratios.
+
+#+BEGIN_SRC python
+  percents = [99, 34, 89, 77, 88]
+  ratios = [percent/100 for percent in percents]
+  print(ratios)
+#+END_SRC
+
+#+RESULTS[bba7ad088dc1f31fedf26732d28270970c37f2c4]:
+: [0.99, 0.34, 0.89, 0.77, 0.88]
+
+In this case, we simply divided by one hundred, but you could also apply
+a function.
+
+* Tasks
+
+** Cleaning a sequence
+
+Write a function that cleans a sequence by removing gaps and making sure
+that all letters are capital. Make use of a single list comprehension in
+your function. The list comprehension should take care of both removing
+the gaps and capitalizing the base. Write tests (with =assert=
+statements at the end of the file or with py.test) to show that your
+function works as expected.
+
+#+BEGIN_EXAMPLE
+  In [1]: clean_sequence('GGc--AGTT')
+  GGCAGTT
+#+END_EXAMPLE
