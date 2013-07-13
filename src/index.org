@@ -30,8 +30,6 @@ can be found [[./doc/syncing-tutorial.org][here]].
 - Pandas :: Data analysis library
 - Matplotlib :: Plotting library
 
-------------------------------------------------------------------------
-
 * Other packages
   :PROPERTIES:
   :HTML_CONTAINER_CLASS: topic-list-def
@@ -64,8 +62,6 @@ Some interesting packages that we probably won't cover directly.
 - [[http://www.youtube.com/watch?v%3DtKTZoB2Vjuk][Google's Python class (video)]]
 - [[http://learnpythonthehardway.org/book/intro.html][Learn python the hard way]]
 - [[http://wiki.python.org/moin/BeginnersGuide/Programmers][List of other tutorials]]
-
-------------------------------------------------------------------------
 
 * Useful non-Python stuff
   :PROPERTIES:

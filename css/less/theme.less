@@ -22,11 +22,13 @@
 
 // Base CSS
 @import "bootstrap/type.less";
-h1,
-h2,
-h3 { line-height: @baseLineHeight * 1.5; }
 h1 { font-size: @baseFontSize * 2.00; }
-h2 { font-size: @baseFontSize * 1.25; }
+h2 {
+    font-size: @baseFontSize * 1.25;
+    border-left: 4px solid @blueDark;
+    padding-left: @defaultPadding/2;
+    margin-top: @defaultPadding;
+}
 h3 { font-size: @baseFontSize * 1.1; }
 
 #content {
@@ -36,6 +38,11 @@ h3 { font-size: @baseFontSize * 1.1; }
 
 #table-of-contents {
     font-size: @baseFontSize * 0.9;
+    h2 {
+        border: none;
+        padding-left: 0px;
+        margin-top: 0px;
+    }
     color: @grayLight;
     a {
         color: @grayLight;
@@ -67,7 +74,6 @@ h3 { font-size: @baseFontSize * 1.1; }
     padding: (@baseLineHeight - 1) / 2;
     margin: 0 0 @baseLineHeight / 2;
     line-height: @baseLineHeight;
-    .border-radius(@baseBorderRadius);
 }
 
 .note {
@@ -82,6 +88,11 @@ h3 { font-size: @baseFontSize * 1.1; }
 
 @import "bootstrap/code.less";
 @import "htmlize.less";
+
+pre, .src, code {
+    color: @black;
+}
+
 pre {
     font-size: @baseFontSize * 0.9;
     border: 1px solid @grayLight;
@@ -89,16 +100,15 @@ pre {
 }
 
 .src {
-    background-color: @grayLightest;
+    background-color: @grayLighter;
 }
 
 code {
   #font > #family > .monospace;
   font-size: @baseFontSize - 2;
-  color: @grayDark;
   .border-radius(3px);
   padding: 2px 4px;
-  background-color: @grayLightest;
+  background-color: @grayLighter;
   border: 1px solid @grayLight;
   white-space: nowrap;
 }
