@@ -57,6 +57,7 @@ Some interesting packages that we probably won't cover directly.
   :HTML_CONTAINER_CLASS: topic-list
   :END:
 
+- [[http://www.learnpython.org/][Learn Python]]
 - [[http://docs.python.org/2/tutorial/][The Python tutorial]]
 - [[http://python.net/~goodger/projects/pycon/2007/idiomatic/][Idiomatic python]]
 - [[http://www.youtube.com/watch?v%3DtKTZoB2Vjuk][Google's Python class (video)]]
