@@ -29,6 +29,11 @@
    :publishing-directory ,(concat python-tutorial-dir "output/code")
    :publishing-function org-publish-attachment
    :recursive t)
+  ("python-tutorial-img"
+   :base-directory ,(concat python-tutorial-dir "img")
+   :base-extension "svg"
+   :publishing-directory ,(concat python-tutorial-dir "output/img")
+   :publishing-function org-publish-attachment)
   ("python-tutorial-data"
    :base-directory ,(concat python-tutorial-dir "data")
    :base-extension any
@@ -38,7 +43,8 @@
   ("python-tutorial" :components ("python-tutorial-orgfiles"
                                   "python-tutorial-css"
                                   "python-tutorial-code"
-                                  "python-tutorial-data"))))
+                                  "python-tutorial-data"
+                                  "python-tutorial-img"))))
 
 (setq org-html-htmlize-output-type "css")
 

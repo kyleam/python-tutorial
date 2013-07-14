@@ -2,3 +2,10 @@ output
 *.css
 __pycache__
 *.pyc
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+img/*.pdf
+img/*.svg
+img/.sentinel

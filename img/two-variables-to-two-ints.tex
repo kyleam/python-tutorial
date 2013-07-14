@@ -1,0 +1,27 @@
+\documentclass[tikz,12pt]{standalone}
+\usetikzlibrary{shapes,arrows,positioning}
+\definecolor{brewred}{RGB}{228,26,28}
+\definecolor{brewblue}{RGB}{55,126,184}
+\definecolor{brewgreen}{RGB}{77,175,74}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+\begin{tikzpicture}[node distance=4em]
+  \tikzset{
+    value/.style={draw=none},
+    binding/.style={draw=none},
+    myarrow/.style={->, >=latex', shorten >=1pt, thick},
+  }
+
+  \node[value] (int3) {3};
+  \node[value] (int12)[below=0.5em of int3] {12};
+  \node[binding] (a) [above left of=int3]{a};
+  \node[binding] (b) [below left of=int12]{b};
+
+  \draw[myarrow] (a.south) -- (int3.north west);
+  \draw[myarrow] (b.north) -- (int12.south west);
+
+\end{tikzpicture}
+\end{document}

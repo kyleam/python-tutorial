@@ -1,0 +1,108 @@
+#+TITLE: Mutable and immutable objects
+#+SETUPFILE: setup.org
+
+* Is this what you expect?
+
+<<mutint-ex>>The result of the code below is probably what you expect.
+
+#+BEGIN_SRC python
+  a = 3
+  b = a
+  print(a, b)
+  b = b + 9
+  print(a, b)
+#+END_SRC
+
+#+RESULTS[b37d1fd19c0fdefb976b27b3be32525a915339e9]:
+: 3 3
+: 3 12
+
+<<mutlist-ex>>Here is similar code that uses lists instead, but the
+result might surprise you.
+
+#+BEGIN_SRC python
+  a = [3, 4, 5]
+  b = a
+  print(a, b)
+  b.append(6)
+  print(a, b)
+#+END_SRC
+
+#+RESULTS[1b314cab8b885d28436bdab3791adbbc686148f8]:
+: [3, 4, 5] [3, 4, 5]
+: [3, 4, 5, 6] [3, 4, 5, 6]
+
+Notice that we changed =b= by appending =6=, yet the value of =a= is
+also changed. In order to understand these examples, we need to cover
+the concept of "variables" in Python and the concept of mutability.
+
+* Variables in Python
+
+The example above shows that =a= has to be linked in some way to =b=
+beyond just initially sharing values. In other words, assigning =a= to
+=b= doesn't just simply copy over the values of =a=. So what is
+happening?
+
+Variables can be thought of as names that are attached to a value. A
+name itself is not the value. For example, =a= above is not a list. At
+that point in time, it refers to a particular list.
+
+# #+attr_html: :width 125
+[[../img/one-variable-to-list.svg]]
+
+After we assign =b = a=, now =b= is another name that attached to the
+same list.
+
+# #+attr_html: :width 125
+[[../img/two-variables-to-list.svg]]
+
+The above diagrams should make it clear what is happening in the [[mutlist-ex][example]]
+with lists. The value of =a= changes when =b= is modified because they
+are referring to the same thing.
+
+* Mutability
+
+The logic above explains why the =b= along with =a=, but why didn't the
+[[mutint-ex][example]] with integers behave the same way? This has to do with an
+important difference between integers and lists: lists are mutable while
+integers are not. Being mutable means that the value can be changed
+in-place. Let's walk through the integer scenario in diagrams.
+
+After both =a= is assigned to =3= and then =b= is assigned to =a=, it
+looks like this:
+
+# #+attr_html: :width 125
+[[../img/two-variables-to-int.svg]]
+
+Once we modify =b= by adding =9=, =b= now refers to a new value, while
+=a= is still bound to the original value.
+
+# #+attr_html: :width 125
+[[../img/two-variables-to-two-ints.svg]]
+
+Notice that =3= still exists, unmodified. Now, a second value exists,
+and the name =b= is now bound to it, while =a= still refers to 3. This
+is very different than the list that we changed in-place. This is why we
+have write =b = b + 9= instead of just =b + 9=. In order to change the
+value of =b=, we need to *reassign* the name =a= because we can't change
+the underlying value.
+
+* Mutability of some common types
+
+#+attr_html: :align center :class table-striped
+| Type   | Mutable |
+|--------+---------|
+| int    | no      |
+| string | no      |
+| tuple  | no      |
+| list   | yes     |
+| dict   | yes     |
+
+
+* More information
+
+Both of these articles provide great explanations (full of pretty
+diagrams) of assignments and mutability:
+
+- [[http://nedbatchelder.com/text/names.html]]
+- [[http://mail.python.org/pipermail/tutor/2001-February/003787.html]]

@@ -1,0 +1,24 @@
+\documentclass[tikz,12pt]{standalone}
+\usetikzlibrary{shapes,arrows,positioning}
+\definecolor{brewred}{RGB}{228,26,28}
+\definecolor{brewblue}{RGB}{55,126,184}
+\definecolor{brewgreen}{RGB}{77,175,74}
+
+\usepackage{helvet}
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+\begin{tikzpicture}[node distance=4em]
+  \tikzset{
+    value/.style={draw=none},
+    binding/.style={draw=none},
+    myarrow/.style={->, >=latex', shorten >=1pt, thick},
+  }
+
+  \node[value] (list) {[3, 4, 5]};
+  \node[binding] (a) [above left of=list]{a};
+
+  \draw[myarrow] (a.south) -- (list.north west);
+
+\end{tikzpicture}
+\end{document}
