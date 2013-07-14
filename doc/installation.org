@@ -29,7 +29,7 @@ This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run:
 
 #+BEGIN_EXAMPLE
-    pip3 install ipython
+  pip3 install ipython
 #+END_EXAMPLE
 
 Now you need to add the newly install ipython to your path. To do this,

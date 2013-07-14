@@ -141,7 +141,7 @@ fact, it usually does not).
   outfh = open(outfile, 'w')
 
   for number in range(3):
-       outfh.write('this is line {}\n'.format(number))
+      outfh.write('this is line {}\n'.format(number))
 
   outfh.close()
 #+END_SRC
