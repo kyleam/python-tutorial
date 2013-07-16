@@ -1,15 +1,15 @@
-#+TITLE: Types in python
-#+SETUPFILE: setup.org
+#+title: Types in python
+#+setupfile: setup.org
 
 * Boolean
 
 Boolean values are represented by =True= and =False=. The often are
 produced by comparison operations.
 
-#+BEGIN_SRC python
+#+begin_src python
   print(3 > 2)
   print(10/5 == 1)
-#+END_SRC
+#+end_src
 
 #+RESULTS[4faf239d93ac0b8c192fa464509820e34c54d229]:
 : True
@@ -20,10 +20,10 @@ produced by comparison operations.
 
 Pretty much what you would expect
 
-#+BEGIN_SRC python
+#+begin_src python
   x = 1
   print(x + 3)
-#+END_SRC
+#+end_src
 
 #+RESULTS[0c412be7cb811bc849188231090703dc90cb6534]:
 : 4
@@ -32,10 +32,10 @@ Pretty much what you would expect
 
 Again, as expected
 
-#+BEGIN_SRC python
+#+begin_src python
   x = 1.0
   print(x + 3)
-#+END_SRC
+#+end_src
 
 #+RESULTS[308f69d037b609db4c4dde29f563bb836729b73b]:
 : 4.0
@@ -47,46 +47,46 @@ If you add an integer to a float, the result will be a float.
 These are characters and words. They must be surrounded by either single
 or double quotes.
 
-#+BEGIN_SRC python :session :results value
+#+begin_src python :session :results value
   name = 'john'
-#+END_SRC
+#+end_src
 
 #+RESULTS[e1608aee6cca410c95f169fabe1fbd966f7bc580]:
 
 Strings have some convenient methods associated with them. For example:
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   print(name.upper())
   print(name.capitalize())
-#+END_SRC
+#+end_src
 
 #+RESULTS[6413688ac5add09b994d8ce71f38e86a4b501d1d]:
 : JOHN
 : John
 
-#+BEGIN_NOTE
+#+begin_note
   *Note:* If you're in IPython, you can find out what methods are
   available for an object (like the string =name= above) by typing the
   object and a period and then hitting tab. So, in this case,
   =name.<TAB>= will show you all the available methods for a =str=.
-#+END_NOTE
+#+end_note
 
 * Lists
 
 A list is a sequence of values
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   primes = [2, 3, 5]
-#+END_SRC
+#+end_src
 
 #+RESULTS[a37cc9d09020a426af757e679e22d7ed71a766c1]:
 
 Each value can be accessed individually
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   print(primes[0])
   print(primes[2])
-#+END_SRC
+#+end_src
 
 #+RESULTS[54a1578f025c60497780a94f0ef84b360ec080da]:
 : 2
@@ -96,10 +96,10 @@ The index (the value inside the brackets) is 0-based.
 
 Lists can also be iterated over one-by-one
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   for prime in primes:
       print(prime)
-#+END_SRC
+#+end_src
 
 #+RESULTS[a60e689c5bd02d3b9e122628dc5cfb56a079d3f9]:
 :
@@ -111,10 +111,10 @@ Lists can also be iterated over one-by-one
 
 Provides key-value look up.
 
-#+BEGIN_SRC python
+#+begin_src python
   prices = {'car' : 40000, 'pop' : 1}
   print(prices['pop'])
-#+END_SRC
+#+end_src
 
 #+RESULTS[be0d22d5f523e19ef5b536e3c722635deced5935]:
 : 1

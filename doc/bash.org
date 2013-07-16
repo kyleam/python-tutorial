@@ -1,4 +1,4 @@
-#+TITLE: Bash cheat sheet
+#+title: Bash cheat sheet
 
 * Getting information on commands
 
@@ -9,10 +9,10 @@ Access the manual:
 If this doesn't work (the program doesn't have a manual), usually it is
 safe to try running the command with typical help flags:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   <command of interest> --help
   <command of interest> -h
-#+END_EXAMPLE
+#+end_example
 
 * Directory (folder) operations
 

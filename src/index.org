@@ -1,5 +1,5 @@
-#+TITLE: Python tutorial
-#+HTML_HEAD: <link rel="stylesheet" href="css/theme.css" type="text/css"/>
+#+title: Python tutorial
+#+html_head: <link rel="stylesheet" href="css/theme.css" type="text/css"/>
 
 Instructions for setting up and staying up-to-date with these tutorials
 can be found [[./doc/syncing-tutorial.org][here]].

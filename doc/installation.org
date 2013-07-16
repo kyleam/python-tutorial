@@ -1,5 +1,5 @@
-#+TITLE: Installing Python
-#+SETUPFILE: setup.org
+#+title: Installing Python
+#+setupfile: setup.org
 
 
 * Installing on Mac OS X
@@ -13,31 +13,31 @@ Otherwise, you can get it from the app store for free.
 
 To install homebrew, copy this into a terminal and hit enter:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   ruby -e "$(curl -fsSL https://raw.github.com/mxcl/homebrew/go)"
-#+END_EXAMPLE
+#+end_example
 
 After that, install python3 by running this in the terminal:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   brew install python3
-#+END_EXAMPLE
+#+end_example
 
 ** Install IPython
 
 This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   pip3 install ipython
-#+END_EXAMPLE
+#+end_example
 
 Now you need to add the newly install ipython to your path. To do this,
 open a terminal and enter:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   echo 'export PATH=/usr/local/share/python3:$PATH' >> $HOME/.bash_profile
-#+END_EXAMPLE
+#+end_example
 
 Once you have this, open a new terminal and type =ipython3= to enter
 into the ipython shell.
@@ -52,16 +52,16 @@ Download python 3: [[http://www.python.org/download]]
 
 Go here:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   Control Panel > System and Security > System > Change settings >
   Advanced > Environmental Variables
-#+END_EXAMPLE
+#+end_example
 
 Select =Path= variables and append:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   ;C:\Python33;C:\Python33\Scripts;
-#+END_EXAMPLE
+#+end_example
 
 You know this is working if you open up command prompt and type
 "python".
@@ -78,9 +78,9 @@ prompt.
 This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run:
 
-#+BEGIN_EXAMPLE
+#+begin_example
   pip install ipython
-#+END_EXAMPLE
+#+end_example
 
 One you have this, type =ipython= in your terminal to enter into the
 ipython shell.

@@ -1,5 +1,5 @@
-#+TITLE: Importing code from other files
-#+SETUPFILE: setup.org
+#+title: Importing code from other files
+#+setupfile: setup.org
 
 * The importance of importing
 
@@ -21,18 +21,18 @@ to take the square root of a number, =math= has you covered.
 
 This is how we would import it:
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   import math
-#+END_SRC
+#+end_src
 
 If you are following along in IPython, you can see what is under math by
 typing =math.<TAB>=. You will see =sqrt= there, along with many others.
 
-#+BEGIN_SRC python :results output
+#+begin_src python :results output
   import math
 
   print(math.sqrt(64))
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 : 8.0
@@ -48,25 +48,25 @@ module. Let's see what functionality it adds to normal dictionaries.
 We can access =defaultdict=, which is under =collections= just as we did
 =sqrt=, which is under =math=.
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   import collections
   # collections.<TAB>
-#+END_SRC
+#+end_src
 
 Since =collections= contains several different data types and we are
 only going to use =defaultdict=, we may just want to make that name
 available directly. We can do that using =from=.
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   from collections import defaultdict
-#+END_SRC
+#+end_src
 
 Now, let's see why =defaultdict= is useful. Say we have a DNA sequence
 and we want to get a count of each base type. One way to do that would
 be to make a dictionary with each base as a key and increment the
 integer value each time a base is encountered.
 
-#+BEGIN_SRC python :results output :session
+#+begin_src python :results output :session
   sequence = 'ATAGGGCCAAAAAA'
 
   base_counts = {}
@@ -74,7 +74,7 @@ integer value each time a base is encountered.
       base_counts[base] = base_counts.setdefault(base, 0) + 1
 
   print(base_counts)
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 :
@@ -85,14 +85,14 @@ for the key =base= if it exists, otherwise initialize the value at 0.
 Run this code without the =setdefault= to convince yourself that you
 would get a key error.
 
-#+BEGIN_SRC python :results output :session
+#+begin_src python :results output :session
   base_counts = {}
   for base in sequence:
       # base_counts[base] = base_counts[base] + 1
       base_counts[base] += 1  # same as line above
 
   print(base_counts)
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 :
@@ -104,7 +104,7 @@ would get a key error.
 =defaultdict= takes care of this behind the scenes, so that there is no
 need to use =setdefault=.
 
-#+BEGIN_SRC python :results output :session
+#+begin_src python :results output :session
   from collections import defaultdict
 
   base_counts = defaultdict(int)
@@ -112,7 +112,7 @@ need to use =setdefault=.
       base_counts[base] += 1
 
   print(base_counts)
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 :
@@ -126,9 +126,9 @@ installer. [[http://wiki.scipy.org/SciPy][SciPy]], as its name suggests, is a py
 many useful tools for science and engineering. Below we will import it
 and use it to calculate a pearson correlation.
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   from scipy.stats import pearsonr
-#+END_SRC
+#+end_src
 
 Remember, if you're in IPython, you can put =?= after the term of
 interest to get more information on it. Running =pearsonr?= will display
@@ -136,11 +136,11 @@ its docstring. We see that it takes two arrays as arguments and returns
 the pearson correlation and a pvalue. Let's just test it out on inputs
 that we know should have a correlation of 1.
 
-#+BEGIN_SRC python :results output
+#+begin_src python :results output
   from scipy.stats import pearsonr
 
   print(pearsonr([1, 2, 3], [1, 2, 3]))
-#+END_SRC
+#+end_src
 
 #+RESULTS:
 : (1.0, 0.0)
@@ -155,24 +155,24 @@ One example is the =codon_to_aminoacid= dictionary that is in
 code/[[../code/codon_mapping.py][codon_mapping.py]]. If we wanted to use this dictionary in another
 file, without copying it over, we could import it.
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   from codon_mapping import codon_to_aminoacid
-#+END_SRC
+#+end_src
 
 Now you can access the variable =codon_to_aminoacid= just as you would
 if you created the dictionary within that file. But what if you hate
 that name for a variable that you are importing? Well, you could of
 course just assign it a new name after the import.
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   new_name = codon_to_aminoacid
-#+END_SRC
+#+end_src
 
 There is also a way to do during the import.
 
-#+BEGIN_SRC python
+#+begin_src python
   from codon_mapping import codon_to_aminoacid as new_name
-#+END_SRC
+#+end_src
 
 
 * Preventing code from running at import
@@ -183,7 +183,7 @@ import it.
 
 This is done using this special line:
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   ## code that is available for import
   def add_two(num):
       return num + 2
@@ -192,7 +192,7 @@ This is done using this special line:
       ## code that only runs when exectuted from command line
       print("I'm adding two now")
       plus2 = add_two(3)
-#+END_SRC
+#+end_src
 
 Because we separated the defintion of =add_two= with the special =if=
 statement, we can now import =add_two= from this file into another file

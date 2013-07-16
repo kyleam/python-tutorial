@@ -1,4 +1,4 @@
-#+PROPERTY: exports both
-#+PROPERTY: results output
-#+PROPERTY: cache yes
-#+OPTIONS: ^:nil
+#+property: exports both
+#+property: results output
+#+property: cache yes
+#+options: ^:nil

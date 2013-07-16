@@ -1,15 +1,15 @@
-#+TITLE: Control constructs
-#+SETUPFILE: setup.org
+#+title: Control constructs
+#+setupfile: setup.org
 
 * if statements
 
 =if= statements are used to perform code if a condition is true.
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   is_rainy = True
   if is_rainy:
       print('bring your bumbershoot')
-#+END_SRC
+#+end_src
 
 #+RESULTS[2668d5d1bc7cde1a1a7ddc8252a54c60662b0710]:
 :
@@ -17,37 +17,37 @@
 
 These can be followed up by an =else=:
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   if is_rainy:
       print('bring your bumbershoot')
   else:
       print('no rain')
-#+END_SRC
+#+end_src
 
 #+RESULTS[e4b9f1a63eba13798ba8cb0465df4f44ed6286ad]:
 :
 : bring your bumbershoot
 
-#+BEGIN_NOTE
+#+begin_note
   *Note:* In python, whitespace is used to define levels in the code. It
   is convention to use 4 spaces (not tabs) as the first level of
   indentation. The second level would be 4 more spaces (8 total) and so
   on.
-#+END_NOTE
+#+end_note
 
 If =is_rainy= to =False=, the code under the =else= statement is
 executed instead of the code under the =if= statement.
 
 More conditions can be added with =elif=.
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   if is_rainy:
       print('bring your bumbershoot')
   elif is_sunny:
       print('bring your hat')
   else:
       print('no rain, no sun')
-#+END_SRC
+#+end_src
 
 #+RESULTS[5a90e698e5d953d276dae3a6acdfe41cf20e1da5]:
 :
@@ -61,10 +61,10 @@ Here are some of the main boolean operators we can use to check whether
 value of =some_number= meets a condition.
 
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   some_number = 9
   print(some_number == 2)
-#+END_SRC
+#+end_src
 
 #+RESULTS[ce297eda3e9f52f1cd76f917602ab1bd53f2a188]:
 :
@@ -77,17 +77,17 @@ comparisons.
 - =<=
 - =>==
 
-#+BEGIN_NOTE
+#+begin_note
   *Note:* Above I am using =print= to see the results of the comparison,
   but if you're in ipython, you don't need to do this.
-#+END_NOTE
+#+end_note
 
 Using them within an =if= statement look like this:
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   if some_number < 10:
       print('there are less than 10')
-#+END_SRC
+#+end_src
 
 #+RESULTS[7b3642b529288201da226ee404e5a49655eb5616]:
 :
@@ -97,11 +97,11 @@ Using them within an =if= statement look like this:
 
 =for= loops allow you to iterate over variables.
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   genes = ['DNJC..uh', 'FOXP2', 'MET7B']
   for gene in genes:
       print('my favorite gene: ' + gene)
-#+END_SRC
+#+end_src
 
 #+RESULTS[05faf59d685ede696352c10dcf5e41485c325057]:
 :
@@ -111,11 +111,11 @@ Using them within an =if= statement look like this:
 
 =for= and =if= statments can be nested.
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   for gene in genes:
       if gene != 'MET7B':
           print(gene +  ', what a dumb gene')
-#+END_SRC
+#+end_src
 
 #+RESULTS[a2a9a46cb6db0c7b225a17c67eb12946a1c549ee]:
 :
@@ -131,12 +131,12 @@ means stop the current iteration of the loop right here and go to the
 next iteration. Using =continue=, we can produce the exact same results
 as the last block.
 
-#+BEGIN_SRC python :session
+#+begin_src python :session
   for gene in genes:
       if gene == 'MET7B':
           continue
       print(gene +  ', what a dumb gene')
-#+END_SRC
+#+end_src
 
 #+RESULTS[07a066a26d2447773a2e40386169411c59c2d632]:
 :
@@ -146,7 +146,7 @@ as the last block.
 Another common behavior is to break out of the loop completely if some
 condition is met. =break= is the command to do this.
 
-#+BEGIN_SRC python
+#+begin_src python
   lottery_numbers = [888, 301, 405, 772, 332]
   winning_number = 405
   for number in lottery_numbers:
@@ -154,7 +154,7 @@ condition is met. =break= is the command to do this.
       if number == winning_number:
           print('we have a winner')
           break
-#+END_SRC
+#+end_src
 
 #+RESULTS[7836408629a136add9992b787a7efb0cf6cbc875]:
 : 888
@@ -168,22 +168,22 @@ There are also =while= loops in python. These allow the code to
 continually be executed *while* a condition is met. They aren't used
 much in practice, but they look like this:
 
-#+BEGIN_SRC python
+#+begin_src python
   number = 1
   while number < 4:
       print(number)
       number += 1
-#+END_SRC
+#+end_src
 
 #+RESULTS[f1d1e07e9751253b37c30a20db255b356f4bab4a]:
 : 1
 : 2
 : 3
 
-#+BEGIN_NOTE
+#+begin_note
   *Note:* The =+== is an assignment operator. It adds the value to the
   current value of the variable and then assigns the new value back to
   the variable. It is equivalent to =number = number + 1=. Similar
   operators exist for subtraction (=-==), multiplication (=*==), and
   division (=\==).
-#+END_NOTE
+#+end_note

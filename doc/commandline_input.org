@@ -1,5 +1,5 @@
-#+TITLE: Command line input
-#+SETUPFILE: setup.org
+#+title: Command line input
+#+setupfile: setup.org
 
 * Avoiding hard-coding
 
@@ -19,21 +19,21 @@ program. A very common way to do this is as command line arguments.
 To provide input to a program at run time, additional arguments can be
 given after the program name.
 
-#+BEGIN_EXAMPLE
+#+begin_example
     $ python program arg1 arg2 ...
-#+END_EXAMPLE
+#+end_example
 
-#+BEGIN_NOTE
+#+begin_note
   *Note:* The =$= above is often used to indicate that the command is
   being given at the command line (in the terminal or Windows Command
   Prompt)
-#+END_NOTE
+#+end_note
 
 For =get_gene_coords.py=, this would look like this:
 
-#+BEGIN_EXAMPLE
+#+begin_example
     $ python get_gene_coords.py ../data/genes-5random.txt
-#+END_EXAMPLE
+#+end_example
 
 First, we provide the name of the script to run and then we provide one
 argument as input: the path to the file containing the genes of interest
@@ -44,9 +44,9 @@ Now that we have given the argument to the program, we have to write
 code that makes use of it. To do this, we need to import a module,
 =sys=.
 
-#+BEGIN_SRC python
+#+begin_src python
   import sys
-#+END_SRC
+#+end_src
 
 #+RESULTS[02427ebb53a263b943403b959c130b1a17f3f66e]:
 
@@ -56,26 +56,26 @@ command line arguments.
 Make a script (name it =argtest.py=) that imports the =sys= module and
 then prints =argv=.
 
-#+BEGIN_SRC python
+#+begin_src python
   import sys
   print(sys.argv)
-#+END_SRC
+#+end_src
 
 #+RESULTS[07718af5012439df5073a4088f0c0042979107b9]:
 : ['']
 
 Now test it from the command line.
 
-#+BEGIN_EXAMPLE
+#+begin_example
   $ python argtest.py
-#+END_EXAMPLE
+#+end_example
 
 This should print a list that contains "argtest.py". Now try to pass an
 argument.
 
-#+BEGIN_EXAMPLE
+#+begin_example
   $ python argtest.py somearg
-#+END_EXAMPLE
+#+end_example
 
 This should print the script name as above, but the list should contain
 a second string, "somearg". Each additional argument passed will be
@@ -84,26 +84,26 @@ added to the list.
 We can apply this to =get_gene_coords.py= example. Before, we were
 explicitly declaring the file name:
 
-#+BEGIN_SRC python
+#+begin_src python
   gene_file = 'data/genes-5random.txt'
-#+END_SRC
+#+end_src
 
 #+RESULTS[6ee62151c1568225f63cd71bc3150b9bcbe6170e]:
 
 Instead, we can do this:
 
-#+BEGIN_SRC python :eval never
+#+begin_src python :eval never
   import sys
   gene_file = sys.argv[1]
   ## rest of script ...
-#+END_SRC
+#+end_src
 
 This allows any file that has the correct format (in this case, one gene
 name per line) to be given as input to the script.
 
-#+BEGIN_EXAMPLE
+#+begin_example
   $ python get_gene_coords.py newfile
-#+END_EXAMPLE
+#+end_example
 
 * Checking the number of arguments
 

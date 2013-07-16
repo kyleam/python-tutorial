@@ -1,4 +1,4 @@
-#+TITLE: Getting the tutorial and staying up-to-date
+#+title: Getting the tutorial and staying up-to-date
 
 The content of this tutorial, as well as the code from our meetings, are
 stored in a [[http://git-scm.com/][git]] repository. git is a fantastic tool, with great
@@ -54,8 +54,8 @@ and click on "fetch from > origin".
 To merge, go to the menu "Merge" and select "Local Merge". Then select
 =origin/master= and click "Merge".
 
-#+BEGIN_NOTE
+#+begin_note
   *Note:* The first time you do this you may get an error saying you
   need to set up your name and email. Just open up a terminal to the
   tutorial directory and follow the instructions.
-#+END_NOTE
+#+end_note
