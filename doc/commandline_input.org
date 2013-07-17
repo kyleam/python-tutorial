@@ -41,8 +41,9 @@ argument as input: the path to the file containing the genes of interest
 ** Accessing command line arguments
 
 Now that we have given the argument to the program, we have to write
-code that makes use of it. To do this, we need to import a module,
+code that makes use of it. To do this, we need to [[./importing.org][import]] a module,
 =sys=.
+
 
 #+begin_src python
   import sys
