@@ -16,9 +16,9 @@ can be found [[./doc/syncing-tutorial.org][here]].
 - [[file:doc/file_io.org][File input and output]] :: Reading and writing to files
 - [[file:doc/functions.org][Functions]] :: Creating reusable operations
 - [[./doc/importing.org][Importing]] :: Accessing code from other files
+- [[./doc/regex.org][Regular expressions]] :: Matching operations
 - Mutability :: Mutable versus immutable objects
 - List comprehensions :: Conveniently filter and operate on lists
-- [[./doc/regex.org][Regular expressions]] :: Matching operations
 - Exceptions :: Raising and catching exceptions
 - Testing :: Tools for making sure your code is correct
 
