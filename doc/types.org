@@ -3,7 +3,7 @@
 
 * Boolean
 
-Boolean values are represented by =True= and =False=. The often are
+Boolean values are represented by =True= and =False=. They are often
 produced by comparison operations.
 
 #+begin_src python
