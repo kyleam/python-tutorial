@@ -62,6 +62,7 @@ Some interesting packages that we probably won't cover directly.
 - [[http://python.net/~goodger/projects/pycon/2007/idiomatic/][Idiomatic python]]
 - [[http://www.youtube.com/watch?v%3DtKTZoB2Vjuk][Google's Python class (video)]]
 - [[http://learnpythonthehardway.org/book/intro.html][Learn python the hard way]]
+- [[http://www.diveintopython.net/toc/index.html][Dive into Python]]
 - [[http://wiki.python.org/moin/BeginnersGuide/Programmers][List of other tutorials]]
 
 * Useful non-Python stuff
