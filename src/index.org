@@ -27,6 +27,8 @@ can be found [[./doc/syncing-tutorial.org][here]].
   :HTML_CONTAINER_CLASS: topic-list-def
   :END:
 
+Python packages that we will cover:
+
 - Pandas :: Data analysis library
 - Matplotlib :: Plotting library
 
@@ -35,7 +37,7 @@ can be found [[./doc/syncing-tutorial.org][here]].
   :HTML_CONTAINER_CLASS: topic-list-def
   :END:
 
-Some interesting packages that we probably won't cover directly.
+Some interesting packages that we probably won't cover directly:
 
 - [[http://biopython.org/wiki/Main_Page][Biopython]] :: Wide collection of tools for biology
 - [[https://bitbucket.org/james_taylor/bx-python/wiki/Home][bx-python]] :: Genome analysis tools
