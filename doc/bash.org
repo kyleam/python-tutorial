@@ -54,7 +54,14 @@ directory:
 
 ** viewing the contents of a text file
 
+Print the entire contents of a file to the terminal screen:
+
+: cat <file>
+
+Load the file so that you can scroll and search the contents:
+
 : less <file>
 
-When viewing a file with less, move down with =j=, up with =k=, and
-leave the file with =q=.
+When viewing a file with less, move down with =j= and up with =k=.
+Search by pressing =/= and then entering the search term. Leave the file
+with =q=.
