@@ -32,8 +32,8 @@ h2 {
 h3 { font-size: @baseFontSize * 1.1; }
 
 #content {
-    max-width: 650px;
-    padding: 0px 0px 0px @defaultPadding;
+    max-width: @contentWidth;
+    padding-left: @defaultPadding;
 }
 
 #table-of-contents {
@@ -46,6 +46,18 @@ h3 { font-size: @baseFontSize * 1.1; }
     color: @grayLight;
     a {
         color: @grayLight;
+    }
+}
+
+#postamble {
+    max-width: @contentWidth;
+    padding-top: @defaultPadding;
+    padding-left: @defaultPadding;
+    font-size: @baseFontSize * 0.8;
+    color: @grayLight;
+    line-height: 80%;
+    a {
+        color: darken(@grayLight, 15%);
     }
 }
 

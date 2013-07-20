@@ -16,7 +16,7 @@
     :html-head-include-default-style nil
     :html-head-include-scripts nil
     :html-preamble nil
-    :html-postamble nil
+    :html-postamble t
     :recursive t)
   ("python-tutorial-css"
    :base-directory ,(concat python-tutorial-dir "css")
@@ -41,3 +41,13 @@
                                   "python-tutorial-data"))))
 
 (setq org-html-htmlize-output-type "css")
+
+(setq org-html-postamble-format
+      '(("en" "<p class=\"license\">
+Released under a
+<a rel=\"license\"
+href=\"http://creativecommons.org/licenses/by-sa/3.0/deed.en_US\">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class=\"creator\">Created with %c</p>
+<p class=\"xhtml-validation\">%v</p>")))
