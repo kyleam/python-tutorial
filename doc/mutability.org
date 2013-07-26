@@ -89,7 +89,7 @@ the underlying value.
 
 * Mutability of some common types
 
-#+attr_html: :align center :class table-striped
+#+attr_html: :class table-centered
 | Type   | Mutable |
 |--------+---------|
 | int    | no      |
