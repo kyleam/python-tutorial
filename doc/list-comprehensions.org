@@ -3,7 +3,7 @@
 
 * A common pattern
 
-In the code you've written so far, you may have noticed some command
+In the code you've written so far, you may have noticed some common
 patterns. One of these looks something like this<<first-example>>:
 
 #+BEGIN_SRC python :eval never
