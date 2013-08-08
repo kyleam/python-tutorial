@@ -1,0 +1,318 @@
+#+title: Pandas: Reading, viewing, and selecting data
+#+setupfile: setup.org
+
+* Reading in data
+
+First, import pandas.
+
+#+begin_src python :session
+  import pandas as pd
+#+end_src
+
+#+RESULTS[2f23064956c5e24fd62b1a842b7993e580eea897]:
+
+Pandas has a number of functions for reading in different types of
+files. You can see these (in IPython) by typing =pd.read<TAB>=. Remember
+that you can type =?= after the name to get more information. The
+function we will use is =read_csv= (=pd.read_csv?=).
+
+First, let's look at the file we will be reading in (below I use the
+=head= command to view the first 4 lines of the file in the terminal,
+but you could just open up the file in a text editor).
+
+#+begin_src sh
+  head -4 ../data/qpcr.csv
+#+end_src
+
+#+RESULTS[9c1c28a6f0aa6c4f3d843f69cbbd1168803ce4b2]:
+: Well,Sample_Name,Detector_Name,Reporter,Ct,Threshold
+: 172,RMB200_A1C,FENG3_1,SYBR,26.44,0.39
+: 173,RMB200_A1C,FENG3_1,SYBR,27.38,0.39
+: 174,RMB200_A1C,FENG3_1,SYBR,27.76,0.39
+
+The file is comma-separted, with the first row as the column. To read it
+into a data frame, we pass the filename to =read_csv=.
+
+#+begin_src python :session
+  qdat = pd.read_csv('../data/qpcr.csv')
+#+end_src
+
+#+RESULTS[aa8c5eb9ec22626676113d5fa0e73bec6fc072c3]:
+
+Now =qdat= contains all the data.
+
+* Viewing the data
+
+Pandas has many convenient function for viewing and summarizing the
+data.
+
+Simply entering the name will give a nice summary.
+
+#+begin_src python :session
+  qdat
+#+end_src
+
+#+RESULTS[958853c79ff0214a626d69195a7d219c1fcb2351]:
+#+begin_example
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 254 entries, 0 to 253
+Data columns (total 6 columns):
+Well             254  non-null values
+Sample_Name      254  non-null values
+Detector_Name    254  non-null values
+Reporter         254  non-null values
+Ct               254  non-null values
+Threshold        254  non-null values
+dtypes: float64(1), int64(1), object(4)
+#+end_example
+
+This tells us things like the column names, how many rows we have, the
+data types.
+
+You'll notice that pandas automatically took the first row in the csv
+file as the column names. This behavior can be controlled by passing
+optional arguments to =read_csv= (for files where this is not the case).
+
+To view the first few rows of the data frame, use the =head= method.
+
+#+begin_src python :session
+  qdat.head()
+#+end_src
+
+#+RESULTS[f22ac6c9e662f568f42d98118cdc02f137ba1551]:
+: Well Sample_Name Detector_Name Reporter     Ct  Threshold
+: 0   172  RMB200_A1C       FENG3_1     SYBR  26.44       0.39
+: 1   173  RMB200_A1C       FENG3_1     SYBR  27.38       0.39
+: 2   174  RMB200_A1C       FENG3_1     SYBR  27.76       0.39
+: 3   187  RMB200_AMY       FENG3_1     SYBR  27.83       0.39
+: 4   188  RMB200_AMY       FENG3_1     SYBR  28.94       0.39
+
+Similary, you can use tail to view the end of the data frame.
+
+#+begin_src python :session
+  qdat.tail()
+#+end_src
+
+#+RESULTS[d8e040a85e6b78308798e95c787dc17eba59376f]:
+: Well Sample_Name Detector_Name Reporter            Ct  Threshold
+: 249   125  RMB200_VFC         RPL32     SYBR         20.91        0.4
+: 250   126  RMB200_VFC         RPL32     SYBR         20.95        0.4
+: 251   349         NTC         RPL32     SYBR  Undetermined        0.4
+: 252   350         NTC         RPL32     SYBR  Undetermined        0.4
+: 253   351         NTC         RPL32     SYBR         36.60        0.4
+
+Notice the "Undetermined" values. In the next tutorial, we'll cover how
+to mark these so that pandas knows that they are missing values.
+
+* Selecting data
+
+** Selecting columns
+
+There are various ways to select different parts of the data frame.
+
+Let's say we wanted to access the "Sample_Name" column. There are two
+ways to do this.
+
+#+begin_src python :session
+  qdat['Sample_Name']
+#+end_src
+
+#+RESULTS[969f906bd4b4f9f852acc404ff6221ac6a4a874a]:
+#+begin_example
+0     RMB200_A1C
+1     RMB200_A1C
+2     RMB200_A1C
+3     RMB200_AMY
+4     RMB200_AMY
+5     RMB200_AMY
+6     RMB200_CBL
+7     RMB200_CBL
+8     RMB200_CBL
+9     RMB200_DFC
+10    RMB200_DFC
+11    RMB200_DFC
+12    RMB200_HIP
+13    RMB200_HIP
+14    RMB200_HIP
+...
+239    RMB200_STR
+240    RMB200_STR
+241    RMB200_STR
+242    RMB200_THM
+243    RMB200_THM
+244    RMB200_THM
+245    RMB200_V1C
+246    RMB200_V1C
+247    RMB200_V1C
+248    RMB200_VFC
+249    RMB200_VFC
+250    RMB200_VFC
+251           NTC
+252           NTC
+253           NTC
+Name: Sample_Name, Length: 254, dtype: object
+#+end_example
+
+Because there are more rows than can be conveniently printed to the
+screen, pandas snips out a lot of the values in the middle.
+
+The other way to access the column names is as attibutes to the data
+frame, assuming that it is a valid attribute name in python (no spaces, hyphens,
+or periods).
+
+#+begin_src python :session :results none
+  qdat.Sample_Name
+#+end_src
+
+If we want two columns, we use a list of column names.
+
+#+begin_src python :session
+  two_cols = qdat[['Sample_Name', 'Ct']]
+  two_cols.head()
+#+end_src
+
+#+RESULTS[9e4ba43e913d22e1dd3173efac847fcfc30f7edc]:
+:
+: Sample_Name     Ct
+: Well
+: 172   RMB200_A1C  26.44
+: 173   RMB200_A1C  27.38
+: 174   RMB200_A1C  27.76
+: 187   RMB200_AMY  27.83
+: 188   RMB200_AMY  28.94
+
+This returns a data frame with two columns (and =head= is used to view
+the first 5 rows).
+
+** Selecting both rows and columns
+
+For selections involving both rows and columns, either =ix=, =loc=, or
+=iloc= can be used. =ix= supports both label (name) indexing and
+position indexing, while =loc= supports only labels and =iloc= supports
+only integers. I tend to prefer =loc= and =iloc= because they are more
+explicit.
+
+Let's first access rows and columns using labels. In this case, the row
+labels for this data are same as the row positions, but the row labels
+and positions do not need to match. The row labels just have to be a
+unique identifier. To make this clear, we'll switch to using the well
+number, which is a unique identifier, as the row labels (called
+"index"). (We could have taken care of this when initially reading in
+the data with =read_csv=).
+
+#+begin_src python :session
+  qdat.index = qdat.Well  # set index to Well column
+  qdat = qdat.drop(["Well"], axis=1)  # remove Well column
+  qdat.head()
+#+end_src
+
+#+RESULTS[6428448da30de654f6c94ad7409c32b0f1717f8f]:
+:
+: Sample_Name Detector_Name Reporter     Ct  Threshold
+: Well
+: 172   RMB200_A1C       FENG3_1     SYBR  26.44       0.39
+: 173   RMB200_A1C       FENG3_1     SYBR  27.38       0.39
+: 174   RMB200_A1C       FENG3_1     SYBR  27.76       0.39
+: 187   RMB200_AMY       FENG3_1     SYBR  27.83       0.39
+: 188   RMB200_AMY       FENG3_1     SYBR  28.94       0.39
+
+To select well 172 and 188 with the "Sample_Name" and "Ct" columns, we
+can use =ix=.
+
+#+begin_src python :session
+  qdat.loc[[172, 187], ["Sample_Name", "Ct"]]
+#+end_src
+
+#+RESULTS[640e86dfa681d0ed2824a2eac4f77b0c3562031f]:
+: Sample_Name     Ct
+: 172  RMB200_A1C  26.44
+: 187  RMB200_AMY  27.83
+
+To get back all rows for these two columns, the =:= can be be used.
+
+#+begin_src python :session
+  qdat.loc[:, ["Sample_Name", "Ct"]]
+#+end_src
+
+#+RESULTS[3f0d11b9ed0bc17e243393c4c83326a78b206585]:
+: <class 'pandas.core.frame.DataFrame'>
+: Int64Index: 254 entries, 172 to 351
+: Data columns (total 2 columns):
+: Sample_Name    254  non-null values
+: Ct             254  non-null values
+: dtypes: object(2)
+
+If we wanted to select these by positions instead, we should use =iloc=.
+
+#+begin_src python :session
+  qdat.iloc[[0, 3], [0, 3]]  ## [[rows], [cols]]
+#+end_src
+
+#+RESULTS[901490a09c5f31ae14fd17c53153c31c095e0fc0]:
+: Sample_Name     Ct
+: Well
+: 172   RMB200_A1C  26.44
+: 187   RMB200_AMY  27.83
+
+If the positions happen to be consecutive, slice notation can be used
+instead. For example, to get the first 3 rows and the first 2 columns,
+we could use:
+
+#+begin_src python :session
+  qdat.iloc[:3, :2]
+#+end_src
+
+#+RESULTS[7f43f75fc09646e6095392960badc74a6b91c364]:
+: Sample_Name Detector_Name
+: Well
+: 172   RMB200_A1C       FENG3_1
+: 173   RMB200_A1C       FENG3_1
+: 174   RMB200_A1C       FENG3_1
+
+** Selecting rows using a boolean vector
+
+Often you want to select all rows the have a specific value in a column.
+For example, the "Detector_Name" column has 5 unique values.
+
+#+begin_src python :session
+  qdat.Detector_Name.unique()
+#+end_src
+
+#+RESULTS[b76ad5089c1b2347f8fec29add6182a15af9979e]:
+: array(['FENG3_1', 'FENG3_2', 'FENG3_3', 'FENG3_4', 'RPL32'], dtype=object)
+
+
+How would we limit the data frame to just the rows that have "RPL32"?
+First, we create a boolean vector.
+
+#+begin_src python :session
+  rpl_bool = qdat.Detector_Name == 'RPL32'
+  # just to preview
+  len(rpl_bool)
+  rpl_bool.unique()
+#+end_src
+
+#+RESULTS[5695d2458e3a27adf87f048c13687f5e61796afb]:
+:
+: 254
+: array([False, True], dtype=object)
+
+Now that we have a True/False list for each row, we can use it to select
+the rows that have =True= as their value (corresponding to the rows that
+have "RPL32 in the "Detector_Name" column.
+
+#+begin_src python :session
+  rpl = qdat[rpl_bool]
+  rpl.Detector_Name.unique()
+#+end_src
+
+#+RESULTS[6566f80eed1c4049e5e4077e93fb72fc85efb08b]:
+:
+: array(['RPL32'], dtype=object)
+
+* Relevant parts of Pandas documentation
+
+- [[http://pandas.pydata.org/pandas-docs/stable/dsintro.html][Intro to Data Structures]]
+- [[http://pandas.pydata.org/pandas-docs/stable/basics.html][Essential Basic Functionality]]
+- [[http://pandas.pydata.org/pandas-docs/stable/indexing.html][Indexing and Selecting Data]]
+- [[http://pandas.pydata.org/pandas-docs/stable/io.html][IO tools]]

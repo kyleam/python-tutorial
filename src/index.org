@@ -30,6 +30,9 @@ can be found [[./doc/syncing-tutorial.org][here]].
 Python packages that we will cover:
 
 - Pandas :: Data analysis library
+
+  Part 1: [[./doc/pandas-part1.org][Reading, viewing, and selecting data]]
+
 - Matplotlib :: Plotting library
 
 * Other packages
