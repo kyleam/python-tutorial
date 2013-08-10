@@ -202,12 +202,11 @@ number, which is a unique identifier, as the row labels (called
 the data with =read_csv=).
 
 #+begin_src python :session
-  qdat.index = qdat.Well  # set index to Well column
-  qdat = qdat.drop(["Well"], axis=1)  # remove Well column
+  qdat.set_index("Well", inplace=True)
   qdat.head()
 #+end_src
 
-#+RESULTS[6428448da30de654f6c94ad7409c32b0f1717f8f]:
+#+RESULTS[e1cd94a9131877d485bfe045f0cd84f5f5bb4c84]:
 :
 : Sample_Name Detector_Name Reporter     Ct  Threshold
 : Well
