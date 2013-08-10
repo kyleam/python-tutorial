@@ -16,9 +16,10 @@ files. You can see these (in IPython) by typing =pd.read<TAB>=. Remember
 that you can type =?= after the name to get more information. The
 function we will use is =read_csv= (=pd.read_csv?=).
 
-First, let's look at the file we will be reading in (below I use the
-=head= command to view the first 4 lines of the file in the terminal,
-but you could just open up the file in a text editor).
+Before doing anything with pandas, let's look at the file we will be
+reading in (below I use the =head= command to view the first 4 lines of
+the file in the terminal, but you could just open up the file in a text
+editor).
 
 #+begin_src sh
   head -4 ../data/qpcr.csv
@@ -41,7 +42,7 @@ into a data frame, we pass the filename to =read_csv=.
 
 Now =qdat= contains all the data.
 
-* Viewing the data
+* Viewing data
 
 Pandas has many convenient function for viewing and summarizing the
 data.
@@ -66,8 +67,8 @@ Threshold        254  non-null values
 dtypes: float64(1), int64(1), object(4)
 #+end_example
 
-This tells us things like the column names, how many rows we have, the
-data types.
+This tells us things like the column names, how many rows we have, and
+the data types present.
 
 You'll notice that pandas automatically took the first row in the csv
 file as the column names. This behavior can be controlled by passing
