@@ -44,10 +44,8 @@ Now =qdat= contains all the data.
 
 * Viewing data
 
-Pandas has many convenient function for viewing and summarizing the
-data.
-
-Simply entering the name will give a nice summary.
+Pandas provides many convenient ways to view and summarize data. Simply
+entering the name will give a nice summary.
 
 #+begin_src python :session
   qdat
