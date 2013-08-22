@@ -1,10 +1,31 @@
 #+title: Installing Python
 #+setupfile: setup.org
 
+* Installing Python with pre-bundled packages
 
-* Installing on Mac OS X
+There are several distributions that bundle Python with popular
+scientific packages that are not included in the base install. This is a
+good way to get everything set up and running with minimal hassle. At
+this time, most of these only support Python 2.7 (Pyzo supports Python3,
+but does not yet run on the latest Mac OS X).
 
-** Install homebrew
+A popular distribution is Continuum Analytics' Anaconda. To download
+this, go [[https://store.continuum.io/cshop/products/][here]] and then select the Free version in the upper left panel.
+
+* Base Python installation
+
+Another option is to install the standard distribution of Python and
+then just add extra packages as you need them. This is a very reasonable
+way to operate on a GNU/Linux system, but this can be trickier to do on
+a machine running Windows or Mac OS X, particularly if the extra
+packages contain or depend on non-Python code. Below I outline how to
+download Python and then install a non-standard package (IPython) with
+pip. Python 3 is installed in the example, but Python 2 could be
+installed in a similar manner.
+
+** Installing on Mac OS X
+
+*** Install homebrew
 
 [[http://mxcl.github.io/homebrew/][homebrew]] is a package manager for Mac OS X. It is the easiest way to
 install python, but it requires that you have Xcode installed. For
@@ -23,7 +44,7 @@ After that, install python3 by running this in the terminal:
   brew install python3
 #+end_example
 
-** Install IPython
+*** Install IPython
 
 This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run:
@@ -42,13 +63,13 @@ open a terminal and enter:
 Once you have this, open a new terminal and type =ipython3= to enter
 into the ipython shell.
 
-* Installing on Windows
+** Installing on Windows
 
-** Download main python exe and run install
+*** Download main python exe and run install
 
 Download python 3: [[http://www.python.org/download]]
 
-** Add python to Path
+*** Add python to Path
 
 Go here:
 
@@ -66,14 +87,14 @@ Select =Path= variables and append:
 You know this is working if you open up command prompt and type
 "python".
 
-** Install distribute and pip
+*** Install distribute and pip
 
 Download and install [[http://www.lfd.uci.edu/~gohlke/pythonlibs/#distribute][distribute]] and then [[http://www.lfd.uci.edu/~gohlke/pythonlibs/#pip][pip]].
 
 These will allow you to install other python packages from the command
 prompt.
 
-** Install IPython
+*** Install IPython
 
 This is an enhanced interactive shell. To install it, open up command
 prompt or terminal and run:
