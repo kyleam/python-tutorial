@@ -31,7 +31,8 @@ Python packages that we will cover:
 
 - Pandas :: Data analysis library
 
-  Part 1: [[./doc/pandas-part1.org][Reading, viewing, and selecting data]]
+  - Part 1: [[./doc/pandas-part1.org][Reading, viewing, and selecting data]]
+  - Part 2: [[./doc/pandas-part2.org][Cleaning and operating on data]]
 
 - Matplotlib :: Plotting library
 

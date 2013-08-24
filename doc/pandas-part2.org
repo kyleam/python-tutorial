@@ -1,0 +1,375 @@
+#+title: Pandas: Cleaning and operating on data
+#+setupfile: setup.org
+#+options: ^:{}
+
+In [[./pandas-part1.org][part 1]] we covered reading and viewing data. We'll use the same data
+set to demonstrate how to carry out calculations in Pandas. If you would
+prefer an overview of some of the methods we'll use before seeing them
+in action, jump to [[Overview of methods for performing calculations]] and
+then come back.
+
+* Reading in and cleaning the data
+
+First, let's read in the data and set the rows to the well column
+values.
+
+#+begin_src python :session
+  import pandas as pd
+  qdat = pd.read_csv('../data/qpcr.csv',
+                     na_values='Undetermined')
+  qdat.set_index('Well', inplace=True)
+#+end_src
+
+#+RESULTS[82a33461c44a521f73e9c5350de1a59c557639b9]:
+
+This is similar to how we read in the data last time, except for the
+=na_values= parameter. This tells Pandas to treat the string
+"Undetermined" as an indicator of a missing value. If we didn't do this,
+the "Ct" column would be read in as strings because "Undetermined" would
+be treated as a string, and all the values of a column must be the same
+type.
+
+To view the rows that have null C_{t} values, we can use =pd.isnull=.
+
+#+begin_src python :session
+  qdat[pd.isnull(qdat.Ct)]
+#+end_src
+
+#+RESULTS[e204de2c65b687a5e84b35cd5e51b82945e52563]:
+#+begin_example
+Sample_Name Detector_Name Reporter  Ct  Threshold
+Well
+337          NTC       FENG3_1     SYBR NaN       0.39
+338          NTC       FENG3_1     SYBR NaN       0.39
+339          NTC       FENG3_1     SYBR NaN       0.39
+340          NTC       FENG3_2     SYBR NaN       0.36
+341          NTC       FENG3_2     SYBR NaN       0.36
+342          NTC       FENG3_2     SYBR NaN       0.36
+343          NTC       FENG3_3     SYBR NaN       0.26
+344          NTC       FENG3_3     SYBR NaN       0.26
+345          NTC       FENG3_3     SYBR NaN       0.26
+109   RMB200_OFC       FENG3_4     SYBR NaN       0.37
+346          NTC       FENG3_4     SYBR NaN       0.37
+347          NTC       FENG3_4     SYBR NaN       0.37
+349          NTC         RPL32     SYBR NaN       0.40
+350          NTC         RPL32     SYBR NaN       0.40
+#+end_example
+
+All but one of the null values occur in the "no template control" wells.
+
+We can remove the wells using =dropna=.
+
+#+begin_src python :session
+  qdat = qdat.dropna(how='any')  # drop if any of row's cell is null
+  ## could also use: qdat = qdat[pd.notnull(qdat.Ct)]
+#+end_src
+
+#+RESULTS[00764b287a7b8393db9e5fb16227f09267e73d64]:
+
+Now we have a data frame that looks like this:
+
+#+begin_src python :session
+  qdat.head()
+#+end_src
+
+#+RESULTS[f22ac6c9e662f568f42d98118cdc02f137ba1551]:
+: Sample_Name Detector_Name Reporter     Ct  Threshold
+: Well
+: 172   RMB200_A1C       FENG3_1     SYBR  26.44       0.39
+: 173   RMB200_A1C       FENG3_1     SYBR  27.38       0.39
+: 174   RMB200_A1C       FENG3_1     SYBR  27.76       0.39
+: 187   RMB200_AMY       FENG3_1     SYBR  27.83       0.39
+: 188   RMB200_AMY       FENG3_1     SYBR  28.94       0.39
+
+Next, we can remove some columns we won't use. One of these is the
+"Threshold" column. Another one is "Reporter", which does not vary over
+the rows
+
+#+begin_src python :session
+  qdat.Reporter.unique()
+#+end_src
+
+#+RESULTS[f5d4c2184dc5abdaaf85ac85dd0824c60f1f32e4]:
+: array(['SYBR'], dtype=object)
+
+To drop columns, the =drop= method can be used. Setting =axis= to 1
+tells =drop= that "Reporter" and "Threshold" are column names (=axis=0=
+would indicate that they are row names).
+
+#+begin_src python :session
+  qdat = qdat.drop(['Reporter', 'Threshold'], axis=1)
+  qdat.head()
+#+end_src
+
+#+RESULTS[cdb2472d3dcf98489113a6ca31764f73895696fc]:
+:
+: Sample_Name Detector_Name     Ct
+: Well
+: 172   RMB200_A1C       FENG3_1  26.44
+: 173   RMB200_A1C       FENG3_1  27.38
+: 174   RMB200_A1C       FENG3_1  27.76
+: 187   RMB200_AMY       FENG3_1  27.83
+: 188   RMB200_AMY       FENG3_1  28.94
+
+* Initial data exploration
+
+Now that we have a clean data frame, let's get a better feel for how the
+data looks.
+
+#+begin_src python :session
+  qdat
+#+end_src
+
+#+RESULTS[958853c79ff0214a626d69195a7d219c1fcb2351]:
+: <class 'pandas.core.frame.DataFrame'>
+: Int64Index: 240 entries, 172 to 351
+: Data columns (total 3 columns):
+: Sample_Name      240  non-null values
+: Detector_Name    240  non-null values
+: Ct               240  non-null values
+: dtypes: float64(1), object(2)
+
+We can use =nunique= to get the number of unique values in a column and
+=unique= to list the unique values.
+
+#+begin_src python :session
+  qdat.Sample_Name.unique()
+  qdat.Detector_Name.unique()
+#+end_src
+
+#+RESULTS[479567a1e56f4608823c3d04159f6b03084afbf3]:
+: array(['RMB200_A1C', 'RMB200_AMY', 'RMB200_CBL', 'RMB200_DFC',
+:        'RMB200_HIP', 'RMB200_IPC', 'RMB200_ITC', 'RMB200_M1C',
+:        'RMB200_MFC', 'RMB200_OFC', 'RMB200_S1C', 'RMB200_STC',
+:        'RMB200_STR', 'RMB200_THM', 'RMB200_V1C', 'RMB200_VFC', 'NTC'], dtype=object)
+: array(['FENG3_1', 'FENG3_2', 'FENG3_3', 'FENG3_4', 'RPL32'], dtype=object)
+
+It would be good to know how many replicates we have for each
+sample/detector combination. We can do this by using the =groupby=
+method. We pass =groupby= the column names that have the variables that
+we want to use to group the data. The =size= method of the =groupby=
+object is used to determine the number of wells in each group.
+
+#+begin_src python :session
+  samp_det_grp = qdat.groupby(['Sample_Name', 'Detector_Name'])
+  samp_gene_counts = samp_det_grp.size()
+  samp_gene_counts.head(10)
+#+end_src
+
+#+RESULTS[61f77499efb9843d51977781e6dd970aa19abd3b]:
+#+begin_example
+
+Sample_Name  Detector_Name
+NTC          FENG3_4          1
+             RPL32            1
+RMB200_A1C   FENG3_1          3
+             FENG3_2          3
+             FENG3_3          3
+             FENG3_4          3
+             RPL32            3
+RMB200_AMY   FENG3_1          3
+             FENG3_2          3
+             FENG3_3          3
+dtype: int64
+#+end_example
+
+Most of the sample/gene combinations seem to be in triplicate. Let's
+view all the combinations that aren't.
+
+#+begin_src python :session
+  samp_gene_counts[samp_gene_counts != 3]
+#+end_src
+
+#+RESULTS[77a672973acc0ab8bd7db21be156a0646ac32c9a]:
+: Sample_Name  Detector_Name
+: NTC          FENG3_4          1
+:              RPL32            1
+: RMB200_OFC   FENG3_4          2
+: RMB200_THM   FENG3_1          2
+: dtype: int64
+
+* Performing calculations on the data frame
+
+Pandas makes it easy to group the data and perform calculations on each
+group. In our case, we want to \Delta\Delta{}C_{t} for each sample and
+gene of interest.
+
+In the first step, we need to normalize by the control detector, RPL32.
+We can create two data frames, one with RPL32 and one with the genes of
+interest, which appear to be variants of FENG3.
+
+#+begin_src python :session
+  is_rpl = qdat.Detector_Name == 'RPL32'
+  rpl = qdat[is_rpl]
+
+  import numpy as np  # for invert method
+  fengs = qdat[np.invert(is_rpl)]  # np.invert flips each True/False value
+#+end_src
+
+#+RESULTS[d2d8970bc7681ec1cb640abe54d36f85f9dc36d7]:
+
+Each sample has replicates for RPL32 expression, so we want to group by
+the sample and take the mean C_{t} value.
+
+#+begin_src python :session
+  rpl_grps = rpl.groupby('Sample_Name')
+  rpl_means = rpl_grps['Ct'].mean()
+  ## or as one step: rpl_means = rpl.groupby('Sample_Name').Ct.mean()
+  rpl_means
+#+end_src
+
+#+RESULTS[ece0faaf191471f7b0f9091fe8914d6ff3300ea4]:
+#+begin_example
+
+Sample_Name
+NTC            36.600000
+RMB200_A1C     20.536667
+RMB200_AMY     20.460000
+RMB200_CBL     21.780000
+RMB200_DFC     21.616667
+RMB200_HIP     20.790000
+RMB200_IPC     20.583333
+RMB200_ITC     20.750000
+RMB200_M1C     21.226667
+RMB200_MFC     20.683333
+RMB200_OFC     20.293333
+RMB200_S1C     20.803333
+RMB200_STC     20.623333
+RMB200_STR     20.556667
+RMB200_THM     20.886667
+RMB200_V1C     20.290000
+RMB200_VFC     20.916667
+Name: Ct, dtype: float64
+#+end_example
+
+We want to associate each RPL32 mean with the samples in =fengs=. One
+way to do this is to just add the values as a column. A function can be
+applied (mapped) to each column value by using =map=, with the return
+values assigned as a new column.
+
+#+begin_src python :session
+  def get_rpl_mean(sample_name):
+      return rpl_means[sample_name]
+
+  fengs['rpl_mean'] = fengs.Sample_Name.map(get_rpl_mean)
+#+end_src
+
+#+RESULTS[4af8299c4a6251a689836841fea85b9b58589c15]:
+
+#+begin_note
+  *Note:* Above I define a simple function to map to all the values of
+  the sample name column, but [[http://docs.python.org/3.3/reference/expressions.html#lambda][lambda expressions]] are often used for
+  this purpose.
+#+end_note
+
+To calculate \Delta{}C_{t}, we just need to substract the "rpl_mean"
+column from the "Ct" column.
+
+#+begin_src python :session
+  fengs['d_Ct'] = fengs.Ct - fengs.rpl_mean
+  fengs.head()
+#+end_src
+
+#+RESULTS[e5943d44b2f78192376f3545bbf2522e87813e37]:
+:
+: Sample_Name Detector_Name     Ct   rpl_mean      d_Ct
+: Well
+: 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333
+: 173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333
+: 174   RMB200_A1C       FENG3_1  27.76  20.536667  7.223333
+: 187   RMB200_AMY       FENG3_1  27.83  20.460000  7.370000
+: 188   RMB200_AMY       FENG3_1  28.94  20.460000  8.480000
+
+We can use a similar approach to normalize all the \Delta{}C_{t} values
+by the mean expression of one sample type (we will use "RMB200_A1C"). We
+limit samples to A1C samples and then take the mean for each gene.
+
+#+begin_src python :session
+  fengs_a1c = fengs[fengs.Sample_Name == 'RMB200_A1C']
+  a1c_means = fengs_a1c.groupby('Detector_Name')['d_Ct'].mean()
+
+  def get_a1c_mean(detector_name):
+      return a1c_means[detector_name]
+
+  fengs['a1c_mean'] = fengs['Detector_Name'].map(get_a1c_mean)
+#+end_src
+
+#+RESULTS[876deb2b2936951815b0cbb8ef0a6d271d71d350]:
+
+To calculate \Delta\Delta{}C_{t}, we subtract this "a1c_mean" column
+from the \Delta{}C_{t} values.
+
+#+begin_src python :session
+  fengs['dd_Ct'] = fengs.d_Ct - fengs.a1c_mean
+  fengs.head()
+#+end_src
+
+#+RESULTS[4ab0c31c516d937590342c3123344c471f1f6199]:
+:
+: Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean     dd_Ct
+: Well
+: 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667 -0.753333
+: 173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333  6.656667  0.186667
+: 174   RMB200_A1C       FENG3_1  27.76  20.536667  7.223333  6.656667  0.566667
+: 187   RMB200_AMY       FENG3_1  27.83  20.460000  7.370000  6.656667  0.713333
+: 188   RMB200_AMY       FENG3_1  28.94  20.460000  8.480000  6.656667  1.823333
+
+Finally, we can calculate 2^{-\Delta\Delta{}C_{t}}.
+
+#+begin_src python :session
+  fengs['two_dd_Ct'] = 2 ** (-1 * fengs['dd_Ct'])
+  fengs.head()
+#+end_src
+
+#+RESULTS[a8c0a33e523b032b48dec75367718645ec043d87]:
+#+begin_example
+
+Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean  \
+Well
+172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667
+173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333  6.656667
+174   RMB200_A1C       FENG3_1  27.76  20.536667  7.223333  6.656667
+187   RMB200_AMY       FENG3_1  27.83  20.460000  7.370000  6.656667
+188   RMB200_AMY       FENG3_1  28.94  20.460000  8.480000  6.656667
+
+         dd_Ct  two_dd_Ct
+Well
+172  -0.753333   1.685683
+173   0.186667   0.878633
+174   0.566667   0.675175
+187   0.713333   0.609909
+188   1.823333   0.282567
+#+end_example
+
+* Overview of methods for performing calculations
+
+Above we used a few important methods for performing calculations, but I
+did not completely cover any of these methods, and I left out a few
+methods entirely. Here is a high-level overview of a few different tools
+you can use.
+
+- groupby :: Group data by criteria and perform operations on groups.
+             This can include calculations on the data that keep the
+             same shape as the input data set (transformations), those
+             that produce a result for each group (aggregation), and
+             those that remove groups that don't fit a certain criteria
+             (filtering).
+- map :: Apply a function to each element of a series. The series is
+         often a column of a data frame. This returns a series of the
+         same shape. To apply a function to each element of a data
+         frame, =applymap= can be used.
+- apply :: Apply a function to each row or column of a data frame. We
+           did not use this above, but this is important for
+           calculations that require information for more than one
+           element of a row or column. This can be combined with
+           =groupby=.
+
+Each of these provides a way to efficiently operate on the data. Any
+time you need to iterate over a data frame or series, you should
+consider one of these methods.
+
+* Relevant parts of Pandas documentation
+
+- [[http://pandas.pydata.org/pandas-docs/stable/missing_data.html][Working with missing data]]
+- [[http://pandas.pydata.org/pandas-docs/stable/basics.html?highlight%3Dmap#applying-elementwise-python-functions][Applying elementwise Python functions]]
+- [[http://pandas.pydata.org/pandas-docs/stable/groupby.html][Group By: split-apply-combine]]
