@@ -10,3 +10,4 @@ img/*.pdf
 img/*.svg
 img/.sentinel
 untracked
+.ipynb_checkpoints
