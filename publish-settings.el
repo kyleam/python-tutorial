@@ -25,7 +25,8 @@
    :publishing-function org-publish-attachment)
   ("python-tutorial-code"
    :base-directory ,(concat python-tutorial-dir "code")
-   :base-extension "py"
+   :base-extension "i*py\\(nb\\)*"
+   :exclude ".ipynb_checkpoints"
    :publishing-directory ,(concat python-tutorial-dir "output/code")
    :publishing-function org-publish-attachment
    :recursive t)

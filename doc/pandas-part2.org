@@ -368,6 +368,15 @@ Each of these provides a way to efficiently operate on the data. Any
 time you need to iterate over a data frame or series, you should
 consider one of these methods.
 
+* Task
+
+There is a set of tasks contained in code/[[../code/array.ipynb][array.ipynb]] that involve
+analyzing data/[[../data/array.csv][array.csv]]. The best way to get these files is by [[./syncing-tutorial.org][syncing]]
+with the git repo.
+
+To start the notebook, go to that directory in a terminal shell and run
+=ipython notebook=.
+
 * Relevant parts of Pandas documentation
 
 - [[http://pandas.pydata.org/pandas-docs/stable/missing_data.html][Working with missing data]]
