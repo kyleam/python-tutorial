@@ -1,0 +1,21 @@
+#+title: Introduction to Matplotlib
+#+setupfile: setup.org
+
+The main tutorial for matplotlib is contained in
+code/[[../code/matplotlib_tutorial.ipynb][matplotlib_tutorial.ipynb]]. The best way to get this file is by
+[[./syncing-tutorial.org][syncing]] with the git repo.
+
+To start the notebook, go to that directory in a terminal shell and run
+=ipython notebook=.
+
+* Relevant parts of Matplotlib documentation
+
+- [[http://matplotlib.org/faq/usage_faq.html#general-concepts][General concepts]]
+- [[http://matplotlib.org/faq/usage_faq.html#matplotlib-pylab-and-pyplot-how-are-they-related][Matplotlib, pylab, and pyplot: how are they related?]]
+- [[http://matplotlib.org/gallery.html][The Matplotlib gallery]]
+
+* Task
+
+In addition to running and tweaking the examples in the matplotlib
+tutorial notebook, you should use matplotlib to reproduce a few plots
+you've made using other software.

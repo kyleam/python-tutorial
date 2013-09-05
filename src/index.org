@@ -36,6 +36,8 @@ Python packages that we will cover:
 
 - Matplotlib :: Plotting library
 
+  - [[./doc/matplotlib.org][Introduction to Matplotlib]]
+
 * Other packages
   :PROPERTIES:
   :HTML_CONTAINER_CLASS: topic-list-def
