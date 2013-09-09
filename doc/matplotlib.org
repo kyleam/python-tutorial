@@ -13,6 +13,7 @@ To start the notebook, go to that directory in a terminal shell and run
 - [[http://matplotlib.org/faq/usage_faq.html#general-concepts][General concepts]]
 - [[http://matplotlib.org/faq/usage_faq.html#matplotlib-pylab-and-pyplot-how-are-they-related][Matplotlib, pylab, and pyplot: how are they related?]]
 - [[http://matplotlib.org/gallery.html][The Matplotlib gallery]]
+- [[http://matplotlib.org/users/customizing.html][Customizing matplotlib]]
 
 * Task
 
