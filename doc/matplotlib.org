@@ -15,6 +15,10 @@ To start the notebook, go to that directory in a terminal shell and run
 - [[http://matplotlib.org/gallery.html][The Matplotlib gallery]]
 - [[http://matplotlib.org/users/customizing.html][Customizing matplotlib]]
 
+* Other tutorials
+- [[http://nbviewer.ipython.org/urls/raw.github.com/jrjohansson/scientific-python-lectures/master/Lecture-4-Matplotlib.ipynb][Robert Johansson's tutorial]]
+- [[http://www.loria.fr/~rougier/teaching/matplotlib/][Nicolas Rougier's tutorial]]
+
 * Task
 
 In addition to running and tweaking the examples in the matplotlib
