@@ -72,6 +72,7 @@ Some interesting packages that we probably won't cover directly:
 - [[http://learnpythonthehardway.org/book/intro.html][Learn python the hard way]]
 - [[http://www.diveintopython.net/toc/index.html][Dive into Python]]
 - [[https://github.com/jrjohansson/scientific-python-lectures][Scientific python lectures]]
+- [[http://rosalind.info/problems/list-view/][Rosalind bioinformatics challenges]]
 - [[http://wiki.python.org/moin/BeginnersGuide/Programmers][List of other tutorials]]
 
 * Useful non-Python stuff
