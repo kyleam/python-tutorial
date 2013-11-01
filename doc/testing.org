@@ -1,0 +1,23 @@
+#+title: Testing
+#+setupfile: setup.org
+
+We have been covering testing your code as we go along. This page will
+just provide some relevant links.
+
+* Types of testing
+
+We have only focused on unit tests, which isolate a small part of the
+code (e.g., a single function) and test that it is working as expected.
+The relationship between unit tests and other types of tests
+(integration and functional) is described nicely [[http://docs.pylonsproject.org/projects/pyramid/en/latest/narr/testing.html][here]].
+
+* Unit testing frameworks
+
+We have been using [[http://pytest.org/latest/][pytest]]. The other popular (and builtin) framework is
+[[http://docs.python.org/3.3/library/unittest.html][unittest]].
+
+* Other links
+
+- [[http://www.voidspace.org.uk/python/mock/][mock]] - a library that helps you perform isolated unit tests
+- [[http://pythontesting.net/start-here/][pythontesting.net]] - good introductions to main testing frameworks
+- [[https://nose.readthedocs.org/en/latest/][nose]] - test discovery

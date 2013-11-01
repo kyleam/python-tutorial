@@ -20,7 +20,7 @@ can be found [[./doc/syncing-tutorial.org][here]].
 - [[./doc/mutability.org][Mutability]] :: Mutable versus immutable objects
 - [[./doc/list-comprehensions.org][List comprehensions]] :: Conveniently filter and operate on lists
 - Exceptions :: Raising and catching exceptions
-- Testing :: Tools for making sure your code is correct
+- [[./doc/testing.org][Testing]] :: Tools for making sure your code is correct
 
 * Packages
   :PROPERTIES:
