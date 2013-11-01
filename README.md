@@ -1,7 +1,7 @@
 # Materials for a weekly Python tutorial
 
 This repository consists of materials (written tutorials, toy data, and
-in-class code) from Python class for biologists with no programming
+in-class code) from a Python class for biologists with no programming
 experience.
 
 The written tutorials can be accessed [here][tutorials]. They were
