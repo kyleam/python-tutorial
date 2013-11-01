@@ -5,12 +5,15 @@
 
 There are several distributions that bundle Python with popular
 scientific packages that are not included in the base install. This is a
-good way to get everything set up and running with minimal hassle. At
-this time, most of these only support Python 2.7 (Pyzo supports Python3,
-but does not yet run on the latest Mac OS X).
+good way to get everything set up and running with minimal hassle
+(especially if your using Windows or Mac OS X).
 
 A popular distribution is Continuum Analytics' Anaconda. To download
 this, go [[https://store.continuum.io/cshop/products/][here]] and then select the Free version in the upper left panel.
+Anaconda comes with a package manager, [[http://docs.continuum.io/conda/][conda]], that can be used to
+install pre-built package, manage dependencies, set up virtual
+environments, and switch between python versions. This [[http://continuum.io/blog/anaconda-python-3][post]] contains
+information about using Python 3 with Anaconda.
 
 * Base Python installation
 
