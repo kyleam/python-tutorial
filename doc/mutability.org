@@ -62,8 +62,8 @@ are referring to the same thing.
 
 * Mutability
 
-The logic above explains why the =b= along with =a=, but why didn't the
-[[mutint-ex][example]] with integers behave the same way? This has to do with an
+The logic above explains why =b= changes along with =a=, but why didn't
+the [[mutint-ex][example]] with integers behave the same way? This has to do with an
 important difference between integers and lists: lists are mutable while
 integers are not. Being mutable means that the value can be changed
 in-place. Let's walk through the integer scenario in diagrams.
