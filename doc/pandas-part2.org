@@ -20,7 +20,7 @@ values.
   qdat.set_index('Well', inplace=True)
 #+end_src
 
-#+RESULTS[82a33461c44a521f73e9c5350de1a59c557639b9]:
+#+RESULTS[523b65b0503b550bfe16a38950f088b7368b2dd9]:
 
 This is similar to how we read in the data last time, except for the
 =na_values= parameter. This tells Pandas to treat the string
@@ -35,9 +35,9 @@ To view the rows that have null C_{t} values, we can use =pd.isnull=.
   qdat[pd.isnull(qdat.Ct)]
 #+end_src
 
-#+RESULTS[e204de2c65b687a5e84b35cd5e51b82945e52563]:
+#+RESULTS[f6243e25de77b68ccd75fabce31a7d97f67d7668]:
 #+begin_example
-Sample_Name Detector_Name Reporter  Ct  Threshold
+     Sample_Name Detector_Name Reporter  Ct  Threshold
 Well
 337          NTC       FENG3_1     SYBR NaN       0.39
 338          NTC       FENG3_1     SYBR NaN       0.39
@@ -64,7 +64,7 @@ We can remove the wells using =dropna=.
   ## could also use: qdat = qdat[pd.notnull(qdat.Ct)]
 #+end_src
 
-#+RESULTS[00764b287a7b8393db9e5fb16227f09267e73d64]:
+#+RESULTS[64750b46b131169004560b291da295c3d9712433]:
 
 Now we have a data frame that looks like this:
 
@@ -72,8 +72,8 @@ Now we have a data frame that looks like this:
   qdat.head()
 #+end_src
 
-#+RESULTS[f22ac6c9e662f568f42d98118cdc02f137ba1551]:
-: Sample_Name Detector_Name Reporter     Ct  Threshold
+#+RESULTS[3426137496dcf7cdfbfdd2d51cfbbb4e5e9349f8]:
+:      Sample_Name Detector_Name Reporter     Ct  Threshold
 : Well
 : 172   RMB200_A1C       FENG3_1     SYBR  26.44       0.39
 : 173   RMB200_A1C       FENG3_1     SYBR  27.38       0.39
@@ -89,7 +89,7 @@ the rows
   qdat.Reporter.unique()
 #+end_src
 
-#+RESULTS[f5d4c2184dc5abdaaf85ac85dd0824c60f1f32e4]:
+#+RESULTS[5286948968591342f812f7a36731699ac40d56b4]:
 : array(['SYBR'], dtype=object)
 
 To drop columns, the =drop= method can be used. Setting =axis= to 1
@@ -101,9 +101,9 @@ would indicate that they are row names).
   qdat.head()
 #+end_src
 
-#+RESULTS[cdb2472d3dcf98489113a6ca31764f73895696fc]:
+#+RESULTS[c1fdca26d4d10cfa80f2136398aeacf09a377787]:
 :
-: Sample_Name Detector_Name     Ct
+:      Sample_Name Detector_Name     Ct
 : Well
 : 172   RMB200_A1C       FENG3_1  26.44
 : 173   RMB200_A1C       FENG3_1  27.38
@@ -120,7 +120,7 @@ data looks.
   qdat
 #+end_src
 
-#+RESULTS[958853c79ff0214a626d69195a7d219c1fcb2351]:
+#+RESULTS[08f30c82e366b295fb55c8a7eb1abb5f75811b76]:
 : <class 'pandas.core.frame.DataFrame'>
 : Int64Index: 240 entries, 172 to 351
 : Data columns (total 3 columns):
@@ -137,7 +137,7 @@ We can use =nunique= to get the number of unique values in a column and
   qdat.Detector_Name.unique()
 #+end_src
 
-#+RESULTS[479567a1e56f4608823c3d04159f6b03084afbf3]:
+#+RESULTS[cb99199388895b6aea3d97de4119cbe0d44eb0d7]:
 : array(['RMB200_A1C', 'RMB200_AMY', 'RMB200_CBL', 'RMB200_DFC',
 :        'RMB200_HIP', 'RMB200_IPC', 'RMB200_ITC', 'RMB200_M1C',
 :        'RMB200_MFC', 'RMB200_OFC', 'RMB200_S1C', 'RMB200_STC',
@@ -156,7 +156,7 @@ object is used to determine the number of wells in each group.
   samp_gene_counts.head(10)
 #+end_src
 
-#+RESULTS[61f77499efb9843d51977781e6dd970aa19abd3b]:
+#+RESULTS[49ab5da3a8b518e7edeca879b507bb9fefe561dc]:
 #+begin_example
 
 Sample_Name  Detector_Name
@@ -180,7 +180,7 @@ view all the combinations that aren't.
   samp_gene_counts[samp_gene_counts != 3]
 #+end_src
 
-#+RESULTS[77a672973acc0ab8bd7db21be156a0646ac32c9a]:
+#+RESULTS[b8657238ea577e55d3fdad25924716b8250c6c5d]:
 : Sample_Name  Detector_Name
 : NTC          FENG3_4          1
 :              RPL32            1
@@ -206,7 +206,7 @@ interest, which appear to be variants of FENG3.
   fengs = qdat[np.invert(is_rpl)]  # np.invert flips each True/False value
 #+end_src
 
-#+RESULTS[d2d8970bc7681ec1cb640abe54d36f85f9dc36d7]:
+#+RESULTS[fb51cb2624f8262d744448c468e60cf0ab05c883]:
 
 Each sample has replicates for RPL32 expression, so we want to group by
 the sample and take the mean C_{t} value.
@@ -218,7 +218,7 @@ the sample and take the mean C_{t} value.
   rpl_means
 #+end_src
 
-#+RESULTS[ece0faaf191471f7b0f9091fe8914d6ff3300ea4]:
+#+RESULTS[9c9525f344f0594ef0bf6f71ce6e9daf5a2aae50]:
 #+begin_example
 
 Sample_Name
@@ -242,6 +242,7 @@ RMB200_VFC     20.916667
 Name: Ct, dtype: float64
 #+end_example
 
+
 We want to associate each RPL32 mean with the samples in =fengs=. One
 way to do this is to just add the values as a column. A function can be
 applied (mapped) to each column value by using =map=, with the return
@@ -254,7 +255,7 @@ values assigned as a new column.
   fengs['rpl_mean'] = fengs.Sample_Name.map(get_rpl_mean)
 #+end_src
 
-#+RESULTS[4af8299c4a6251a689836841fea85b9b58589c15]:
+#+RESULTS[cb663ba26bce968a497f229bebc6944e318caee1]:
 
 #+begin_note
   *Note:* Above I define a simple function to map to all the values of
@@ -270,9 +271,9 @@ column from the "Ct" column.
   fengs.head()
 #+end_src
 
-#+RESULTS[e5943d44b2f78192376f3545bbf2522e87813e37]:
+#+RESULTS[3ac290124d795a1a9b25f10d2c70093486184f46]:
 :
-: Sample_Name Detector_Name     Ct   rpl_mean      d_Ct
+:      Sample_Name Detector_Name     Ct   rpl_mean      d_Ct
 : Well
 : 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333
 : 173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333
@@ -294,7 +295,7 @@ limit samples to A1C samples and then take the mean for each gene.
   fengs['a1c_mean'] = fengs['Detector_Name'].map(get_a1c_mean)
 #+end_src
 
-#+RESULTS[876deb2b2936951815b0cbb8ef0a6d271d71d350]:
+#+RESULTS[845c1bcd873bbbaea3f11ab7d478a98d81f3e0a4]:
 
 To calculate \Delta\Delta{}C_{t}, we subtract this "a1c_mean" column
 from the \Delta{}C_{t} values.
@@ -304,9 +305,9 @@ from the \Delta{}C_{t} values.
   fengs.head()
 #+end_src
 
-#+RESULTS[4ab0c31c516d937590342c3123344c471f1f6199]:
+#+RESULTS[87903924de09e09e304817fdd7926835f022675c]:
 :
-: Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean     dd_Ct
+:      Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean     dd_Ct
 : Well
 : 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667 -0.753333
 : 173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333  6.656667  0.186667
@@ -321,10 +322,10 @@ Finally, we can calculate 2^{-\Delta\Delta{}C_{t}}.
   fengs.head()
 #+end_src
 
-#+RESULTS[a8c0a33e523b032b48dec75367718645ec043d87]:
+#+RESULTS[d77dfc87390905086d4af5523d497fda5adfcb00]:
 #+begin_example
 
-Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean  \
+     Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean  \
 Well
 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667
 173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333  6.656667
