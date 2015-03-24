@@ -1,5 +1,5 @@
-(add-to-list 'load-path (car (file-expand-wildcards "~/.emacs.d/elpa/org-*")))
-(add-to-list 'load-path (car (file-expand-wildcards "~/.emacs.d/elpa/htmlize-*")))
+(add-to-list 'load-path "~/src/emacs/org-mode/lisp/")
+(add-to-list 'load-path "~/src/emacs/org-mode/contrib/lisp/")
 
 (require 'org)
 (require 'htmlize)
