@@ -3,19 +3,19 @@
 
 * Reading in files
 
-First, we'll define the file name as a string. The specifies where the
+First, we'll define the file name as a string that specifies where the
 file exists on the system.
 
 #+begin_src python :session
   infile = '../data/weights.csv'
 #+end_src
 
-#+RESULTS[868b66d585c50a55f7886434541f4152293fdba4]:
+#+RESULTS[27a94cd4521d7b51500a54f91a58dfb4de6ab8d2]:
 
 #+begin_note
-  *Note:* In the path of the file name, =..= stands for go one directory
-  up from the current directory. So in the above case, =weights.csv= is
-  in the =data= directory that is one directory up.
+  *Note:* In the path of the file name, =..= stands for "go one
+  directory up from the current directory". So in the above case,
+  =weights.csv= is in the =data= directory that is one directory up.
 
   #+begin_example
       .
@@ -49,11 +49,10 @@ contents.
   infh = open(infile)
   file_content = infh.read()
   print(file_content)
-  infh.close()  # file should be closed after reading
+  infh.close()  # File should be closed after reading.
 #+end_src
 
-#+RESULTS[2eea14c01bfc0a7ada69f22d146ca03fdc8d9e52]:
-:
+#+RESULTS[b9ec4fa1fe804bf0f4cf9960b98aa68c72ba4bf4]:
 : person,weight
 : John,201
 : Sue,120
@@ -72,8 +71,7 @@ We could separate these lines into a list by using =split=.
   infh.close()
 #+end_src
 
-#+RESULTS[11cebb375c616cd17dd977ecb14779e868d2582a]:
-:
+#+RESULTS[8e9c405eb1c532803eb7a1dabd720fb17e509b66]:
 : ['person,weight', 'John,201', 'Sue,120', 'Paul,150', '']
 
 While this works fine, this is such a common operation that there is a
@@ -91,8 +89,7 @@ can be used.
   infh.close()
 #+end_src
 
-#+RESULTS[9f3ad8600bfd1026c293e3852a94b94d6ee2074f]:
-:
+#+RESULTS[175ec5da0e5d448513908f9fa44da6697f45fc44]:
 : ['person,weight\n', 'John,201\n', 'Sue,120\n', 'Paul,150\n']
 
 ** Using a for loop
@@ -109,8 +106,7 @@ fit into memory.
   infh.close()
 #+end_src
 
-#+RESULTS[7277035e9f826b3f95fffb6518c8f8ab1ad703fd]:
-:
+#+RESULTS[d06a0f3aa1d3ea1ec65badef01bd9f228aaa3697]:
 : current line: person,weight
 : current line: John,201
 : current line: Sue,120
@@ -135,7 +131,6 @@ fact, it usually does not).
   content will be overwritten.
 #+end_warning
 
-
 #+begin_src python :eval never
   outfile = 'test-outfile.txt'
   outfh = open(outfile, 'w')
@@ -156,9 +151,10 @@ The would result in a file (=test-outfile.txt=) that looks like this:
 
 * A better way to close files
 
-In all the examples above, the file needs to be explicitly closed after
-opening it. The =with= statement provides a convenient way to deal with
-the opening and closing of files.
+In all the examples above, the file needs to be explicitly closed
+after opening it. Instead, we could've used a =with= statement, which
+provides a convenient way to deal with the opening and closing of
+files.
 
 This is how the [[first-read-example][first read example]] would look using a
 =with= statement.
@@ -168,12 +164,11 @@ This is how the [[first-read-example][first read example]] would look using a
       file_content = infh.read()
 #+end_src
 
-#+RESULTS[bc9944bc592fa388f4a0cf97df7277a5827e5ee6]:
+#+RESULTS[e350e9c3ac82f26fcef6a08644bcdadb4a4a5ad7]:
 
-
-The =with= takes care of closing the file once the current level (marked
-by indentation) is left. If a =w= is passed to =open=, the exact same
-method can be used for writing files.
+The =with= takes care of closing the file once the current level
+(marked by indentation) is exited. If a =w= is passed to =open=, the
+exact same method can be used for writing files.
 
 * Tasks
 
