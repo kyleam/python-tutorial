@@ -41,10 +41,10 @@ comprehension.
 #+END_SRC
 
 It looks a little backwards, so compare this to the [[first-example][first example]] and
-try to match up parts. It says to check if each =element= in =old_list=
-meets some condition; if it does, store it in a list, which is being
-assigned to =new_list=. Notice that all of this is happening in between
-the list notation =[ ... ]=.
+try to match up parts. It says to check if each =element= in
+=old_list= meets some condition. If it does, store it in a list, which
+is being assigned to =new_list=. Notice that all of this is happening
+in between the list notation =[ ... ]=.
 
 Here is the gc function that uses a list comprehension:
 
