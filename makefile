@@ -20,15 +20,6 @@ img_tex:=$(wildcard $(img_dir)/*.tex)
 
 github_remote=kyleam
 
-.PHONY: help
-help:
-	@echo "site         build site files in output directory"
-	@echo "github       build site and push to github pages"
-	@echo "html         update site html without updating css"
-	@echo "css          update site css without updating html"
-	@echo "img	    build images in img directory"
-	@echo "clean        remove output directory"
-
 site: css html img
 
 github: site
@@ -56,7 +47,15 @@ $(img_sentinel): $(img_tex)
 	cd $(img_dir) && make svg
 	touch $(img_dir)/.sentinel
 
-
 .PHONY: clean
 clean:
 	-rm -rf $(output_dir)
+
+.PHONY: help
+help:
+	@echo "site         build site files in output directory"
+	@echo "github       build site and push to github pages"
+	@echo "html         update site html without updating css"
+	@echo "css          update site css without updating html"
+	@echo "img	    build images in img directory"
+	@echo "clean        remove output directory"
