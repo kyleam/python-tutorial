@@ -15,10 +15,12 @@ produced by comparison operations.
 : True
 : False
 
+#+begin_note
+  *Note:* Above I am using =print= to see the results of the
+  comparison, but if you're in IPython, you don't need to do this.
+#+end_note
 
 * Integers
-
-Pretty much what you would expect
 
 #+begin_src python
   x = 1
@@ -30,17 +32,23 @@ Pretty much what you would expect
 
 * Floats
 
-Again, as expected
+#+begin_src python
+  x = 1.0
+  print(x + 3.0)
+#+end_src
+
+#+RESULTS[34bb485ab44b97d1d7ca056d8e720964b2b50101]:
+: 4.0
+
+If you add an integer to a float, the result will be a float.
 
 #+begin_src python
   x = 1.0
   print(x + 3)
 #+end_src
 
-#+RESULTS[308f69d037b609db4c4dde29f563bb836729b73b]:
+#+RESULTS[aadf5af59ab95c1b9568d11cc411ec9f4895093b]:
 : 4.0
-
-If you add an integer to a float, the result will be a float.
 
 * Strings
 
@@ -73,7 +81,7 @@ Strings have some convenient methods associated with them. For example:
 
 * Lists
 
-A list is a sequence of values
+A list is a sequence of values.
 
 #+begin_src python :session
   primes = [2, 3, 5]
@@ -81,7 +89,7 @@ A list is a sequence of values
 
 #+RESULTS[a37cc9d09020a426af757e679e22d7ed71a766c1]:
 
-Each value can be accessed individually
+Each value can be accessed individually.
 
 #+begin_src python :session
   print(primes[0])
@@ -94,7 +102,7 @@ Each value can be accessed individually
 
 The index (the value inside the brackets) is 0-based.
 
-Lists can also be iterated over one-by-one
+Lists can also be iterated over one-by-one.
 
 #+begin_src python :session
   for prime in primes:
@@ -107,9 +115,9 @@ Lists can also be iterated over one-by-one
 : 3
 : 5
 
-* Dicts
+* Dictionaries
 
-Provides key-value look up.
+Dictionaries store key-value pairs.
 
 #+begin_src python
   prices = {'car' : 40000, 'pop' : 1}
