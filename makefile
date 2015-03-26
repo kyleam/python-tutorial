@@ -18,7 +18,7 @@ img_dir=$(base_dir)/img
 img_sentinel=$(img_dir)/.sentinel
 img_tex:=$(wildcard $(img_dir)/*.tex)
 
-github_remote=github
+github_remote=kyleam
 
 help:
 	@echo "site         build site files in output directory"
