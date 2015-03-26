@@ -7,7 +7,7 @@ get and stay up-to-date with changes.
 
 * Downloading the tutorials for the first time
 
-Open up a terminal window (or "Git Bash" on Windows) to a folder were
+Open up a terminal window (or "Git Bash" on Windows) to a folder where
 you want to store the tutorial (you can change folders by typing =cd=,
 which stands for "change directory"). Then enter this command:
 
@@ -27,7 +27,7 @@ target directory where you want to store the tutorials.
 Open up terminal (or "Git Bash" on Windows) and go to the python
 tutorial folder.
 
-To download the changes, run:
+To download the changes, run
 
 : git fetch origin
 

@@ -9,7 +9,7 @@ can be found [[./doc/syncing-tutorial.org][here]].
   :HTML_CONTAINER_CLASS: topic-list-def
   :END:
 
-- [[file:doc/installation.org][Installation]] :: Instructions for Mac OS X and Windows
+- [[file:doc/installation.org][Installation]] :: Instructions for installing Python
 - [[file:doc/types.org][Types]] :: Some of the major types of objects
 - [[file:doc/control_constructs.org][Control constructs]] :: Controlling what code is executed
 - [[file:doc/commandline_input.org][Command line input]] :: Specifying values at the command line

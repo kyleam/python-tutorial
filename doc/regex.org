@@ -24,21 +24,21 @@ the same.)
   print(gene_name)
 #+END_SRC
 
-#+RESULTS[b8b91f3cbaa72a2a406adc423ec748121b98396a]:
-:
+#+RESULTS[bbf49c3c1cf68bd528c969b99a2376b2c6a1aa5a]:
 : ZNF510
 
 That's a lot of work just to get to the gene name. Regular expressions
-provide a nice solution to this problem because they allow you match a
-pattern and pull out the information that you're interested in.
+provide a nice solution to this problem because they allow you to
+match a pattern and pull out the information that you're interested
+in.
 
 * Defining a regular expression
 
-In order to pull out the gene name, we need to define that pattern to
-match with. Defining regular expressions can be a little confusing
+In order to pull out the gene name, we need to define the match
+pattern. Defining regular expressions can be a little confusing
 because the [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][syntax for creating]] them is dense. We are not going to go
-into the details of the syntax; we'll just cover what we need to extract
-out the gene name. This will give you an idea for what regular
+into the details of the syntax; we'll just cover what we need to
+extract out the gene name. This will give you an idea for what regular
 expression can do, so that you recognize situations where they may be
 helpful.
 
@@ -50,32 +50,31 @@ this.
   pattern = r'gene_name "\w+"'
 #+END_SRC
 
-#+RESULTS[c95c44d1c86c9a5489c4edbd23b3712b87d50981]:
+#+RESULTS[b15f307034ea3231e36a3bba5638bfeda3732667]:
 
-The first part of that pattern should make sense: we creating a match
-for "gene_name". Everything in the pattern should look similar to what
-we are trying to match, except for what's between the double quotes.
-=\w= is a special character that means match a word character, which is
-defined as upper and lower case letters as well as digits (see [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][here]] for
-a list of possible characters). This should cover the possible elements
-of a gene name (except for maybe a hyphen). The =+= means match one or
-more instances of the thing it follows (in this case, =\w=). A related
-symbol is =*=, which means match *zero* or more instances of the thing
-it follows.
+The first part of that pattern should make sense: we are creating a
+match for "gene_name". =\w= is a special character that means match a
+word character, which is defined as upper and lower case letters as
+well as digits. (See [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][here]] for a list of possible characters.) This
+should cover the possible elements of a gene name (except for maybe a
+hyphen). The =+= means match one or more instances of the thing it
+follows (in this case, =\w=). A related symbol is =*=, which means
+match *zero* or more instances of the thing it follows.
 
 The only thing left to explain in the pattern is the =r= that comes
-before the string. This classifies the string as a raw string and makes
-it so that Python does not interpret =\= as special. For example, recall
-that a new line is represented as "\n". Even though you type two
-characters, the =\= indicates that Python should treat the =n= as a new
-line, so the string consists of one new line character. If instead, you
-wrote an =r= before the string, the =\= would no longer have its special
-meaning, and the string would consist of two characters: a =\= and a
-=n=. This is useful with regular expressions because the [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][syntax]] makes
-heavy use of =\=. Putting =r= before the string prevents Python from
-trying to do anything special to the =\= characters before they are
-passed to the regular expression function, which will then interpret
-them and apply any special meaning to the characters.
+before the string. This classifies the string as a raw string and
+tells Python to not interpret =\= as special. For example, recall that
+a new line is represented as "\n". Even though you type two
+characters, the =\= indicates that Python should treat the =n= as a
+new line, so the string consists of one new line character. If
+instead, you wrote an =r= before the string, the =\= would no longer
+have its special meaning, and the string would consist of two
+characters: a =\= and a =n=. This is useful with regular expressions
+because the [[http://docs.python.org/3.3/library/re.html#regular-expression-syntax][syntax]] makes heavy use of =\=. Putting =r= before the
+string prevents Python from trying to do anything special to the =\=
+characters before they are passed to the regular expression function,
+which will then interpret them and apply any special meaning to the
+characters.
 
 * Matching patterns
 
@@ -89,27 +88,26 @@ string.
   print(match)
 #+END_SRC
 
-#+RESULTS[c4d8df0978866b29299a2f7bacc460457300a3d6]:
-:
-: <_sre.SRE_Match object at 0x7f0ceca5a8b8
+#+RESULTS[266d0ce7336b88b120321fdcde30d9b239a746d7]:
+: <_sre.SRE_Match object; span=(29, 47), match='gene_name "ZNF510"'>
 
-<<nogroup>>The =search= function returns a match object (if a match is
-found). From the output, we see that we have an object, but how do we
-access the match? If you are in IPython, you can type =match.<TAB>= to
-see your options. Use a =?= after some of them to get more information.
-The description of =match.group?= seems promising. It tells us that
-giving =0= as an argument will return the entire match. Let's try.
+<<nogroup>>The =search= function returns a match object (or =None= if
+a match isn't found). From the output, we see that we have an object,
+but how do we access the match? If you are in IPython, you can type
+=match.<TAB>= to see your options. Use a =?= after some of them to get
+more information. The description of =match.group?= seems promising.
+It tells us that giving =0= as an argument will return the entire
+match. Let's try.
 
 #+BEGIN_SRC python :session
   print(match.group(0))
 #+END_SRC
 
-#+RESULTS[ccb46e58999a1761c4136f10973f4295eb8ef08e]:
+#+RESULTS[c229de8a5908e3b6542ef0e88e26f764512d027e]:
 : gene_name "ZNF510"
 
 Well, still not exactly what we want. It would be nice to get the gene
-name that is inside the quotes (or else we haven't done much better than
-our original splitting approach).
+name that is inside the quotes.
 
 * Pulling out groups
 
@@ -119,7 +117,7 @@ The trick is putting parentheses around the text we want to capture.
   pattern = r'gene_name "(\w+)"'
 #+END_SRC
 
-#+RESULTS[b8af2f2949905bd3ea69660389e9c381b9f3268d]:
+#+RESULTS[808a215cf53865a0c7b1fb7772ce654e0f6004af]:
 
 Now we can access the captured text as a group. We know from the
 [[nogroup][previous matching example]] that passing =0= to =match.group= gives that
@@ -135,8 +133,7 @@ to the default group that corresponds to the entire match.
   print(match.group(1))
 #+END_SRC
 
-#+RESULTS[ba34d09323c96d21150c33154bdbd740f28b4687]:
-:
+#+RESULTS[8c710489bb28109ebbc7da5628fa34e232d592a5]:
 : gene_name "ZNF510"
 : ZNF510
 
@@ -151,7 +148,7 @@ Here is the complete example extracting out the gene name.
   print(gene_name)
 #+END_SRC
 
-#+RESULTS[6e6177ffd240696448b6e5f5ea5d9836df7e2530]:
+#+RESULTS[226e9cb8ca65edda4ff5c0941a41937fed84d6f7]:
 : ZNF510
 
 * Tasks

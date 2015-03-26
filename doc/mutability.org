@@ -32,7 +32,7 @@ result might surprise you.
 : [3, 4, 5] [3, 4, 5]
 : [3, 4, 5, 6] [3, 4, 5, 6]
 
-Notice that we changed =b= by appending =6=, yet the value of =a= is
+Notice that we changed =b= by appending =6=, yet the value of =a= has
 also changed. In order to understand these examples, we need to cover
 the concept of "variables" in Python and the concept of mutability.
 

@@ -3,13 +3,13 @@
 
 * The advantage of functions
 
-Functions are reusable pieces of code that do something (that's not a
-strict enough definition, but it works). In their purest form, functions
-take some input, do some calculation, and then return an output.
+Functions allow you to created reusable pieces of code. In their
+purest form, functions take some input, do some calculation, and then
+return an output.
 
 Let's write a function that, given a gene's start position, returns a
-set of "promoter" coordinates. We'll coarsely define this as 1,000 bases
-upstream and 500 based downstream of the start position.
+set of "promoter" coordinates. We'll coarsely define this as 1,000
+bases upstream and 500 bases downstream of the start position.
 
 So, if we have a set of coordinates for a gene of interest
 (chr7:73,095,248-73,097,781), we can get the start of the promoter by
@@ -29,13 +29,11 @@ In code, this would look like this:
   promend = genestart + 500
 #+end_src
 
-#+RESULTS[3a193bb5afe8a4596d3be219a128c59822df9f0e]:
+#+RESULTS[34cd5af35a20317f35a93c269a9f3ad5939aa3cd]:
 
-If we have one set of gene coordinates, we might be tempted to do this,
-but it doesn't lead to good code. It is mixing the details of a specific
-case (the gene coordinates) with general calculation logic (finding the
-promoter). Functions allow us to separate out this calculation logic,
-give a name to it, and then apply it throughout the code by the name.
+Functions allow us to separate out this calculation logic from the
+details of a specific case, give a name to it, and then apply it
+throughout the code by the name.
 
 * Defining functions
 
@@ -43,10 +41,10 @@ Let's create a function named =get_promoter=. This is done using =def=.
 
 #+begin_src python :session
   def get_promoter():
-      pass  ## placeholder until we fill in the code
+      pass  ## Placeholder until we fill in the code
 #+end_src
 
-#+RESULTS[f885ed9b7d742294967315c2b81646d9415f74e8]:
+#+RESULTS[b70b89e4166430de81b2c071af0cbdf330ffe63f]:
 
 At this point, the function doesn't do anything. It doesn't take any
 arguments and it doesn't return any values.
@@ -56,29 +54,29 @@ serves as documentation for what the function does.
 
 #+begin_src python :session
   def get_promoter():
-      """Return promoter of gene"""
-      pass  ## placeholder until we fill in the code
+      """Return promoter of gene."""
+      pass  ## Placeholder until we fill in the code
 #+end_src
 
-#+RESULTS[dad3099f18fd65c7d494e4ba2a6329b9c2cd307a]:
+#+RESULTS[307ec91926a63ee483ff98198e6c41d622b04396]:
 
 Next, we should declare what arguments the function receives.
 
 #+begin_src python :session
-def get_promoter(start, strand):
-    """Return promoter of gene
+  def get_promoter(start, strand):
+      """Return promoter of gene.
 
-    Parameters
-    ----------
-    start : int
-        start coordinate of gene
-    strand : str
-        strand direction indicated by + or -
-    """
-    pass
+      Parameters
+      ----------
+      start : int
+          Start coordinate of gene
+      strand : str
+          Strand direction indicated by + or -
+      """
+      pass
 #+end_src
 
-#+RESULTS[6b13d014923cd323aa12831374215ed59ae1b246]:
+#+RESULTS[8320739125458ecde70598da568baab391c37d03]:
 
 The arguments are specified between the parentheses (everything added
 between the triple quotes is documentation that, while often helpful, is
@@ -93,21 +91,21 @@ new function.
   get_promoter(genestart, '-')
 #+end_src
 
-#+RESULTS[913d4268323b8a547cbfc614f4704dd8efcd6ede]:
+#+RESULTS[c6ce06ca7133113de657cf65da1ae97f1a14a480]:
 
 We have called the function, but it doesn't do anything yet. Let's add
 in the calculation.
 
 #+begin_src python :session
   def get_promoter(start, strand):
-      """Return promoter of gene
+      """Return promoter of gene.
 
       Parameters
       ----------
       start : int
-          start coordinate of gene
+          Start coordinate of gene
       strand : str
-          strand direction indicated by + or -
+          Strand direction indicated by + or -
       """
       if strand == '+':
           promstart = start - 1000
@@ -116,16 +114,17 @@ in the calculation.
           promstart = start + 1000
           promend = start - 500
       else:
-          print('strand not recognized')
+          print('Strand not recognized.')
+          # REV: Why is handling a bad argument like this problematic?
+          #      What could be done instead?
       print(promstart, promend)
 
-  # now call it
+  # Now call it.
   promoter = get_promoter(genestart, '-')
   print(promoter)
 #+end_src
 
-#+RESULTS[22fbef9ce0fea1bacfdd1db416441674c203c2be]:
-:
+#+RESULTS[ad87e27a242fc665c8b289033ba1cbf4314e231d]:
 : 73098781 73097281
 : None
 
@@ -138,14 +137,14 @@ statement.
 
 #+begin_src python :session
   def get_promoter(start, strand):
-      """Return promoter of gene
+      """Return promoter of gene.
 
       Parameters
       ----------
       start : int
-          start coordinate of gene
+          Start coordinate of gene
       strand : str
-          strand direction indicated by + or -
+          Strand direction indicated by + or -
       """
       if strand == '+':
           promstart = start - 1000
@@ -154,23 +153,23 @@ statement.
           promstart = start + 1000
           promend = start - 500
       else:
-          print('strand not recognized')
+          print('Strand not recognized.')
+          # REV: Why is handling a bad argument like this problematic?
+          #      What could be done instead?
       return promstart, promend
 
-  # now call it
+  # Now call it.
   promoter = get_promoter(genestart, '-')
   print(promoter)
 #+end_src
 
-#+RESULTS[bb980bff341af2d6a711f0b999f945e9d37eafc8]:
-:
+#+RESULTS[7d97be433a6c4964ddb6f693d118c32932f79c8f]:
 : (73098781, 73097281)
 
 When we call the new function, the result is returned (because we've
-added the return statement at the end) and no longer printed out
-(because we removed the print statement).
-
-The variable =promoter= now contains the returned results.
+added the return statement at the end) and is no longer printed out
+(because we removed the print statement). The variable =promoter= now
+contains the returned results.
 
 #+begin_note
   *Note:* Due to how the return statement was specified, a tuple has
@@ -184,8 +183,8 @@ The variable =promoter= now contains the returned results.
 * Keyword arguments
 
 In the above example, we have two required arguments: =start= and
-=strand= must be given. If we call the function without an argument, we
-get an error.
+=strand=. If we call the function without an argument, we get an
+error.
 
 #+begin_src python :eval never
   get_promoter(genestart)
@@ -197,24 +196,24 @@ get an error.
   TypeError: get_promoter() missing 1 required positional argument: 'strand'
 #+end_example
 
-Required arguments are a good thing, but in some cases, it is useful to
-allow optional arguments. For example, the 1,000 bases upstream/500
-bases downstream used to define the promoter are parameters that should
-probably be tunable, so we can provide them as default values that can
-be overridden when the function is called.
+Required arguments are a good thing, but, in some cases, it is useful
+to allow optional arguments. For example, the 1,000 bases upstream and
+500 bases downstream used to define the promoter are parameters that
+should probably be tunable, so we can provide them as default values
+that can be overridden when the function is called.
 
 #+begin_src python :session
   def get_promoter(start, strand, upstream=1000, downstream=500):
-      """Return promoter of gene
+      """Return promoter of gene.
 
       Parameters
       ----------
       start : int
-          start coordinate of gene
+          Start coordinate of gene
       strand : str
-          strand direction indicated by + or -
+          Strand direction indicated by + or -
       upstream, downstream : int
-          number of bases upstream/downstream of start used to
+          Number of bases upstream/downstream of `start` used to
           define promoter
       """
       if strand == '+':
@@ -224,16 +223,19 @@ be overridden when the function is called.
           promstart = start + upstream
           promend = start - downstream
       else:
-          print('strand not recognized')
+          print('Strand not recognized.')
+          # REV: Why is handling a bad argument like this problematic?
+          #      What could be done instead?
       return promstart, promend
 #+end_src
 
-#+RESULTS[802ea61564de02f6f18b57564c7b719b776e6475]:
+#+RESULTS[ddfad2922988ae88ffab8fb7833363c62b3d2433]:
 
 Now we can call the function as before and get the same results, as we
-do in the fisrt call. If we choose to, we can override the default
-values. For example, in the second call, we bring the upstream bases down to 500.
-In the third call, both optional arguments are tweaked at the same time.
+do in the first call below. If we choose to, we can override the
+default values. For example, in the second call, we bring the upstream
+bases down to 500. In the third call, both optional arguments are
+tweaked at the same time.
 
 #+begin_src python :session
   print(get_promoter(genestart, '-'))
@@ -241,7 +243,7 @@ In the third call, both optional arguments are tweaked at the same time.
   print(get_promoter(genestart, '-', upstream=500, downstream=400))
 #+end_src
 
-#+RESULTS[2f0276d30c1c467a4266e4e3ed7f3c9f9a3d8edf]:
+#+RESULTS[16e8003ea603eb80b50c36abee3e1a677de8b5c2]:
 : (73098781, 73097281)
 : (73098281, 73097281)
 : (73098281, 73097381)
@@ -254,7 +256,7 @@ preserved.
   print(get_promoter(genestart, '-', 500, 400))
 #+end_src
 
-#+RESULTS[019e84b9947120cc4b53bf80dacedabf6a2f301c]:
+#+RESULTS[3762d162848f106f8dc8a56a4c239952c1fee691]:
 : (73098281, 73097381)
 
 In this case, however, leaving out the keywords makes the function less

@@ -3,33 +3,31 @@
 
 * if statements
 
-=if= statements are used to perform code if a condition is true.
+=if= statements are used to execute code when a condition is true.
 
 #+begin_src python :session
   is_rainy = True
   if is_rainy:
-      print('bring your bumbershoot')
+      print('Bring your bumbershoot')
 #+end_src
 
-#+RESULTS[2668d5d1bc7cde1a1a7ddc8252a54c60662b0710]:
-:
-: bring your bumbershoot
+#+RESULTS[567ff1b03f22ad378345a25b649ad0b1ebde8ddd]:
+: Bring your bumbershoot
 
 These can be followed up by an =else=:
 
 #+begin_src python :session
   if is_rainy:
-      print('bring your bumbershoot')
+      print('Bring your bumbershoot')
   else:
-      print('no rain')
+      print('No rain')
 #+end_src
 
-#+RESULTS[e4b9f1a63eba13798ba8cb0465df4f44ed6286ad]:
-:
-: bring your bumbershoot
+#+RESULTS[1c3de9eb1993bdb57d1a7c926bcd3d49c49bd639]:
+: Bring your bumbershoot
 
 #+begin_note
-  *Note:* In python, whitespace is used to define levels in the code. It
+  *Note:* In Python, whitespace is used to define levels in the code. It
   is convention to use 4 spaces (not tabs) as the first level of
   indentation. The second level would be 4 more spaces (8 total) and so
   on.
@@ -42,56 +40,49 @@ More conditions can be added with =elif=.
 
 #+begin_src python :session
   if is_rainy:
-      print('bring your bumbershoot')
+      print('Bring your bumbershoot')
   elif is_sunny:
-      print('bring your hat')
+      print('Bring your hat')
   else:
-      print('no rain, no sun')
+      print('No rain, no sun')
 #+end_src
 
-#+RESULTS[5a90e698e5d953d276dae3a6acdfe41cf20e1da5]:
-:
-: bring your bumbershoot
+#+RESULTS[f12eeca69d573e4b21639fd4fe7bf73661cde89f]:
+: Bring your bumbershoot
 
 ** Boolean operators
 
 It is common to use boolean operators with =if= statements.
-
-Here are some of the main boolean operators we can use to check whether
-value of =some_number= meets a condition.
-
 
 #+begin_src python :session
   some_number = 9
   print(some_number == 2)
 #+end_src
 
-#+RESULTS[ce297eda3e9f52f1cd76f917602ab1bd53f2a188]:
-:
+#+RESULTS[762988d150d4ba74d7615b8f9f6ce06341c4fa03]:
 : False
 
-Start ipython by typing =ipython= in a terminal, and try out a few more
-comparisons.
+Start IPython by typing =ipython= in a terminal, and try out a few
+more comparisons.
 
 - =!==
 - =<=
 - =>==
 
 #+begin_note
-  *Note:* Above I am using =print= to see the results of the comparison,
-  but if you're in ipython, you don't need to do this.
+  *Note:* Above I am using =print= to see the results of the
+  comparison, but if you're in IPython, you don't need to do this.
 #+end_note
 
 Using them within an =if= statement look like this:
 
 #+begin_src python :session
   if some_number < 10:
-      print('there are less than 10')
+      print('There are less than 10')
 #+end_src
 
-#+RESULTS[7b3642b529288201da226ee404e5a49655eb5616]:
-:
-: there are less than 10
+#+RESULTS[f9607016d716c68c6e64c36ab3ac32d67cac3da9]:
+: There are less than 10
 
 * for loops
 
@@ -100,14 +91,13 @@ Using them within an =if= statement look like this:
 #+begin_src python :session
   genes = ['DNJC..uh', 'FOXP2', 'MET7B']
   for gene in genes:
-      print('my favorite gene: ' + gene)
+      print('My favorite gene: ' + gene)
 #+end_src
 
-#+RESULTS[05faf59d685ede696352c10dcf5e41485c325057]:
-:
-: my favorite gene: DNJC..uh
-: my favorite gene: FOXP2
-: my favorite gene: MET7B
+#+RESULTS[a4d9f80dc217488edbbe5e0d2ddf8776c486be23]:
+: My favorite gene: DNJC..uh
+: My favorite gene: FOXP2
+: My favorite gene: MET7B
 
 =for= and =if= statments can be nested.
 
@@ -117,19 +107,18 @@ Using them within an =if= statement look like this:
           print(gene +  ', what a dumb gene')
 #+end_src
 
-#+RESULTS[a2a9a46cb6db0c7b225a17c67eb12946a1c549ee]:
-:
+#+RESULTS[b06e7055dfc419f51428ed6eb39ec17d85035b13]:
 : DNJC..uh, what a dumb gene
 : FOXP2, what a dumb gene
 
 ** Controlling for loops
 
 Once a =for= loop is running, you often want to change the behavior
-based on the current iteration. For example, if a certain value
-encountered, skip the iteration. This can be done with =continue=, which
-means stop the current iteration of the loop right here and go to the
-next iteration. Using =continue=, we can produce the exact same results
-as the last block.
+based on the current iteration. For example, if a certain value is
+encountered, skip to the next iteration. This can be done with
+=continue=, which means stop the current iteration of the loop right
+here and go to the next iteration. Using =continue=, we can produce
+the exact same results as the last block.
 
 #+begin_src python :session
   for gene in genes:
@@ -138,8 +127,7 @@ as the last block.
       print(gene +  ', what a dumb gene')
 #+end_src
 
-#+RESULTS[07a066a26d2447773a2e40386169411c59c2d632]:
-:
+#+RESULTS[b77271fceb2dd6e07759c0ad4613c05821323b0c]:
 : DNJC..uh, what a dumb gene
 : FOXP2, what a dumb gene
 
@@ -152,21 +140,20 @@ condition is met. =break= is the command to do this.
   for number in lottery_numbers:
       print(number)
       if number == winning_number:
-          print('we have a winner')
+          print('We have a winner')
           break
 #+end_src
 
-#+RESULTS[7836408629a136add9992b787a7efb0cf6cbc875]:
+#+RESULTS[113db27c1f4d86fa874d2fab4b1aa3aa2f7841ec]:
 : 888
 : 301
 : 405
-: we have a winner
+: We have a winner
 
 * while loops
 
 There are also =while= loops in python. These allow the code to
-continually be executed *while* a condition is met. They aren't used
-much in practice, but they look like this:
+continually be executed *while* a condition is met.
 
 #+begin_src python
   number = 1
@@ -175,7 +162,7 @@ much in practice, but they look like this:
       number += 1
 #+end_src
 
-#+RESULTS[f1d1e07e9751253b37c30a20db255b356f4bab4a]:
+#+RESULTS[55a5fe6c09e1d07e86ae09b9a968c40da3046c3b]:
 : 1
 : 2
 : 3

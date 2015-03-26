@@ -16,7 +16,7 @@ files. You can see these (in IPython) by typing =pd.read<TAB>=. Remember
 that you can type =?= after the name to get more information. The
 function we will use is =read_csv= (=pd.read_csv?=).
 
-Before doing anything with pandas, let's look at the file we will be
+Before doing anything with Pandas, let's look at the file we will be
 reading in (below I use the =head= command to view the first 4 lines of
 the file in the terminal, but you could just open up the file in a text
 editor).
@@ -44,33 +44,34 @@ Now =qdat= contains all the data.
 
 * Viewing data
 
-Pandas provides many convenient ways to view and summarize data. Simply
-entering the name will give a nice summary.
+Pandas provides many convenient ways to view and summarize data. The
+=info= method will give a nice summary of the data frame.
 
 #+begin_src python :session
-  qdat
+  qdat.info()
 #+end_src
 
-#+RESULTS[08f30c82e366b295fb55c8a7eb1abb5f75811b76]:
+#+RESULTS[066c260efc09d549fbfb6bc09b71edb9539a6b91]:
 #+begin_example
 <class 'pandas.core.frame.DataFrame'>
 Int64Index: 254 entries, 0 to 253
 Data columns (total 6 columns):
-Well             254  non-null values
-Sample_Name      254  non-null values
-Detector_Name    254  non-null values
-Reporter         254  non-null values
-Ct               254  non-null values
-Threshold        254  non-null values
+Well             254 non-null int64
+Sample_Name      254 non-null object
+Detector_Name    254 non-null object
+Reporter         254 non-null object
+Ct               254 non-null object
+Threshold        254 non-null float64
 dtypes: float64(1), int64(1), object(4)
+memory usage: 13.9+ KB
 #+end_example
 
 This tells us things like the column names, how many rows we have, and
 the data types present.
 
-You'll notice that pandas automatically took the first row in the csv
+You'll notice that Pandas automatically took the first row in the csv
 file as the column names. This behavior can be controlled by passing
-optional arguments to =read_csv= (for files where this is not the case).
+optional arguments to =read_csv=.
 
 To view the first few rows of the data frame, use the =head= method.
 
@@ -101,7 +102,7 @@ Similary, you can use tail to view the end of the data frame.
 : 253   351         NTC         RPL32     SYBR         36.60        0.4
 
 Notice the "Undetermined" values. In the next tutorial, we'll cover how
-to mark these so that pandas knows that they are missing values.
+to mark these so that Pandas knows that they are missing values.
 
 * Selecting data
 
@@ -118,22 +119,52 @@ ways to do this.
 
 #+RESULTS[fa68738f1cf99f16dd6c4ab0083377a94e24bcf1]:
 #+begin_example
-0     RMB200_A1C
-1     RMB200_A1C
-2     RMB200_A1C
-3     RMB200_AMY
-4     RMB200_AMY
-5     RMB200_AMY
-6     RMB200_CBL
-7     RMB200_CBL
-8     RMB200_CBL
-9     RMB200_DFC
-10    RMB200_DFC
-11    RMB200_DFC
-12    RMB200_HIP
-13    RMB200_HIP
-14    RMB200_HIP
-...
+0      RMB200_A1C
+1      RMB200_A1C
+2      RMB200_A1C
+3      RMB200_AMY
+4      RMB200_AMY
+5      RMB200_AMY
+6      RMB200_CBL
+7      RMB200_CBL
+8      RMB200_CBL
+9      RMB200_DFC
+10     RMB200_DFC
+11     RMB200_DFC
+12     RMB200_HIP
+13     RMB200_HIP
+14     RMB200_HIP
+15     RMB200_IPC
+16     RMB200_IPC
+17     RMB200_IPC
+18     RMB200_ITC
+19     RMB200_ITC
+20     RMB200_ITC
+21     RMB200_M1C
+22     RMB200_M1C
+23     RMB200_M1C
+24     RMB200_MFC
+25     RMB200_MFC
+26     RMB200_MFC
+27     RMB200_OFC
+28     RMB200_OFC
+29     RMB200_OFC
+          ...
+224    RMB200_M1C
+225    RMB200_M1C
+226    RMB200_M1C
+227    RMB200_MFC
+228    RMB200_MFC
+229    RMB200_MFC
+230    RMB200_OFC
+231    RMB200_OFC
+232    RMB200_OFC
+233    RMB200_S1C
+234    RMB200_S1C
+235    RMB200_S1C
+236    RMB200_STC
+237    RMB200_STC
+238    RMB200_STC
 239    RMB200_STR
 240    RMB200_STR
 241    RMB200_STR
@@ -149,15 +180,15 @@ ways to do this.
 251           NTC
 252           NTC
 253           NTC
-Name: Sample_Name, Length: 254, dtype: object
+Name: Sample_Name, dtype: object
 #+end_example
 
 Because there are more rows than can be conveniently printed to the
-screen, pandas snips out a lot of the values in the middle.
+screen, Pandas snips out a lot of the values in the middle.
 
-The other way to access the column names is as attibutes to the data
-frame, assuming that it is a valid attribute name in python (no spaces, hyphens,
-or periods).
+The other way to access a column name is as an attibute to the data
+frame, assuming that it is a valid attribute name in Python (no
+spaces, hyphens, or periods).
 
 #+begin_src python :session :results none
   qdat.Sample_Name
@@ -166,12 +197,10 @@ or periods).
 If we want two columns, we use a list of column names.
 
 #+begin_src python :session
-  two_cols = qdat[['Sample_Name', 'Ct']]
-  two_cols.head()
+  qdat[['Sample_Name', 'Ct']].head()
 #+end_src
 
-#+RESULTS[e837c56d4e20af6042b4d8d908c6d298a1dea072]:
-:
+#+RESULTS[4e85f0d93e341de3a530f5dec4b2f25ca892bee3]:
 :   Sample_Name     Ct
 : 0  RMB200_A1C  26.44
 : 1  RMB200_A1C  27.38
@@ -190,21 +219,25 @@ position indexing, while =loc= supports only labels and =iloc= supports
 only integers. I tend to prefer =loc= and =iloc= because they are more
 explicit.
 
-Let's first access rows and columns using labels. In this case, the row
-labels for this data are same as the row positions, but the row labels
-and positions do not need to match. The row labels just have to be a
-unique identifier. To make this clear, we'll switch to using the well
-number, which is a unique identifier, as the row labels (called
-"index"). (We could have taken care of this when initially reading in
-the data with =read_csv=).
+Let's first access rows and columns using labels. For the current data
+frame, the row labels are same as the row positions, but the row
+labels and positions do not need to match. The row labels just have to
+be a unique identifier. To make this clear, we'll switch to using the
+well number, which is a unique identifier, as the row labels (called
+the "index"). (We could have taken care of this when initially reading
+in the data with =read_csv=).
 
 #+begin_src python :session
   qdat.set_index("Well", inplace=True)
+#+end_src
+
+#+RESULTS[49bcbe59e58d3aa680677ad5bdaec01c5dad2507]:
+
+#+begin_src python :session
   qdat.head()
 #+end_src
 
-#+RESULTS[eb123a4a83c7f6a7c45963f2910870566435efbb]:
-:
+#+RESULTS[3426137496dcf7cdfbfdd2d51cfbbb4e5e9349f8]:
 :      Sample_Name Detector_Name Reporter     Ct  Threshold
 : Well
 : 172   RMB200_A1C       FENG3_1     SYBR  26.44       0.39
@@ -221,9 +254,10 @@ can use =ix=.
 #+end_src
 
 #+RESULTS[6b1c5ba9a961079207c1c7c42d44fd5341c0f1ee]:
-:     Sample_Name     Ct
-: 172  RMB200_A1C  26.44
-: 187  RMB200_AMY  27.83
+:      Sample_Name     Ct
+: Well
+: 172   RMB200_A1C  26.44
+: 187   RMB200_AMY  27.83
 
 To get back all rows for these two columns, the =:= can be be used.
 
@@ -232,12 +266,73 @@ To get back all rows for these two columns, the =:= can be be used.
 #+end_src
 
 #+RESULTS[bcde37461d9c8e887241566dafe6cf096f304fa7]:
-: <class 'pandas.core.frame.DataFrame'>
-: Int64Index: 254 entries, 172 to 351
-: Data columns (total 2 columns):
-: Sample_Name    254  non-null values
-: Ct             254  non-null values
-: dtypes: object(2)
+#+begin_example
+     Sample_Name            Ct
+Well
+172   RMB200_A1C         26.44
+173   RMB200_A1C         27.38
+174   RMB200_A1C         27.76
+187   RMB200_AMY         27.83
+188   RMB200_AMY         28.94
+189   RMB200_AMY         28.91
+190   RMB200_CBL         28.04
+191   RMB200_CBL         27.95
+192   RMB200_CBL         27.89
+25    RMB200_DFC         27.90
+26    RMB200_DFC         27.90
+27    RMB200_DFC         27.29
+184   RMB200_HIP         27.40
+185   RMB200_HIP         28.04
+186   RMB200_HIP         28.50
+43    RMB200_IPC         28.08
+44    RMB200_IPC         28.18
+45    RMB200_IPC         27.08
+46    RMB200_ITC         28.39
+47    RMB200_ITC         28.33
+48    RMB200_ITC         28.20
+34    RMB200_M1C         27.97
+35    RMB200_M1C         27.28
+36    RMB200_M1C         26.93
+31    RMB200_MFC         27.94
+32    RMB200_MFC         27.90
+33    RMB200_MFC         28.31
+37    RMB200_OFC         28.08
+38    RMB200_OFC         28.29
+39    RMB200_OFC         27.68
+         ...           ...
+130   RMB200_M1C         21.28
+131   RMB200_M1C         20.98
+132   RMB200_M1C         21.42
+127   RMB200_MFC         20.68
+128   RMB200_MFC         20.58
+129   RMB200_MFC         20.79
+133   RMB200_OFC         19.58
+134   RMB200_OFC         20.67
+135   RMB200_OFC         20.63
+136   RMB200_S1C         20.84
+137   RMB200_S1C         20.73
+138   RMB200_S1C         20.84
+265   RMB200_STC         20.11
+266   RMB200_STC         20.60
+267   RMB200_STC         21.16
+274   RMB200_STR         20.76
+275   RMB200_STR         20.16
+276   RMB200_STR         20.75
+277   RMB200_THM         20.89
+278   RMB200_THM         21.12
+279   RMB200_THM         20.65
+271   RMB200_V1C         20.13
+272   RMB200_V1C         20.36
+273   RMB200_V1C         20.38
+124   RMB200_VFC         20.89
+125   RMB200_VFC         20.91
+126   RMB200_VFC         20.95
+349          NTC  Undetermined
+350          NTC  Undetermined
+351          NTC         36.60
+
+[254 rows x 2 columns]
+#+end_example
 
 If we wanted to select these by positions instead, we should use =iloc=.
 
@@ -268,8 +363,8 @@ we could use:
 
 ** Selecting rows using a boolean vector
 
-Often you want to select all rows the have a specific value in a column.
-For example, the "Detector_Name" column has 5 unique values.
+Often you want to select all rows that have a specific value in a
+column. For example, the "Detector_Name" column has 5 unique values.
 
 #+begin_src python :session
   qdat.Detector_Name.unique()
@@ -278,33 +373,30 @@ For example, the "Detector_Name" column has 5 unique values.
 #+RESULTS[de58f9b94128ccde207eec5e1681743e08cf99fb]:
 : array(['FENG3_1', 'FENG3_2', 'FENG3_3', 'FENG3_4', 'RPL32'], dtype=object)
 
-
 How would we limit the data frame to just the rows that have "RPL32"?
 First, we create a boolean vector.
 
 #+begin_src python :session
   rpl_bool = qdat.Detector_Name == 'RPL32'
-  # just to preview
-  len(rpl_bool)
-  rpl_bool.unique()
 #+end_src
 
-#+RESULTS[1edcacafa7dda6174483443de787b20823c2e2f3]:
-:
-: 254
-: array([False, True], dtype=object)
+#+RESULTS[67d9281b2b399fe7844351342b7db3f7a2612ecc]:
 
-Now that we have a True/False list for each row, we can use it to select
-the rows that have =True= as their value (corresponding to the rows that
-have "RPL32 in the "Detector_Name" column.
+Now that we have a True/False list for each row, we can use it to
+select the rows that have =True= as their value (corresponding to the
+rows that have "RPL32 in the "Detector_Name" column).
 
 #+begin_src python :session
   rpl = qdat[rpl_bool]
+#+end_src
+
+#+RESULTS[af14ab90aeda72b562e8200cffcedc633292c8f6]:
+
+#+begin_src python :session
   rpl.Detector_Name.unique()
 #+end_src
 
-#+RESULTS[9e25009bbbe098384f72309f825c08214bf5c613]:
-:
+#+RESULTS[b642ce59b8959cbbd2bcdaadb97b2ad880e03080]:
 : array(['RPL32'], dtype=object)
 
 * Relevant parts of Pandas documentation
