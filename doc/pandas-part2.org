@@ -55,16 +55,16 @@ Well
 350          NTC         RPL32     SYBR NaN       0.40
 #+end_example
 
-All but one of the null values occur in the "no template control" wells.
+All but one of the null values occur a "no template control" well.
 
 We can remove the wells using =dropna=.
 
 #+begin_src python :session
   qdat = qdat.dropna(how='any')  # drop if any of row's cell is null
-  ## could also use: qdat = qdat[pd.notnull(qdat.Ct)]
+  ## Could also use: qdat = qdat[pd.notnull(qdat.Ct)]
 #+end_src
 
-#+RESULTS[64750b46b131169004560b291da295c3d9712433]:
+#+RESULTS[e34e63aeefee0a95c07e806620b52f2dc77ddea3]:
 
 Now we have a data frame that looks like this:
 
@@ -98,11 +98,15 @@ would indicate that they are row names).
 
 #+begin_src python :session
   qdat = qdat.drop(['Reporter', 'Threshold'], axis=1)
+#+end_src
+
+#+RESULTS[3b4a1834011b576285d840fd2b6cb0913339242f]:
+
+#+begin_src python :session
   qdat.head()
 #+end_src
 
-#+RESULTS[c1fdca26d4d10cfa80f2136398aeacf09a377787]:
-:
+#+RESULTS[3426137496dcf7cdfbfdd2d51cfbbb4e5e9349f8]:
 :      Sample_Name Detector_Name     Ct
 : Well
 : 172   RMB200_A1C       FENG3_1  26.44
@@ -117,31 +121,37 @@ Now that we have a clean data frame, let's get a better feel for how the
 data looks.
 
 #+begin_src python :session
-  qdat
+  qdat.info()
 #+end_src
 
-#+RESULTS[08f30c82e366b295fb55c8a7eb1abb5f75811b76]:
+#+RESULTS[066c260efc09d549fbfb6bc09b71edb9539a6b91]:
 : <class 'pandas.core.frame.DataFrame'>
 : Int64Index: 240 entries, 172 to 351
 : Data columns (total 3 columns):
-: Sample_Name      240  non-null values
-: Detector_Name    240  non-null values
-: Ct               240  non-null values
+: Sample_Name      240 non-null object
+: Detector_Name    240 non-null object
+: Ct               240 non-null float64
 : dtypes: float64(1), object(2)
+: memory usage: 7.5+ KB
 
 We can use =nunique= to get the number of unique values in a column and
 =unique= to list the unique values.
 
 #+begin_src python :session
   qdat.Sample_Name.unique()
-  qdat.Detector_Name.unique()
 #+end_src
 
-#+RESULTS[cb99199388895b6aea3d97de4119cbe0d44eb0d7]:
+#+RESULTS[6376dd1ad54bd1aa0115f4cf0804d7c67182c40f]:
 : array(['RMB200_A1C', 'RMB200_AMY', 'RMB200_CBL', 'RMB200_DFC',
 :        'RMB200_HIP', 'RMB200_IPC', 'RMB200_ITC', 'RMB200_M1C',
 :        'RMB200_MFC', 'RMB200_OFC', 'RMB200_S1C', 'RMB200_STC',
 :        'RMB200_STR', 'RMB200_THM', 'RMB200_V1C', 'RMB200_VFC', 'NTC'], dtype=object)
+
+#+begin_src python :session
+  qdat.Detector_Name.unique()
+#+end_src
+
+#+RESULTS[de58f9b94128ccde207eec5e1681743e08cf99fb]:
 : array(['FENG3_1', 'FENG3_2', 'FENG3_3', 'FENG3_4', 'RPL32'], dtype=object)
 
 It would be good to know how many replicates we have for each
@@ -153,12 +163,16 @@ object is used to determine the number of wells in each group.
 #+begin_src python :session
   samp_det_grp = qdat.groupby(['Sample_Name', 'Detector_Name'])
   samp_gene_counts = samp_det_grp.size()
+#+end_src
+
+#+RESULTS[b8eed0b77339adb639cc8e5f4a7374d021a12ab7]:
+
+#+begin_src python :session
   samp_gene_counts.head(10)
 #+end_src
 
-#+RESULTS[49ab5da3a8b518e7edeca879b507bb9fefe561dc]:
+#+RESULTS[89233c6e1bf5c1ff285c93380060e1a049f78044]:
 #+begin_example
-
 Sample_Name  Detector_Name
 NTC          FENG3_4          1
              RPL32            1
@@ -202,11 +216,10 @@ interest, which appear to be variants of FENG3.
   is_rpl = qdat.Detector_Name == 'RPL32'
   rpl = qdat[is_rpl]
 
-  import numpy as np  # for invert method
-  fengs = qdat[np.invert(is_rpl)]  # np.invert flips each True/False value
+  fengs = qdat[~is_rpl].copy()  # ~ flips each True/False value
 #+end_src
 
-#+RESULTS[fb51cb2624f8262d744448c468e60cf0ab05c883]:
+#+RESULTS[6d5f604aec0620316cc4a5298e6f5131f0d30e71]:
 
 Each sample has replicates for RPL32 expression, so we want to group by
 the sample and take the mean C_{t} value.
@@ -215,33 +228,36 @@ the sample and take the mean C_{t} value.
   rpl_grps = rpl.groupby('Sample_Name')
   rpl_means = rpl_grps['Ct'].mean()
   ## or as one step: rpl_means = rpl.groupby('Sample_Name').Ct.mean()
+#+end_src
+
+#+RESULTS[06aaeb5e97da8e07ff12df966d7db89e457dde5d]:
+
+#+begin_src python :session
   rpl_means
 #+end_src
 
-#+RESULTS[9c9525f344f0594ef0bf6f71ce6e9daf5a2aae50]:
+#+RESULTS[a367004ba7d1c76896910cccdf97ae30a54705c3]:
 #+begin_example
-
 Sample_Name
-NTC            36.600000
-RMB200_A1C     20.536667
-RMB200_AMY     20.460000
-RMB200_CBL     21.780000
-RMB200_DFC     21.616667
-RMB200_HIP     20.790000
-RMB200_IPC     20.583333
-RMB200_ITC     20.750000
-RMB200_M1C     21.226667
-RMB200_MFC     20.683333
-RMB200_OFC     20.293333
-RMB200_S1C     20.803333
-RMB200_STC     20.623333
-RMB200_STR     20.556667
-RMB200_THM     20.886667
-RMB200_V1C     20.290000
-RMB200_VFC     20.916667
+NTC           36.600000
+RMB200_A1C    20.536667
+RMB200_AMY    20.460000
+RMB200_CBL    21.780000
+RMB200_DFC    21.616667
+RMB200_HIP    20.790000
+RMB200_IPC    20.583333
+RMB200_ITC    20.750000
+RMB200_M1C    21.226667
+RMB200_MFC    20.683333
+RMB200_OFC    20.293333
+RMB200_S1C    20.803333
+RMB200_STC    20.623333
+RMB200_STR    20.556667
+RMB200_THM    20.886667
+RMB200_V1C    20.290000
+RMB200_VFC    20.916667
 Name: Ct, dtype: float64
 #+end_example
-
 
 We want to associate each RPL32 mean with the samples in =fengs=. One
 way to do this is to just add the values as a column. A function can be
@@ -268,11 +284,15 @@ column from the "Ct" column.
 
 #+begin_src python :session
   fengs['d_Ct'] = fengs.Ct - fengs.rpl_mean
+#+end_src
+
+#+RESULTS[f57d2dcf5c7bbafbab77481b79f73de3d772610b]:
+
+#+begin_src python :session
   fengs.head()
 #+end_src
 
-#+RESULTS[3ac290124d795a1a9b25f10d2c70093486184f46]:
-:
+#+RESULTS[f0c9173879b9db8a6019f07442762958f3b7bf91]:
 :      Sample_Name Detector_Name     Ct   rpl_mean      d_Ct
 : Well
 : 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333
@@ -302,11 +322,15 @@ from the \Delta{}C_{t} values.
 
 #+begin_src python :session
   fengs['dd_Ct'] = fengs.d_Ct - fengs.a1c_mean
+#+end_src
+
+#+RESULTS[5746a57c7b0487a10d6461801ccf1a24ad7478f5]:
+
+#+begin_src python :session
   fengs.head()
 #+end_src
 
-#+RESULTS[87903924de09e09e304817fdd7926835f022675c]:
-:
+#+RESULTS[f0c9173879b9db8a6019f07442762958f3b7bf91]:
 :      Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean     dd_Ct
 : Well
 : 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667 -0.753333
@@ -319,12 +343,16 @@ Finally, we can calculate 2^{-\Delta\Delta{}C_{t}}.
 
 #+begin_src python :session
   fengs['two_dd_Ct'] = 2 ** (-1 * fengs['dd_Ct'])
+#+end_src
+
+#+RESULTS[111567c1cda4755ca1da2ab2d3fe97518667368a]:
+
+#+begin_src python :session
   fengs.head()
 #+end_src
 
-#+RESULTS[d77dfc87390905086d4af5523d497fda5adfcb00]:
+#+RESULTS[f0c9173879b9db8a6019f07442762958f3b7bf91]:
 #+begin_example
-
      Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean  \
 Well
 172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667
