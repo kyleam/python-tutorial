@@ -2,7 +2,7 @@
 #+setupfile: setup.org
 
 The main tutorial for matplotlib is contained in
-code/[[../code/matplotlib_tutorial.ipynb][matplotlib_tutorial.ipynb]]. The best way to get this file is by
+code/[[http://nbviewer.ipython.org/url/kyleam.github.io/python-tutorial/code/matplotlib_tutorial.ipynb][matplotlib_tutorial.ipynb]]. The best way to get this file is by
 [[./syncing-tutorial.org][syncing]] with the git repo.
 
 To start the notebook, go to that directory in a terminal shell and run
