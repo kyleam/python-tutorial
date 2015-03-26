@@ -1,5 +1,4 @@
-(defvar python-tutorial-dir
-  (file-name-as-directory "~/projects/python-tutorial")
+(defvar python-tutorial-dir (expand-file-name "~/sites/python-tutorial/")
   "Top directory of python tutorials")
 
 (setq org-publish-project-alist
