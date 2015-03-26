@@ -20,6 +20,7 @@ img_tex:=$(wildcard $(img_dir)/*.tex)
 
 github_remote=kyleam
 
+.PHONY: help
 help:
 	@echo "site         build site files in output directory"
 	@echo "github       build site and push to github pages"
@@ -56,7 +57,6 @@ $(img_sentinel): $(img_tex)
 	touch $(img_dir)/.sentinel
 
 
+.PHONY: clean
 clean:
 	-rm -rf $(output_dir)
-
-.PHONY: clean help
