@@ -259,7 +259,7 @@ can use =ix=.
 : 172   RMB200_A1C  26.44
 : 187   RMB200_AMY  27.83
 
-To get back all rows for these two columns, the =:= can be be used.
+To get back all rows for these two columns, =:= can be be used.
 
 #+begin_src python :session
   qdat.loc[:, ["Sample_Name", "Ct"]]
