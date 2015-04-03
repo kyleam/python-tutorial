@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Getting the tutorial and staying up-to-date</title>
+<!-- 2015-04-02 Thu 23:43 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Getting the tutorial and staying up-to-date</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Downloading the tutorials for the first time</a>
+<ul>
+<li><a href="#unnumbered-2">With the GUI</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-3">Syncing changes to the tutorials</a>
+<ul>
+<li><a href="#unnumbered-4">With the GUI</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<p>
+The content of this tutorial, as well as the code from our meetings, are
+stored in a <a href="http://git-scm.com/">git</a> repository. git is a fantastic tool, with great
+<a href="http://git-scm.com/documentation">documentation</a> online, but the commands below are all you need to stay
+get and stay up-to-date with changes.
+</p>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Downloading the tutorials for the first time</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+Open up a terminal window (or "Git Bash" on Windows) to a folder where
+you want to store the tutorial (you can change folders by typing <code>cd</code>,
+which stands for "change directory"). Then enter this command:
+</p>
+
+<pre class="example">
+git clone https://github.com/kyleam/python-tutorial.git
+</pre>
+
+<p>
+This will result in a folder called "python-tutorial".
+</p>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-3">
+<h3 id="unnumbered-2">With the GUI</h3>
+<div class="outline-text-3" id="text-unnumbered-2">
+<p>
+If you prefer a GUI instead, open up the Git GUI program and click
+"Clone Existing Repository". Paste in
+<a href="https://github.com/kyleam/python-tutorial.git">https://github.com/kyleam/python-tutorial.git</a> as the source and choose a
+target directory where you want to store the tutorials.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Syncing changes to the tutorials</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+Open up terminal (or "Git Bash" on Windows) and go to the python
+tutorial folder.
+</p>
+
+<p>
+To download the changes, run
+</p>
+
+<pre class="example">
+git fetch origin
+</pre>
+
+<p>
+If changes were found, the command will print out a message.
+</p>
+
+<p>
+Those downloaded changes are present on a branch called <code>origin/master</code>.
+</p>
+
+<p>
+To merge them into your current branch (<code>master</code>), run
+</p>
+
+<pre class="example">
+git merge origin/master
+</pre>
+
+<p>
+Now you are up-to-date (and you see a message describing what has
+changed).
+</p>
+
+<p>
+The above two commands can be achieved in one command:
+</p>
+
+<pre class="example">
+git pull origin master
+</pre>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-3">
+<h3 id="unnumbered-4">With the GUI</h3>
+<div class="outline-text-3" id="text-unnumbered-4">
+<p>
+Load up the Git GUI program. To fetch a branch, go to the menu "Remote"
+and click on "fetch from &gt; origin".
+</p>
+
+<p>
+To merge, go to the menu "Merge" and select "Local Merge". Then select
+<code>origin/master</code> and click "Merge".
+</p>
+
+<div class="note">
+<p>
+<b>Note:</b> The first time you do this you may get an error saying you
+need to set up your name and email. Just open up a terminal to the
+tutorial directory and follow the instructions.
+</p>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

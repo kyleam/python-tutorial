@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Command line input</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Command line input</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Avoiding hard-coding</a></li>
+<li><a href="#unnumbered-2">Command line arguments</a>
+<ul>
+<li><a href="#unnumbered-3">Providing command line arguments</a></li>
+<li><a href="#unnumbered-4">Accessing command line arguments</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-5">Checking the number of arguments</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Avoiding hard-coding</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+Up to this point, we have been hard-coding many elements in the code.
+For example, in <code>get_gene_coords.py</code>, we explicitly provide the file
+name for the genes of interest. This is problematic because if we want
+to extract coordinates from another file, we have to change the source
+code itself.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Command line arguments</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+A better way to do this is to provide this information as input the
+program.
+</p>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-3">
+<h3 id="unnumbered-3">Providing command line arguments</h3>
+<div class="outline-text-3" id="text-unnumbered-3">
+<p>
+To provide input to a program at run time, additional arguments can be
+given after the program name.
+</p>
+
+<pre class="example">
+$ python program arg1 arg2 ...
+</pre>
+
+<div class="note">
+<p>
+<b>Note:</b> The <code>$</code> above is often used to indicate that the command is
+being given at the command line (in the terminal or Windows Command
+Prompt).
+</p>
+
+</div>
+
+<p>
+For <code>get_gene_coords.py</code>, this would look like this:
+</p>
+
+<pre class="example">
+$ python get_gene_coords.py ../data/genes-5random.txt
+</pre>
+
+<p>
+First, we provide the name of the script to run, and then we provide
+the path to the file containing the genes of interest as an argument
+to the script.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-3">
+<h3 id="unnumbered-4">Accessing command line arguments</h3>
+<div class="outline-text-3" id="text-unnumbered-4">
+<p>
+Now that we have given the argument to the program, we have to write
+code that makes use of it. To do this, we need to <a href="./importing.html">import</a> a module,
+<code>sys</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> sys
+</pre>
+</div>
+
+<p>
+<code>sys</code> contains a list, named <code>argv</code>, that has information about the
+command line arguments.
+</p>
+
+<p>
+Make a script (name it <code>argtest.py</code>) that imports the <code>sys</code> module and
+then prints <code>argv</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> sys
+<span class="org-keyword">print</span>(sys.argv)
+</pre>
+</div>
+
+<pre class="example">
+['']
+</pre>
+
+<p>
+Now test it from the command line.
+</p>
+
+<pre class="example">
+$ python argtest.py
+</pre>
+
+<p>
+This should print a list that contains "argtest.py". Now try to pass an
+argument.
+</p>
+
+<pre class="example">
+$ python argtest.py somearg
+</pre>
+
+<p>
+This should print the script name as above, but the list should
+contain a second string, "somearg". Each additional argument will be
+added to the list.
+</p>
+
+<p>
+We can apply this to <code>get_gene_coords.py</code> example. Before, we were
+explicitly declaring the file name.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">gene_file</span> = <span class="org-string">'data/genes-5random.txt'</span>
+</pre>
+</div>
+
+<p>
+Instead, we can do this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> sys
+<span class="org-variable-name">gene_file</span> = sys.argv[1]
+<span class="org-comment-delimiter">## </span><span class="org-comment">rest of script ...</span>
+</pre>
+</div>
+
+<p>
+This allows any file that has the correct format (in this case, one gene
+name per line) to be given as input to the script.
+</p>
+
+<pre class="example">
+$ python get_gene_coords.py newfile
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">Checking the number of arguments</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+If something seems wrong with the input arguments, it is often a good
+idea to stop the program and print a helpful usage message. A simple
+(and good) thing to check is whether the right number of arguments has
+been given. For example, <code>get_gene_coords.py</code> needs exactly one argument
+to work properly. What code could you write to check that the correct
+number of arguments has been passed?
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

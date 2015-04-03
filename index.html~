@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Python tutorial</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python tutorial</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Basics</a></li>
+<li><a href="#unnumbered-2">Packages</a></li>
+<li><a href="#unnumbered-3">Other packages</a></li>
+<li><a href="#unnumbered-4">A few other Python resources</a></li>
+<li><a href="#unnumbered-5">Useful non-Python stuff</a></li>
+</ul>
+</div>
+</div>
+<p>
+Instructions for setting up and staying up-to-date with these tutorials
+can be found <a href="./doc/syncing-tutorial.html">here</a>.
+</p>
+
+<div id="outline-container-unnumbered-1" class="outline-2 topic-list-def">
+<h2 id="unnumbered-1">Basics</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<dl class="org-dl">
+<dt><a href="doc/installation.html">Installation</a></dt><dd>Instructions for installing Python</dd>
+<dt><a href="doc/types.html">Types</a></dt><dd>Some of the major types of objects</dd>
+<dt><a href="doc/control_constructs.html">Control constructs</a></dt><dd>Controlling what code is executed</dd>
+<dt><a href="doc/commandline_input.html">Command line input</a></dt><dd>Specifying values at the command line</dd>
+<dt><a href="doc/file_io.html">File input and output</a></dt><dd>Reading and writing to files</dd>
+<dt><a href="doc/functions.html">Functions</a></dt><dd>Creating reusable operations</dd>
+<dt><a href="./doc/importing.html">Importing</a></dt><dd>Accessing code from other files</dd>
+<dt><a href="./doc/regex.html">Regular expressions</a></dt><dd>Matching operations</dd>
+<dt><a href="./doc/mutability.html">Mutability</a></dt><dd>Mutable versus immutable objects</dd>
+<dt><a href="./doc/list-comprehensions.html">List comprehensions</a></dt><dd>Conveniently filter and operate on lists</dd>
+<dt>Exceptions</dt><dd>Raising and catching exceptions</dd>
+<dt><a href="./doc/testing.html">Testing</a></dt><dd>Tools for making sure your code is correct</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2 topic-list-def">
+<h2 id="unnumbered-2">Packages</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+Python packages that we will cover:
+</p>
+
+<dl class="org-dl">
+<dt>Pandas</dt><dd>Data analysis library
+
+<ul class="org-ul">
+<li>Part 1: <a href="./doc/pandas-part1.html">Reading, viewing, and selecting data</a></li>
+<li>Part 2: <a href="./doc/pandas-part2.html">Cleaning and operating on data</a></li>
+</ul></dd>
+
+<dt>Matplotlib</dt><dd>Plotting library
+
+<ul class="org-ul">
+<li><a href="./doc/matplotlib.html">Introduction to Matplotlib</a></li>
+</ul></dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2 topic-list-def">
+<h2 id="unnumbered-3">Other packages</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+Some interesting packages that we probably won't cover directly:
+</p>
+
+<dl class="org-dl">
+<dt><a href="http://biopython.org/wiki/Main_Page">Biopython</a></dt><dd>Wide collection of tools for biology</dd>
+<dt><a href="https://bitbucket.org/james_taylor/bx-python/wiki/Home">bx-python</a></dt><dd>Genome analysis tools</dd>
+<dt><a href="http://docs.python.org/3.3/library/collections.html">collections</a></dt><dd>Some useful datatypes, especially <code>defaultdict</code> and
+<code>namedtuple</code></dd>
+<dt><a href="http://docs.python.org/3.3/library/csv.html">csv</a></dt><dd>Reading and writing of delimited files</dd>
+<dt><a href="http://docopt.org/">docopt</a></dt><dd>Convenient and fast way to write command line program</dd>
+<dt><a href="http://docs.python.org/3.3/library/fileinput.html">fileinput</a></dt><dd>A good solution for handling standard input and multiple
+input files</dd>
+<dt><a href="http://docs.python.org/3.3/library/itertools.html">itertools</a></dt><dd>Handy functions for working with iterators</dd>
+<dt><a href="http://ipython.org/notebook.html">IPython notebook</a></dt><dd>IPython session within a text document</dd>
+<dt><a href="https://en.wikipedia.org/wiki/NumPy">NumPy</a></dt><dd>Multi-dimensional arrays (Pandas is built on top of this)</dd>
+<dt><a href="http://statsmodels.sourceforge.net/">statsmodels</a></dt><dd>Statistical library</dd>
+</dl>
+</div>
+</div>
+
+
+<div id="outline-container-unnumbered-4" class="outline-2 topic-list">
+<h2 id="unnumbered-4">A few other Python resources</h2>
+<div class="outline-text-2" id="text-unnumbered-4">
+<ul class="org-ul">
+<li><a href="http://www.learnpython.org/">Learn Python</a></li>
+<li><a href="http://docs.python.org/2/tutorial/">The Python tutorial</a></li>
+<li><a href="http://www.pythonforbeginners.com/">Python for Beginners</a></li>
+<li><a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/">Idiomatic python</a></li>
+<li><a href="http://www.youtube.com/watch?v=tKTZoB2Vjuk">Google's Python class (video)</a></li>
+<li><a href="http://learnpythonthehardway.org/book/intro.html">Learn python the hard way</a></li>
+<li><a href="http://www.diveintopython.net/toc/index.html">Dive into Python</a></li>
+<li><a href="https://github.com/jrjohansson/scientific-python-lectures">Scientific python lectures</a></li>
+<li><a href="http://rosalind.info/problems/list-view/">Rosalind bioinformatics challenges</a></li>
+<li><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">List of other tutorials</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2 topic-list-def">
+<h2 id="unnumbered-5">Useful non-Python stuff</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<dl class="org-dl">
+<dt><a href="./doc/bash.html">Bash cheat sheet</a></dt><dd>Important commands for working from the terminal</dd>
+</dl>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

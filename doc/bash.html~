@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Bash cheat sheet</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Bash cheat sheet</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Getting information on commands</a></li>
+<li><a href="#unnumbered-2">Directory (folder) operations</a>
+<ul>
+<li><a href="#unnumbered-3">listing the contents of a directory</a></li>
+<li><a href="#unnumbered-4">change directories</a></li>
+<li><a href="#unnumbered-5">show your current (present) directory</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-6">File operations</a>
+<ul>
+<li><a href="#unnumbered-7">copying a file</a></li>
+<li><a href="#unnumbered-8">rename (move) a file</a></li>
+<li><a href="#unnumbered-9">deleting (removing) a file</a></li>
+<li><a href="#unnumbered-10">viewing the contents of a text file</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Getting information on commands</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+Access the manual:
+</p>
+
+<pre class="example">
+man &lt;command of interest&gt;
+</pre>
+
+<p>
+If this doesn't work (the program doesn't have a manual), usually it is
+safe to try running the command with typical help flags:
+</p>
+
+<pre class="example">
+&lt;command of interest&gt; --help
+&lt;command of interest&gt; -h
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Directory (folder) operations</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+</div><div id="outline-container-unnumbered-3" class="outline-3">
+<h3 id="unnumbered-3">listing the contents of a directory</h3>
+<div class="outline-text-3" id="text-unnumbered-3">
+<pre class="example">
+ls
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-3">
+<h3 id="unnumbered-4">change directories</h3>
+<div class="outline-text-3" id="text-unnumbered-4">
+<pre class="example">
+cd &lt;directory&gt;
+</pre>
+
+<p>
+<code>~</code> stands for your home directory. So this would take you to your home
+directory:
+</p>
+
+<pre class="example">
+cd ~
+</pre>
+
+<p>
+And this would take you to your downloads folder under you home
+directory:
+</p>
+
+<pre class="example">
+cd ~/downloads
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-3">
+<h3 id="unnumbered-5">show your current (present) directory</h3>
+<div class="outline-text-3" id="text-unnumbered-5">
+<pre class="example">
+pwd
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-6" class="outline-2">
+<h2 id="unnumbered-6">File operations</h2>
+<div class="outline-text-2" id="text-unnumbered-6">
+</div><div id="outline-container-unnumbered-7" class="outline-3">
+<h3 id="unnumbered-7">copying a file</h3>
+<div class="outline-text-3" id="text-unnumbered-7">
+<pre class="example">
+cp &lt;file name&gt; &lt;new file name&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-8" class="outline-3">
+<h3 id="unnumbered-8">rename (move) a file</h3>
+<div class="outline-text-3" id="text-unnumbered-8">
+<pre class="example">
+mv &lt;file name&gt; &lt;new file name&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-9" class="outline-3">
+<h3 id="unnumbered-9">deleting (removing) a file</h3>
+<div class="outline-text-3" id="text-unnumbered-9">
+<pre class="example">
+rm &lt;file&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-10" class="outline-3">
+<h3 id="unnumbered-10">viewing the contents of a text file</h3>
+<div class="outline-text-3" id="text-unnumbered-10">
+<p>
+Print the entire contents of a file to the terminal screen:
+</p>
+
+<pre class="example">
+cat &lt;file&gt;
+</pre>
+
+<p>
+Load the file so that you can scroll and search the contents:
+</p>
+
+<pre class="example">
+less &lt;file&gt;
+</pre>
+
+<p>
+When viewing a file with less, move down with <code>j</code> and up with <code>k</code>.
+Search by pressing <code>/</code> and then entering the search term. Leave the file
+with <code>q</code>.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

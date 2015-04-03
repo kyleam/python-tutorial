@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Pandas: Reading, viewing, and selecting data</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Pandas: Reading, viewing, and selecting data</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Reading in data</a></li>
+<li><a href="#unnumbered-2">Viewing data</a></li>
+<li><a href="#unnumbered-3">Selecting data</a>
+<ul>
+<li><a href="#unnumbered-4">Selecting columns</a></li>
+<li><a href="#unnumbered-5">Selecting both rows and columns</a></li>
+<li><a href="#unnumbered-6">Selecting rows using a boolean vector</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-7">Relevant parts of Pandas documentation</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Reading in data</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+First, import pandas.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> pandas <span class="org-keyword">as</span> pd
+</pre>
+</div>
+
+<p>
+Pandas has a number of functions for reading in different types of
+files. You can see these (in IPython) by typing <code>pd.read&lt;TAB&gt;</code>. Remember
+that you can type <code>?</code> after the name to get more information. The
+function we will use is <code>read_csv</code> (<code>pd.read_csv?</code>).
+</p>
+
+<p>
+Before doing anything with Pandas, let's look at the file we will be
+reading in (below I use the <code>head</code> command to view the first 4 lines of
+the file in the terminal, but you could just open up the file in a text
+editor).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">head -4 ../data/qpcr.csv
+</pre>
+</div>
+
+<pre class="example">
+Well,Sample_Name,Detector_Name,Reporter,Ct,Threshold
+172,RMB200_A1C,FENG3_1,SYBR,26.44,0.39
+173,RMB200_A1C,FENG3_1,SYBR,27.38,0.39
+174,RMB200_A1C,FENG3_1,SYBR,27.76,0.39
+</pre>
+
+<p>
+The file is comma-separted, with the first row as the column. To read it
+into a data frame, we pass the filename to <code>read_csv</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">qdat</span> = pd.read_csv(<span class="org-string">'../data/qpcr.csv'</span>)
+</pre>
+</div>
+
+<p>
+Now <code>qdat</code> contains all the data.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Viewing data</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+Pandas provides many convenient ways to view and summarize data. The
+<code>info</code> method will give a nice summary of the data frame.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.info()
+</pre>
+</div>
+
+<pre class="example">
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 254 entries, 0 to 253
+Data columns (total 6 columns):
+Well             254 non-null int64
+Sample_Name      254 non-null object
+Detector_Name    254 non-null object
+Reporter         254 non-null object
+Ct               254 non-null object
+Threshold        254 non-null float64
+dtypes: float64(1), int64(1), object(4)
+memory usage: 13.9+ KB
+</pre>
+
+<p>
+This tells us things like the column names, how many rows we have, and
+the data types present.
+</p>
+
+<p>
+You'll notice that Pandas automatically took the first row in the csv
+file as the column names. This behavior can be controlled by passing
+optional arguments to <code>read_csv</code>.
+</p>
+
+<p>
+To view the first few rows of the data frame, use the <code>head</code> method.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.head()
+</pre>
+</div>
+
+<pre class="example">
+   Well Sample_Name Detector_Name Reporter     Ct  Threshold
+0   172  RMB200_A1C       FENG3_1     SYBR  26.44       0.39
+1   173  RMB200_A1C       FENG3_1     SYBR  27.38       0.39
+2   174  RMB200_A1C       FENG3_1     SYBR  27.76       0.39
+3   187  RMB200_AMY       FENG3_1     SYBR  27.83       0.39
+4   188  RMB200_AMY       FENG3_1     SYBR  28.94       0.39
+</pre>
+
+<p>
+Similary, you can use tail to view the end of the data frame.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.tail()
+</pre>
+</div>
+
+<pre class="example">
+     Well Sample_Name Detector_Name Reporter            Ct  Threshold
+249   125  RMB200_VFC         RPL32     SYBR         20.91        0.4
+250   126  RMB200_VFC         RPL32     SYBR         20.95        0.4
+251   349         NTC         RPL32     SYBR  Undetermined        0.4
+252   350         NTC         RPL32     SYBR  Undetermined        0.4
+253   351         NTC         RPL32     SYBR         36.60        0.4
+</pre>
+
+<p>
+Notice the "Undetermined" values. In the next tutorial, we'll cover how
+to mark these so that Pandas knows that they are missing values.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Selecting data</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+</div><div id="outline-container-unnumbered-4" class="outline-3">
+<h3 id="unnumbered-4">Selecting columns</h3>
+<div class="outline-text-3" id="text-unnumbered-4">
+<p>
+There are various ways to select different parts of the data frame.
+</p>
+
+<p>
+Let's say we wanted to access the "Sample_Name" column. There are two
+ways to do this.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat[<span class="org-string">'Sample_Name'</span>]
+</pre>
+</div>
+
+<pre class="example">
+0      RMB200_A1C
+1      RMB200_A1C
+2      RMB200_A1C
+3      RMB200_AMY
+4      RMB200_AMY
+5      RMB200_AMY
+6      RMB200_CBL
+7      RMB200_CBL
+8      RMB200_CBL
+9      RMB200_DFC
+10     RMB200_DFC
+11     RMB200_DFC
+12     RMB200_HIP
+13     RMB200_HIP
+14     RMB200_HIP
+15     RMB200_IPC
+16     RMB200_IPC
+17     RMB200_IPC
+18     RMB200_ITC
+19     RMB200_ITC
+20     RMB200_ITC
+21     RMB200_M1C
+22     RMB200_M1C
+23     RMB200_M1C
+24     RMB200_MFC
+25     RMB200_MFC
+26     RMB200_MFC
+27     RMB200_OFC
+28     RMB200_OFC
+29     RMB200_OFC
+          ...
+224    RMB200_M1C
+225    RMB200_M1C
+226    RMB200_M1C
+227    RMB200_MFC
+228    RMB200_MFC
+229    RMB200_MFC
+230    RMB200_OFC
+231    RMB200_OFC
+232    RMB200_OFC
+233    RMB200_S1C
+234    RMB200_S1C
+235    RMB200_S1C
+236    RMB200_STC
+237    RMB200_STC
+238    RMB200_STC
+239    RMB200_STR
+240    RMB200_STR
+241    RMB200_STR
+242    RMB200_THM
+243    RMB200_THM
+244    RMB200_THM
+245    RMB200_V1C
+246    RMB200_V1C
+247    RMB200_V1C
+248    RMB200_VFC
+249    RMB200_VFC
+250    RMB200_VFC
+251           NTC
+252           NTC
+253           NTC
+Name: Sample_Name, dtype: object
+</pre>
+
+<p>
+Because there are more rows than can be conveniently printed to the
+screen, Pandas snips out a lot of the values in the middle.
+</p>
+
+<p>
+The other way to access a column name is as an attibute to the data
+frame, assuming that it is a valid attribute name in Python (no
+spaces, hyphens, or periods).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.Sample_Name
+</pre>
+</div>
+
+<p>
+If we want two columns, we use a list of column names.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat[[<span class="org-string">'Sample_Name'</span>, <span class="org-string">'Ct'</span>]].head()
+</pre>
+</div>
+
+<pre class="example">
+  Sample_Name     Ct
+0  RMB200_A1C  26.44
+1  RMB200_A1C  27.38
+2  RMB200_A1C  27.76
+3  RMB200_AMY  27.83
+4  RMB200_AMY  28.94
+</pre>
+
+<p>
+This returns a data frame with two columns (and <code>head</code> is used to view
+the first 5 rows).
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-3">
+<h3 id="unnumbered-5">Selecting both rows and columns</h3>
+<div class="outline-text-3" id="text-unnumbered-5">
+<p>
+For selections involving both rows and columns, either <code>ix</code>, <code>loc</code>, or
+<code>iloc</code> can be used. <code>ix</code> supports both label (name) indexing and
+position indexing, while <code>loc</code> supports only labels and <code>iloc</code> supports
+only integers. I tend to prefer <code>loc</code> and <code>iloc</code> because they are more
+explicit.
+</p>
+
+<p>
+Let's first access rows and columns using labels. For the current data
+frame, the row labels are same as the row positions, but the row
+labels and positions do not need to match. The row labels just have to
+be a unique identifier. To make this clear, we'll switch to using the
+well number, which is a unique identifier, as the row labels (called
+the "index"). (We could have taken care of this when initially reading
+in the data with <code>read_csv</code>).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.set_index(<span class="org-string">"Well"</span>, inplace=<span class="org-constant">True</span>)
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.head()
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name Reporter     Ct  Threshold
+Well
+172   RMB200_A1C       FENG3_1     SYBR  26.44       0.39
+173   RMB200_A1C       FENG3_1     SYBR  27.38       0.39
+174   RMB200_A1C       FENG3_1     SYBR  27.76       0.39
+187   RMB200_AMY       FENG3_1     SYBR  27.83       0.39
+188   RMB200_AMY       FENG3_1     SYBR  28.94       0.39
+</pre>
+
+<p>
+To select well 172 and 188 with the "Sample_Name" and "Ct" columns, we
+can use <code>ix</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.loc[[172, 187], [<span class="org-string">"Sample_Name"</span>, <span class="org-string">"Ct"</span>]]
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name     Ct
+Well
+172   RMB200_A1C  26.44
+187   RMB200_AMY  27.83
+</pre>
+
+<p>
+To get back all rows for these two columns, <code>:</code> can be be used.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.loc[:, [<span class="org-string">"Sample_Name"</span>, <span class="org-string">"Ct"</span>]]
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name            Ct
+Well
+172   RMB200_A1C         26.44
+173   RMB200_A1C         27.38
+174   RMB200_A1C         27.76
+187   RMB200_AMY         27.83
+188   RMB200_AMY         28.94
+189   RMB200_AMY         28.91
+190   RMB200_CBL         28.04
+191   RMB200_CBL         27.95
+192   RMB200_CBL         27.89
+25    RMB200_DFC         27.90
+26    RMB200_DFC         27.90
+27    RMB200_DFC         27.29
+184   RMB200_HIP         27.40
+185   RMB200_HIP         28.04
+186   RMB200_HIP         28.50
+43    RMB200_IPC         28.08
+44    RMB200_IPC         28.18
+45    RMB200_IPC         27.08
+46    RMB200_ITC         28.39
+47    RMB200_ITC         28.33
+48    RMB200_ITC         28.20
+34    RMB200_M1C         27.97
+35    RMB200_M1C         27.28
+36    RMB200_M1C         26.93
+31    RMB200_MFC         27.94
+32    RMB200_MFC         27.90
+33    RMB200_MFC         28.31
+37    RMB200_OFC         28.08
+38    RMB200_OFC         28.29
+39    RMB200_OFC         27.68
+         ...           ...
+130   RMB200_M1C         21.28
+131   RMB200_M1C         20.98
+132   RMB200_M1C         21.42
+127   RMB200_MFC         20.68
+128   RMB200_MFC         20.58
+129   RMB200_MFC         20.79
+133   RMB200_OFC         19.58
+134   RMB200_OFC         20.67
+135   RMB200_OFC         20.63
+136   RMB200_S1C         20.84
+137   RMB200_S1C         20.73
+138   RMB200_S1C         20.84
+265   RMB200_STC         20.11
+266   RMB200_STC         20.60
+267   RMB200_STC         21.16
+274   RMB200_STR         20.76
+275   RMB200_STR         20.16
+276   RMB200_STR         20.75
+277   RMB200_THM         20.89
+278   RMB200_THM         21.12
+279   RMB200_THM         20.65
+271   RMB200_V1C         20.13
+272   RMB200_V1C         20.36
+273   RMB200_V1C         20.38
+124   RMB200_VFC         20.89
+125   RMB200_VFC         20.91
+126   RMB200_VFC         20.95
+349          NTC  Undetermined
+350          NTC  Undetermined
+351          NTC         36.60
+
+[254 rows x 2 columns]
+</pre>
+
+<p>
+If we wanted to select these by positions instead, we should use <code>iloc</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.iloc[[0, 3], [0, 3]]  <span class="org-comment-delimiter">## </span><span class="org-comment">[[rows], [cols]]</span>
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name     Ct
+Well
+172   RMB200_A1C  26.44
+187   RMB200_AMY  27.83
+</pre>
+
+<p>
+If the positions happen to be consecutive, slice notation can be used
+instead. For example, to get the first 3 rows and the first 2 columns,
+we could use:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.iloc[:3, :2]
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name
+Well
+172   RMB200_A1C       FENG3_1
+173   RMB200_A1C       FENG3_1
+174   RMB200_A1C       FENG3_1
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-6" class="outline-3">
+<h3 id="unnumbered-6">Selecting rows using a boolean vector</h3>
+<div class="outline-text-3" id="text-unnumbered-6">
+<p>
+Often you want to select all rows that have a specific value in a
+column. For example, the "Detector_Name" column has 5 unique values.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.Detector_Name.unique()
+</pre>
+</div>
+
+<pre class="example">
+array(['FENG3_1', 'FENG3_2', 'FENG3_3', 'FENG3_4', 'RPL32'], dtype=object)
+</pre>
+
+<p>
+How would we limit the data frame to just the rows that have "RPL32"?
+First, we create a boolean vector.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">rpl_bool</span> = qdat.Detector_Name == <span class="org-string">'RPL32'</span>
+</pre>
+</div>
+
+<p>
+Now that we have a True/False list for each row, we can use it to
+select the rows that have <code>True</code> as their value (corresponding to the
+rows that have "RPL32 in the "Detector_Name" column).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">rpl</span> = qdat[rpl_bool]
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">rpl.Detector_Name.unique()
+</pre>
+</div>
+
+<pre class="example">
+array(['RPL32'], dtype=object)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-7" class="outline-2">
+<h2 id="unnumbered-7">Relevant parts of Pandas documentation</h2>
+<div class="outline-text-2" id="text-unnumbered-7">
+<ul class="org-ul">
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/dsintro.html">Intro to Data Structures</a></li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html">Essential Basic Functionality</a></li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/indexing.html">Indexing and Selecting Data</a></li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/io.html">IO tools</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

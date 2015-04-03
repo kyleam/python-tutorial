@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Regular expressions</title>
+<!-- 2015-04-02 Thu 23:43 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Regular expressions</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">When regular expressions are useful</a></li>
+<li><a href="#unnumbered-2">Defining a regular expression</a></li>
+<li><a href="#unnumbered-3">Matching patterns</a></li>
+<li><a href="#unnumbered-4">Pulling out groups</a></li>
+<li><a href="#unnumbered-5">Tasks</a>
+<ul>
+<li><a href="#unnumbered-6">Extract Ensembl IDs from a GTF file</a></li>
+<li><a href="#unnumbered-7">Find each base that follows an insertion</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">When regular expressions are useful</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+We've already encountered a situation when regular expressions would
+have been very useful. Remember when we wanted to get the gene name from
+a line in a GTF file? The line with the gene name had a bunch of fields
+separated by ";".
+</p>
+
+<pre class="example">
+gene_id "ENSG00000081386.8"; [ ... ] gene_name "ZNF510"; [ ... ]
+</pre>
+
+<p>
+At the time, we approached this using splitting. (I'm going to snip out
+a lot of the other fields to make it more readable, but the process was
+the same.)
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">info</span> = <span class="org-string">'gene_id "ENSG00000081386.8"; gene_name "ZNF510"'</span>
+<span class="org-variable-name">gene_name_field</span> = info.split(<span class="org-string">';'</span>)[1]
+<span class="org-variable-name">gene_name</span> = gene_name_field.split()[1]
+<span class="org-variable-name">gene_name</span> = gene_name[1:-1]  <span class="org-comment-delimiter"># </span><span class="org-comment">strip out quotes</span>
+<span class="org-keyword">print</span>(gene_name)
+</pre>
+</div>
+
+<pre class="example">
+ZNF510
+</pre>
+
+<p>
+That's a lot of work just to get to the gene name. Regular expressions
+provide a nice solution to this problem because they allow you to
+match a pattern and pull out the information that you're interested
+in.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Defining a regular expression</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+In order to pull out the gene name, we need to define the match
+pattern. Defining regular expressions can be a little confusing
+because the <a href="http://docs.python.org/3.3/library/re.html#regular-expression-syntax">syntax for creating</a> them is dense. We are not going to go
+into the details of the syntax; we'll just cover what we need to
+extract out the gene name. This will give you an idea for what regular
+expression can do, so that you recognize situations where they may be
+helpful.
+</p>
+
+<p>
+If we look at the string above, the thing that distinguishes the gene
+name is the text "gene_name". We will create a pattern that matches
+this.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">pattern</span> = r<span class="org-string">'gene_name "\w+"'</span>
+</pre>
+</div>
+
+<p>
+The first part of that pattern should make sense: we are creating a
+match for "gene_name". <code>\w</code> is a special character that means match a
+word character, which is defined as upper and lower case letters as
+well as digits. (See <a href="http://docs.python.org/3.3/library/re.html#regular-expression-syntax">here</a> for a list of possible characters.) This
+should cover the possible elements of a gene name (except for maybe a
+hyphen). The <code>+</code> means match one or more instances of the thing it
+follows (in this case, <code>\w</code>). A related symbol is <code>*</code>, which means
+match <b>zero</b> or more instances of the thing it follows.
+</p>
+
+<p>
+The only thing left to explain in the pattern is the <code>r</code> that comes
+before the string. This classifies the string as a raw string and
+tells Python to not interpret <code>\</code> as special. For example, recall that
+a new line is represented as "\n". Even though you type two
+characters, the <code>\</code> indicates that Python should treat the <code>n</code> as a
+new line, so the string consists of one new line character. If
+instead, you wrote an <code>r</code> before the string, the <code>\</code> would no longer
+have its special meaning, and the string would consist of two
+characters: a <code>\</code> and a <code>n</code>. This is useful with regular expressions
+because the <a href="http://docs.python.org/3.3/library/re.html#regular-expression-syntax">syntax</a> makes heavy use of <code>\</code>. Putting <code>r</code> before the
+string prevents Python from trying to do anything special to the <code>\</code>
+characters before they are passed to the regular expression function,
+which will then interpret them and apply any special meaning to the
+characters.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Matching patterns</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+Now that we have defined that pattern, we can search for it in the
+string.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> re
+
+<span class="org-variable-name">match</span> = re.search(pattern, info)
+<span class="org-keyword">print</span>(match)
+</pre>
+</div>
+
+<pre class="example">
+&lt;_sre.SRE_Match object; span=(29, 47), match='gene_name "ZNF510"'&gt;
+</pre>
+
+<p>
+<a id="nogroup"></a>The <code>search</code> function returns a match object (or <code>None</code> if
+a match isn't found). From the output, we see that we have an object,
+but how do we access the match? If you are in IPython, you can type
+<code>match.&lt;TAB&gt;</code> to see your options. Use a <code>?</code> after some of them to get
+more information. The description of <code>match.group?</code> seems promising.
+It tells us that giving <code>0</code> as an argument will return the entire
+match. Let's try.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">print</span>(match.group(0))
+</pre>
+</div>
+
+<pre class="example">
+gene_name "ZNF510"
+</pre>
+
+<p>
+Well, still not exactly what we want. It would be nice to get the gene
+name that is inside the quotes.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-2">
+<h2 id="unnumbered-4">Pulling out groups</h2>
+<div class="outline-text-2" id="text-unnumbered-4">
+<p>
+The trick is putting parentheses around the text we want to capture.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">pattern</span> = r<span class="org-string">'gene_name "(\w+)"'</span>
+</pre>
+</div>
+
+<p>
+Now we can access the captured text as a group. We know from the
+<a href="#nogroup">previous matching example</a> that passing <code>0</code> to <code>match.group</code> gives that
+entire match string. After this default group, there are as many
+additional groups as parentheses sets in the pattern. So in the first
+example, there were no more groups. In the second pattern we created, we
+defined a group with parentheses, so there is one more group in addition
+to the default group that corresponds to the entire match.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">match</span> = re.search(pattern, info)
+<span class="org-keyword">print</span>(match.group(0))
+<span class="org-keyword">print</span>(match.group(1))
+</pre>
+</div>
+
+<pre class="example">
+gene_name "ZNF510"
+ZNF510
+</pre>
+
+<p>
+Here is the complete example extracting out the gene name.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> re
+
+<span class="org-variable-name">info</span> = <span class="org-string">'gene_id "ENSG00000081386.8"; gene_name "ZNF510"'</span>
+<span class="org-variable-name">pattern</span> = r<span class="org-string">'gene_name "(\w+)"'</span>
+<span class="org-variable-name">gene_name</span> = re.search(pattern, info).group(1)
+<span class="org-keyword">print</span>(gene_name)
+</pre>
+</div>
+
+<pre class="example">
+ZNF510
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">Tasks</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+</div><div id="outline-container-unnumbered-6" class="outline-3">
+<h3 id="unnumbered-6">Extract Ensembl IDs from a GTF file</h3>
+<div class="outline-text-3" id="text-unnumbered-6">
+<p>
+Write a program that uses a regular expression to extract the gene ID
+from the lines in data/<a href="../data/gencode-v10-50random.gtf">gencode-v10-50random.gtf</a>. Only extract the part
+of the gene ID before the decimal point. You should wrap the ID
+extraction in a function and write tests to show that it works. You can
+decide whether you would prefer to print the extracted gene IDs to the
+screen or write them to an output file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-7" class="outline-3">
+<h3 id="unnumbered-7">Find each base that follows an insertion</h3>
+<div class="outline-text-3" id="text-unnumbered-7">
+<p>
+Write a function that uses a regular expression to find each base that
+follows an insertion in the sequence. Write tests to demonstrate that
+your function works.
+</p>
+
+<pre class="example">
+In [1]: bases_after_insert('AACT-CGGCA-AGAT')
+['C', 'A']
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

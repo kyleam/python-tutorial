@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Types in python</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Types in python</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Boolean</a></li>
+<li><a href="#unnumbered-2">Integers</a></li>
+<li><a href="#unnumbered-3">Floats</a></li>
+<li><a href="#unnumbered-4">Strings</a></li>
+<li><a href="#unnumbered-5">Lists</a></li>
+<li><a href="#unnumbered-6">Dictionaries</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Boolean</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+Boolean values are represented by <code>True</code> and <code>False</code>. They are often
+produced by comparison operations.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">print</span>(3 &gt; 2)
+<span class="org-keyword">print</span>(10/5 == 1)
+</pre>
+</div>
+
+<pre class="example">
+True
+False
+</pre>
+
+<div class="note">
+<p>
+<b>Note:</b> Above I am using <code>print</code> to see the results of the
+comparison, but if you're in IPython, you don't need to do this.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Integers</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">x</span> = 1
+<span class="org-keyword">print</span>(x + 3)
+</pre>
+</div>
+
+<pre class="example">
+4
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Floats</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">x</span> = 1.0
+<span class="org-keyword">print</span>(x + 3.0)
+</pre>
+</div>
+
+<pre class="example">
+4.0
+</pre>
+
+<p>
+If you add an integer to a float, the result will be a float.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">x</span> = 1.0
+<span class="org-keyword">print</span>(x + 3)
+</pre>
+</div>
+
+<pre class="example">
+4.0
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-2">
+<h2 id="unnumbered-4">Strings</h2>
+<div class="outline-text-2" id="text-unnumbered-4">
+<p>
+These are characters and words. They must be surrounded by either single
+or double quotes.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">name</span> = <span class="org-string">'john'</span>
+</pre>
+</div>
+
+<p>
+Strings have some convenient methods associated with them. For example:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">print</span>(name.upper())
+<span class="org-keyword">print</span>(name.capitalize())
+</pre>
+</div>
+
+<pre class="example">
+JOHN
+John
+</pre>
+
+<div class="note">
+<p>
+<b>Note:</b> If you're in IPython, you can find out what methods are
+available for an object (like the string <code>name</code> above) by typing the
+object and a period and then hitting tab. So, in this case,
+<code>name.&lt;TAB&gt;</code> will show you all the available methods for a <code>str</code>.
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">Lists</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+A list is a sequence of values.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">primes</span> = [2, 3, 5]
+</pre>
+</div>
+
+<p>
+Each value can be accessed individually.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">print</span>(primes[0])
+<span class="org-keyword">print</span>(primes[2])
+</pre>
+</div>
+
+<pre class="example">
+2
+5
+</pre>
+
+<p>
+The index (the value inside the brackets) is 0-based.
+</p>
+
+<p>
+Lists can also be iterated over one-by-one.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">for</span> prime <span class="org-keyword">in</span> primes:
+    <span class="org-keyword">print</span>(prime)
+</pre>
+</div>
+
+<pre class="example">
+2
+3
+5
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-6" class="outline-2">
+<h2 id="unnumbered-6">Dictionaries</h2>
+<div class="outline-text-2" id="text-unnumbered-6">
+<p>
+Dictionaries store key-value pairs.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">prices</span> = {<span class="org-string">'car'</span> : 40000, <span class="org-string">'pop'</span> : 1}
+<span class="org-keyword">print</span>(prices[<span class="org-string">'pop'</span>])
+</pre>
+</div>
+
+<pre class="example">
+1
+</pre>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

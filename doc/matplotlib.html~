@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Introduction to Matplotlib</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Introduction to Matplotlib</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Relevant parts of Matplotlib documentation</a></li>
+<li><a href="#unnumbered-2">Other tutorials</a></li>
+<li><a href="#unnumbered-3">Task</a></li>
+</ul>
+</div>
+</div>
+<p>
+The main tutorial for matplotlib is contained in
+code/<a href="http://nbviewer.ipython.org/url/kyleam.github.io/python-tutorial/code/matplotlib_tutorial.ipynb">matplotlib_tutorial.ipynb</a>. The best way to get this file is by
+<a href="./syncing-tutorial.html">syncing</a> with the git repo.
+</p>
+
+<p>
+To start the notebook, go to that directory in a terminal shell and run
+<code>ipython notebook</code>.
+</p>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Relevant parts of Matplotlib documentation</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<ul class="org-ul">
+<li><a href="http://matplotlib.org/faq/usage_faq.html#general-concepts">General concepts</a></li>
+<li><a href="http://matplotlib.org/faq/usage_faq.html#matplotlib-pylab-and-pyplot-how-are-they-related">Matplotlib, pylab, and pyplot: how are they related?</a></li>
+<li><a href="http://matplotlib.org/gallery.html">The Matplotlib gallery</a></li>
+<li><a href="http://matplotlib.org/users/customizing.html">Customizing matplotlib</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Other tutorials</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<ul class="org-ul">
+<li><a href="http://nbviewer.ipython.org/urls/raw.github.com/jrjohansson/scientific-python-lectures/master/Lecture-4-Matplotlib.ipynb">Robert Johansson's tutorial</a></li>
+<li><a href="http://www.loria.fr/~rougier/teaching/matplotlib/">Nicolas Rougier's tutorial</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Task</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+In addition to running and tweaking the examples in the matplotlib
+tutorial notebook, you should use matplotlib to reproduce a few plots
+you've made using other software.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

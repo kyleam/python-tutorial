@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Pandas: Cleaning and operating on data</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Pandas: Cleaning and operating on data</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Reading in and cleaning the data</a></li>
+<li><a href="#unnumbered-2">Initial data exploration</a></li>
+<li><a href="#unnumbered-3">Performing calculations on the data frame</a></li>
+<li><a href="#unnumbered-4">Overview of methods for performing calculations</a></li>
+<li><a href="#unnumbered-5">Task</a></li>
+<li><a href="#unnumbered-6">Relevant parts of Pandas documentation</a></li>
+</ul>
+</div>
+</div>
+<p>
+In <a href="./pandas-part1.html">part 1</a> we covered reading and viewing data. We'll use the same data
+set to demonstrate how to carry out calculations in Pandas. If you would
+prefer an overview of some of the methods we'll use before seeing them
+in action, jump to <a href="#unnumbered-4">Overview of methods for performing calculations</a> and
+then come back.
+</p>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Reading in and cleaning the data</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+First, let's read in the data and set the rows to the well column
+values.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> pandas <span class="org-keyword">as</span> pd
+<span class="org-variable-name">qdat</span> = pd.read_csv(<span class="org-string">'../data/qpcr.csv'</span>,
+                   na_values=<span class="org-string">'Undetermined'</span>)
+qdat.set_index(<span class="org-string">'Well'</span>, inplace=<span class="org-constant">True</span>)
+</pre>
+</div>
+
+<p>
+This is similar to how we read in the data last time, except for the
+<code>na_values</code> parameter. This tells Pandas to treat the string
+"Undetermined" as an indicator of a missing value. If we didn't do this,
+the "Ct" column would be read in as strings because "Undetermined" would
+be treated as a string, and all the values of a column must be the same
+type.
+</p>
+
+<p>
+To view the rows that have null C<sub>t</sub> values, we can use <code>pd.isnull</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat[pd.isnull(qdat.Ct)]
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name Reporter  Ct  Threshold
+Well
+337          NTC       FENG3_1     SYBR NaN       0.39
+338          NTC       FENG3_1     SYBR NaN       0.39
+339          NTC       FENG3_1     SYBR NaN       0.39
+340          NTC       FENG3_2     SYBR NaN       0.36
+341          NTC       FENG3_2     SYBR NaN       0.36
+342          NTC       FENG3_2     SYBR NaN       0.36
+343          NTC       FENG3_3     SYBR NaN       0.26
+344          NTC       FENG3_3     SYBR NaN       0.26
+345          NTC       FENG3_3     SYBR NaN       0.26
+109   RMB200_OFC       FENG3_4     SYBR NaN       0.37
+346          NTC       FENG3_4     SYBR NaN       0.37
+347          NTC       FENG3_4     SYBR NaN       0.37
+349          NTC         RPL32     SYBR NaN       0.40
+350          NTC         RPL32     SYBR NaN       0.40
+</pre>
+
+<p>
+All but one of the null values occur a "no template control" well.
+</p>
+
+<p>
+We can remove the wells using <code>dropna</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">qdat</span> = qdat.dropna(how=<span class="org-string">'any'</span>)  <span class="org-comment-delimiter"># </span><span class="org-comment">drop if any of row's cell is null</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">Could also use: qdat = qdat[pd.notnull(qdat.Ct)]</span>
+</pre>
+</div>
+
+<p>
+Now we have a data frame that looks like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.head()
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name Reporter     Ct  Threshold
+Well
+172   RMB200_A1C       FENG3_1     SYBR  26.44       0.39
+173   RMB200_A1C       FENG3_1     SYBR  27.38       0.39
+174   RMB200_A1C       FENG3_1     SYBR  27.76       0.39
+187   RMB200_AMY       FENG3_1     SYBR  27.83       0.39
+188   RMB200_AMY       FENG3_1     SYBR  28.94       0.39
+</pre>
+
+<p>
+Next, we can remove some columns we won't use. One of these is the
+"Threshold" column. Another one is "Reporter", which does not vary over
+the rows
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.Reporter.unique()
+</pre>
+</div>
+
+<pre class="example">
+array(['SYBR'], dtype=object)
+</pre>
+
+<p>
+To drop columns, the <code>drop</code> method can be used. Setting <code>axis</code> to 1
+tells <code>drop</code> that "Reporter" and "Threshold" are column names (<code>axis=0</code>
+would indicate that they are row names).
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">qdat</span> = qdat.drop([<span class="org-string">'Reporter'</span>, <span class="org-string">'Threshold'</span>], axis=1)
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.head()
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name     Ct
+Well
+172   RMB200_A1C       FENG3_1  26.44
+173   RMB200_A1C       FENG3_1  27.38
+174   RMB200_A1C       FENG3_1  27.76
+187   RMB200_AMY       FENG3_1  27.83
+188   RMB200_AMY       FENG3_1  28.94
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Initial data exploration</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+Now that we have a clean data frame, let's get a better feel for how the
+data looks.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.info()
+</pre>
+</div>
+
+<pre class="example">
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+Int64Index: 240 entries, 172 to 351
+Data columns (total 3 columns):
+Sample_Name      240 non-null object
+Detector_Name    240 non-null object
+Ct               240 non-null float64
+dtypes: float64(1), object(2)
+memory usage: 7.5+ KB
+</pre>
+
+<p>
+We can use <code>nunique</code> to get the number of unique values in a column and
+<code>unique</code> to list the unique values.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.Sample_Name.unique()
+</pre>
+</div>
+
+<pre class="example">
+array(['RMB200_A1C', 'RMB200_AMY', 'RMB200_CBL', 'RMB200_DFC',
+       'RMB200_HIP', 'RMB200_IPC', 'RMB200_ITC', 'RMB200_M1C',
+       'RMB200_MFC', 'RMB200_OFC', 'RMB200_S1C', 'RMB200_STC',
+       'RMB200_STR', 'RMB200_THM', 'RMB200_V1C', 'RMB200_VFC', 'NTC'], dtype=object)
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-python">qdat.Detector_Name.unique()
+</pre>
+</div>
+
+<pre class="example">
+array(['FENG3_1', 'FENG3_2', 'FENG3_3', 'FENG3_4', 'RPL32'], dtype=object)
+</pre>
+
+<p>
+It would be good to know how many replicates we have for each
+sample/detector combination. We can do this by using the <code>groupby</code>
+method. We pass <code>groupby</code> the column names that have the variables that
+we want to use to group the data. The <code>size</code> method of the <code>groupby</code>
+object is used to determine the number of wells in each group.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">samp_det_grp</span> = qdat.groupby([<span class="org-string">'Sample_Name'</span>, <span class="org-string">'Detector_Name'</span>])
+<span class="org-variable-name">samp_gene_counts</span> = samp_det_grp.size()
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">samp_gene_counts.head(10)
+</pre>
+</div>
+
+<pre class="example">
+Sample_Name  Detector_Name
+NTC          FENG3_4          1
+             RPL32            1
+RMB200_A1C   FENG3_1          3
+             FENG3_2          3
+             FENG3_3          3
+             FENG3_4          3
+             RPL32            3
+RMB200_AMY   FENG3_1          3
+             FENG3_2          3
+             FENG3_3          3
+dtype: int64
+</pre>
+
+<p>
+Most of the sample/gene combinations seem to be in triplicate. Let's
+view all the combinations that aren't.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">samp_gene_counts[samp_gene_counts != 3]
+</pre>
+</div>
+
+<pre class="example">
+Sample_Name  Detector_Name
+NTC          FENG3_4          1
+             RPL32            1
+RMB200_OFC   FENG3_4          2
+RMB200_THM   FENG3_1          2
+dtype: int64
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Performing calculations on the data frame</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+Pandas makes it easy to group the data and perform calculations on each
+group. In our case, we want to &Delta;&Delta;C<sub>t</sub> for each sample and
+gene of interest.
+</p>
+
+<p>
+In the first step, we need to normalize by the control detector, RPL32.
+We can create two data frames, one with RPL32 and one with the genes of
+interest, which appear to be variants of FENG3.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">is_rpl</span> = qdat.Detector_Name == <span class="org-string">'RPL32'</span>
+<span class="org-variable-name">rpl</span> = qdat[is_rpl]
+
+<span class="org-variable-name">fengs</span> = qdat[~is_rpl].copy()  <span class="org-comment-delimiter"># </span><span class="org-comment">~ flips each True/False value</span>
+</pre>
+</div>
+
+<p>
+Each sample has replicates for RPL32 expression, so we want to group by
+the sample and take the mean C<sub>t</sub> value.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">rpl_grps</span> = rpl.groupby(<span class="org-string">'Sample_Name'</span>)
+<span class="org-variable-name">rpl_means</span> = rpl_grps[<span class="org-string">'Ct'</span>].mean()
+<span class="org-comment-delimiter">## </span><span class="org-comment">or as one step: rpl_means = rpl.groupby('Sample_Name').Ct.mean()</span>
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">rpl_means
+</pre>
+</div>
+
+<pre class="example">
+Sample_Name
+NTC           36.600000
+RMB200_A1C    20.536667
+RMB200_AMY    20.460000
+RMB200_CBL    21.780000
+RMB200_DFC    21.616667
+RMB200_HIP    20.790000
+RMB200_IPC    20.583333
+RMB200_ITC    20.750000
+RMB200_M1C    21.226667
+RMB200_MFC    20.683333
+RMB200_OFC    20.293333
+RMB200_S1C    20.803333
+RMB200_STC    20.623333
+RMB200_STR    20.556667
+RMB200_THM    20.886667
+RMB200_V1C    20.290000
+RMB200_VFC    20.916667
+Name: Ct, dtype: float64
+</pre>
+
+<p>
+We want to associate each RPL32 mean with the samples in <code>fengs</code>. One
+way to do this is to just add the values as a column. A function can be
+applied (mapped) to each column value by using <code>map</code>, with the return
+values assigned as a new column.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_rpl_mean</span>(sample_name):
+    <span class="org-keyword">return</span> rpl_means[sample_name]
+
+<span class="org-variable-name">fengs</span>[<span class="org-string">'rpl_mean'</span>] = fengs.Sample_Name.<span class="org-builtin">map</span>(get_rpl_mean)
+</pre>
+</div>
+
+<div class="note">
+<p>
+<b>Note:</b> Above I define a simple function to map to all the values of
+the sample name column, but <a href="http://docs.python.org/3.3/reference/expressions.html#lambda">lambda expressions</a> are often used for
+this purpose.
+</p>
+
+</div>
+
+<p>
+To calculate &Delta;C<sub>t</sub>, we just need to substract the "rpl_mean"
+column from the "Ct" column.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">fengs</span>[<span class="org-string">'d_Ct'</span>] = fengs.Ct - fengs.rpl_mean
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">fengs.head()
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name     Ct   rpl_mean      d_Ct
+Well
+172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333
+173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333
+174   RMB200_A1C       FENG3_1  27.76  20.536667  7.223333
+187   RMB200_AMY       FENG3_1  27.83  20.460000  7.370000
+188   RMB200_AMY       FENG3_1  28.94  20.460000  8.480000
+</pre>
+
+<p>
+We can use a similar approach to normalize all the &Delta;C<sub>t</sub> values
+by the mean expression of one sample type (we will use "RMB200_A1C"). We
+limit samples to A1C samples and then take the mean for each gene.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">fengs_a1c</span> = fengs[fengs.Sample_Name == <span class="org-string">'RMB200_A1C'</span>]
+<span class="org-variable-name">a1c_means</span> = fengs_a1c.groupby(<span class="org-string">'Detector_Name'</span>)[<span class="org-string">'d_Ct'</span>].mean()
+
+<span class="org-keyword">def</span> <span class="org-function-name">get_a1c_mean</span>(detector_name):
+    <span class="org-keyword">return</span> a1c_means[detector_name]
+
+<span class="org-variable-name">fengs</span>[<span class="org-string">'a1c_mean'</span>] = fengs[<span class="org-string">'Detector_Name'</span>].<span class="org-builtin">map</span>(get_a1c_mean)
+</pre>
+</div>
+
+<p>
+To calculate &Delta;&Delta;C<sub>t</sub>, we subtract this "a1c_mean" column
+from the &Delta;C<sub>t</sub> values.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">fengs</span>[<span class="org-string">'dd_Ct'</span>] = fengs.d_Ct - fengs.a1c_mean
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">fengs.head()
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean     dd_Ct
+Well
+172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667 -0.753333
+173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333  6.656667  0.186667
+174   RMB200_A1C       FENG3_1  27.76  20.536667  7.223333  6.656667  0.566667
+187   RMB200_AMY       FENG3_1  27.83  20.460000  7.370000  6.656667  0.713333
+188   RMB200_AMY       FENG3_1  28.94  20.460000  8.480000  6.656667  1.823333
+</pre>
+
+<p>
+Finally, we can calculate 2<sup>-&Delta;&Delta;C<sub>t</sub></sup>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">fengs</span>[<span class="org-string">'two_dd_Ct'</span>] = 2 ** (-1 * fengs[<span class="org-string">'dd_Ct'</span>])
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python">fengs.head()
+</pre>
+</div>
+
+<pre class="example">
+     Sample_Name Detector_Name     Ct   rpl_mean      d_Ct  a1c_mean  \
+Well
+172   RMB200_A1C       FENG3_1  26.44  20.536667  5.903333  6.656667
+173   RMB200_A1C       FENG3_1  27.38  20.536667  6.843333  6.656667
+174   RMB200_A1C       FENG3_1  27.76  20.536667  7.223333  6.656667
+187   RMB200_AMY       FENG3_1  27.83  20.460000  7.370000  6.656667
+188   RMB200_AMY       FENG3_1  28.94  20.460000  8.480000  6.656667
+
+         dd_Ct  two_dd_Ct
+Well
+172  -0.753333   1.685683
+173   0.186667   0.878633
+174   0.566667   0.675175
+187   0.713333   0.609909
+188   1.823333   0.282567
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-2">
+<h2 id="unnumbered-4">Overview of methods for performing calculations</h2>
+<div class="outline-text-2" id="text-unnumbered-4">
+<p>
+Above we used a few important methods for performing calculations, but I
+did not completely cover any of these methods, and I left out a few
+methods entirely. Here is a high-level overview of a few different tools
+you can use.
+</p>
+
+<dl class="org-dl">
+<dt>groupby</dt><dd>Group data by criteria and perform operations on groups.
+This can include calculations on the data that keep the
+same shape as the input data set (transformations), those
+that produce a result for each group (aggregation), and
+those that remove groups that don't fit a certain criteria
+(filtering).</dd>
+<dt>map</dt><dd>Apply a function to each element of a series. The series is
+often a column of a data frame. This returns a series of the
+same shape. To apply a function to each element of a data
+frame, <code>applymap</code> can be used.</dd>
+<dt>apply</dt><dd>Apply a function to each row or column of a data frame. We
+did not use this above, but this is important for
+calculations that require information for more than one
+element of a row or column. This can be combined with
+<code>groupby</code>.</dd>
+</dl>
+
+<p>
+Each of these provides a way to efficiently operate on the data. Any
+time you need to iterate over a data frame or series, you should
+consider one of these methods.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">Task</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+There is a set of tasks contained in code/<a href="../code/array.ipynb">array.ipynb</a> that involve
+analyzing data/<a href="../data/array.csv">array.csv</a>. The best way to get these files is by <a href="./syncing-tutorial.html">syncing</a>
+with the git repo.
+</p>
+
+<p>
+To start the notebook, go to that directory in a terminal shell and run
+<code>ipython notebook</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-6" class="outline-2">
+<h2 id="unnumbered-6">Relevant parts of Pandas documentation</h2>
+<div class="outline-text-2" id="text-unnumbered-6">
+<ul class="org-ul">
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/missing_data.html">Working with missing data</a></li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/basics.html?highlight=map#applying-elementwise-python-functions">Applying elementwise Python functions</a></li>
+<li><a href="http://pandas.pydata.org/pandas-docs/stable/groupby.html">Group By: split-apply-combine</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

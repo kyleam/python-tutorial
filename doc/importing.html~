@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Importing code from other files</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Importing code from other files</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">The importance of importing</a></li>
+<li><a href="#unnumbered-2">Importing modules from the Python standard library</a>
+<ul>
+<li><a href="#unnumbered-3">math</a></li>
+<li><a href="#unnumbered-4">defaultdict</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-5">Importing code from installed packages</a></li>
+<li><a href="#unnumbered-6">Importing your own code</a></li>
+<li><a href="#unnumbered-7">Preventing code from running at import</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">The importance of importing</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+The ability to bring in code from other files enables a program to use
+other code (without requiring that python load up a huge amount of code
+by default). Below a few scenarios are covered. All of these make use of
+<code>import</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Importing modules from the Python standard library</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+Python ships with many modules in its standard library. The following
+examples show how to access and use a module.
+</p>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-3">
+<h3 id="unnumbered-3">math</h3>
+<div class="outline-text-3" id="text-unnumbered-3">
+<p>
+<code>math</code> is a module in the standard library that you should check if
+you're looking for a math-related function. For example, if you wanted
+to take the square root of a number, <code>math</code> has you covered.
+</p>
+
+<p>
+This is how we would import it:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> math
+</pre>
+</div>
+
+<p>
+If you are following along in IPython, you can see what is under
+<code>math</code> by typing <code>math.&lt;TAB&gt;</code>. You will see <code>sqrt</code> there, along with
+many others.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> math
+
+<span class="org-keyword">print</span>(math.sqrt(64))
+</pre>
+</div>
+
+<pre class="example">
+8.0
+</pre>
+
+<p>
+Notice that to access something that belongs to the imported module, we
+need to use a <code>.</code> after the module name.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-3">
+<h3 id="unnumbered-4">defaultdict</h3>
+<div class="outline-text-3" id="text-unnumbered-4">
+<p>
+Another example is <code>defaultdict</code>, which is available in the <a href="http://docs.python.org/3.3/library/collections.html">collections</a>
+module. Let's see what functionality it adds to normal dictionaries.
+</p>
+
+<p>
+We can access <code>defaultdict</code>, which is under <code>collections</code> just as we did
+<code>sqrt</code>, which is under <code>math</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">import</span> collections
+<span class="org-comment-delimiter"># </span><span class="org-comment">collections.&lt;TAB&gt;</span>
+</pre>
+</div>
+
+<p>
+Since <code>collections</code> contains several different data types and we are
+only going to use <code>defaultdict</code>, we may just want to make that name
+available directly. We can do that using <code>from</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">from</span> collections <span class="org-keyword">import</span> defaultdict
+</pre>
+</div>
+
+<p>
+Now, let's see why <code>defaultdict</code> is useful. Say we have a DNA sequence
+and want to get a count of each base type. One way to do that would be
+to make a dictionary with each base as a key and increment the integer
+value each time a base is encountered.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">sequence</span> = <span class="org-string">'ATAGGGCCAAAAAA'</span>
+
+<span class="org-variable-name">base_counts</span> = {}
+<span class="org-keyword">for</span> base <span class="org-keyword">in</span> sequence:
+    <span class="org-variable-name">base_counts</span>[base] = base_counts.setdefault(base, 0) + 1
+
+<span class="org-keyword">print</span>(base_counts)
+</pre>
+</div>
+
+<pre class="example">
+{'T': 1, 'A': 8, 'C': 2, 'G': 3}
+</pre>
+
+<p>
+This works, but notice we use <code>setdefault</code>. This says to use the value
+for the key <code>base</code> if it exists, otherwise initialize the value at 0.
+Run this code without the <code>setdefault</code> to convince yourself that you
+would get a key error.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">base_counts</span> = {}
+<span class="org-keyword">for</span> base <span class="org-keyword">in</span> sequence:
+    <span class="org-comment-delimiter"># </span><span class="org-comment">base_counts[base] = base_counts[base] + 1</span>
+    <span class="org-variable-name">base_counts</span>[base] += 1  <span class="org-comment-delimiter"># </span><span class="org-comment">Equivalent to the line above</span>
+
+<span class="org-keyword">print</span>(base_counts)
+</pre>
+</div>
+
+<pre class="example">
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 3, in &lt;module&gt;
+KeyError: 'A'
+{}
+</pre>
+
+<p>
+<code>defaultdict</code> takes care of this behind the scenes, so that there is no
+need to use <code>setdefault</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">from</span> collections <span class="org-keyword">import</span> defaultdict
+
+<span class="org-variable-name">base_counts</span> = defaultdict(<span class="org-builtin">int</span>)
+<span class="org-keyword">for</span> base <span class="org-keyword">in</span> sequence:
+    <span class="org-variable-name">base_counts</span>[base] += 1
+
+<span class="org-keyword">print</span>(base_counts)
+</pre>
+</div>
+
+<pre class="example">
+defaultdict(&lt;class 'int'&gt;, {'T': 1, 'A': 8, 'C': 2, 'G': 3})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">Importing code from installed packages</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+Installed packages are also accessed by importing. These can be packages
+that you installed with <a href="http://www.pip-installer.org/en/latest/">pip</a> or ones from another method, such as an exe
+installer. <a href="http://wiki.scipy.org/SciPy">SciPy</a>, as its name suggests, is a python package that has
+many useful tools for science and engineering. Below we will import it
+and use it to calculate a pearson correlation.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">from</span> scipy.stats <span class="org-keyword">import</span> pearsonr
+</pre>
+</div>
+
+<p>
+Remember, if you're in IPython, you can put <code>?</code> after the term of
+interest to get more information on it. Running <code>pearsonr?</code> will display
+its docstring. We see that it takes two arrays as arguments and returns
+the pearson correlation and a pvalue. Let's just test it out on inputs
+that we know should have a correlation of 1.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">print</span>(pearsonr([1, 2, 3], [1, 2, 3]))
+</pre>
+</div>
+
+<pre class="example">
+(1.0, 0.0)
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-6" class="outline-2">
+<h2 id="unnumbered-6">Importing your own code</h2>
+<div class="outline-text-2" id="text-unnumbered-6">
+<p>
+Another important use of <code>import</code> is accessing code that you've
+written. This allows you to group related code in one file and access
+it with many files, without having to duplicate the code in each file.
+</p>
+
+<p>
+One example is the <code>codon_to_aminoacid</code> dictionary that is in
+code/<a href="../code/codon_mapping.py">codon_mapping.py</a>. If we wanted to use this dictionary in another
+file, without copying it over, we could import it.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">from</span> codon_mapping <span class="org-keyword">import</span> codon_to_aminoacid
+</pre>
+</div>
+
+<p>
+Now you can access the variable <code>codon_to_aminoacid</code> just as you would
+if you created the dictionary within that file. But what if you hate
+that name for a variable that you are importing? Well, you could of
+course just assign it a new name after the import.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">new_name</span> = codon_to_aminoacid
+</pre>
+</div>
+
+<p>
+There is also a way to rename it during the import.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">from</span> codon_mapping <span class="org-keyword">import</span> codon_to_aminoacid <span class="org-keyword">as</span> new_name
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-unnumbered-7" class="outline-2">
+<h2 id="unnumbered-7">Preventing code from running at import</h2>
+<div class="outline-text-2" id="text-unnumbered-7">
+<p>
+Frequently, you have code that you only want to execute if you run the
+file from the command line (<code>python &lt;script name&gt;</code>), but not if you
+import it.
+</p>
+
+<p>
+This is done using this special line:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-comment-delimiter">## </span><span class="org-comment">This code is available after importing this file or when running</span>
+<span class="org-comment-delimiter">## </span><span class="org-comment">this file from the command line.</span>
+<span class="org-keyword">def</span> <span class="org-function-name">add_two</span>(num):
+    <span class="org-keyword">return</span> num + 2
+
+<span class="org-keyword">if</span> <span class="org-builtin">__name__</span> == <span class="org-string">'__main__'</span>:
+    <span class="org-comment-delimiter">## </span><span class="org-comment">This code is only executed when running this file from the</span>
+    <span class="org-comment-delimiter">## </span><span class="org-comment">command line.</span>
+    <span class="org-keyword">print</span>(<span class="org-string">"I'm adding two now."</span>)
+    <span class="org-variable-name">plus2</span> = add_two(3)
+</pre>
+</div>
+
+<p>
+Because we've used the special <code>if __name__...</code> line, we can import
+<code>add_two</code> from this file into another file (or IPython session)
+without worrying about the code at the bottom being executed. See
+code/<a href="../code/strjoin.py">strjoin.py</a> for an example script that we made in class.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

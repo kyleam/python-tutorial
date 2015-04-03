@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>File input and output</title>
+<!-- 2015-04-02 Thu 23:43 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">File input and output</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Reading in files</a>
+<ul>
+<li><a href="#unnumbered-2">read</a></li>
+<li><a href="#unnumbered-3">readlines</a></li>
+<li><a href="#unnumbered-4">Using a for loop</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-5">Writing files</a></li>
+<li><a href="#unnumbered-6">A better way to close files</a></li>
+<li><a href="#unnumbered-7">Tasks</a>
+<ul>
+<li><a href="#unnumbered-8">Getting gene coordinates from a gencode file</a></li>
+<li><a href="#unnumbered-9">Filter gene coordinates by size</a></li>
+<li><a href="#unnumbered-10">Merge program information</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Reading in files</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+First, we'll define the file name as a string that specifies where the
+file exists on the system.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">infile</span> = <span class="org-string">'../data/weights.csv'</span>
+</pre>
+</div>
+
+<div class="note">
+<p>
+<b>Note:</b> In the path of the file name, <code>..</code> stands for "go one
+directory up from the current directory". So in the above case,
+<code>weights.csv</code> is in the <code>data</code> directory that is one directory up.
+</p>
+
+<pre class="example">
+.
+|_ current directory
+|   |
+|   |_ current python file
+|
+|_ data
+    |
+    |_ weights.csv
+</pre>
+
+</div>
+
+<p>
+In order to work with files, a file handle needs to be created. This is
+done using <code>open</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">infh</span> = <span class="org-builtin">open</span>(infile)
+</pre>
+</div>
+
+<p>
+Once the file handle is created, there are several ways to read in the
+contents.
+</p>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-3">
+<h3 id="unnumbered-2">read</h3>
+<div class="outline-text-3" id="text-unnumbered-2">
+<p>
+<a id="first-read-example"></a>The first way is <code>read</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">infh</span> = <span class="org-builtin">open</span>(infile)
+<span class="org-variable-name">file_content</span> = infh.read()
+<span class="org-keyword">print</span>(file_content)
+infh.close()  <span class="org-comment-delimiter"># </span><span class="org-comment">File should be closed after reading.</span>
+</pre>
+</div>
+
+<pre class="example">
+person,weight
+John,201
+Sue,120
+Paul,150
+</pre>
+
+<p>
+As can be seen in the results, the contents are stored as a single
+string (with new lines indicated by <code>\n</code>).
+</p>
+
+<p>
+We could separate these lines into a list by using <code>split</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">infh</span> = <span class="org-builtin">open</span>(infile)
+<span class="org-variable-name">file_content</span> = infh.read()
+<span class="org-variable-name">file_lines</span> = file_content.split(<span class="org-string">'\n'</span>)
+<span class="org-keyword">print</span>(file_lines)
+infh.close()
+</pre>
+</div>
+
+<pre class="example">
+['person,weight', 'John,201', 'Sue,120', 'Paul,150', '']
+</pre>
+
+<p>
+While this works fine, this is such a common operation that there is a
+built-in method for it.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-3">
+<h3 id="unnumbered-3">readlines</h3>
+<div class="outline-text-3" id="text-unnumbered-3">
+<p>
+To get the file contents into a list separated by new lines, <code>readlines</code>
+can be used.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">infh</span> = <span class="org-builtin">open</span>(infile)
+<span class="org-variable-name">file_lines</span> = infh.readlines()
+<span class="org-keyword">print</span>(file_lines)
+infh.close()
+</pre>
+</div>
+
+<pre class="example">
+['person,weight\n', 'John,201\n', 'Sue,120\n', 'Paul,150\n']
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-3">
+<h3 id="unnumbered-4">Using a for loop</h3>
+<div class="outline-text-3" id="text-unnumbered-4">
+<p>
+A common method for reading in file contents is to do it one line at a
+time. This is particularly useful for large files that are too big to
+fit into memory.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">infh</span> = <span class="org-builtin">open</span>(infile)
+<span class="org-keyword">for</span> line <span class="org-keyword">in</span> infh:
+    <span class="org-keyword">print</span>(<span class="org-string">'current line: '</span> + line.strip())
+
+infh.close()
+</pre>
+</div>
+
+<pre class="example">
+current line: person,weight
+current line: John,201
+current line: Sue,120
+current line: Paul,150
+</pre>
+
+<div class="note">
+<p>
+<b>Note:</b> <code>strip</code> is used above to remove the new line (<code>\n</code>) at the end
+ of the line
+</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">Writing files</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+Writing files is very similar to reading files, but there are a few
+differences. Again, a file handle is created using <code>open</code>, but the
+second argument to open must be <code>w</code>. This tells <code>open</code> the file is to be
+written to, as opposed to reading. Another difference is that the file
+that you a writing to does not need to exist on your file system (in
+fact, it usually does not).
+</p>
+
+<div class="warning">
+<p>
+<b>WARNING:</b> If you open a file for writing that already exists, its
+content will be overwritten.
+</p>
+
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">outfile</span> = <span class="org-string">'test-outfile.txt'</span>
+<span class="org-variable-name">outfh</span> = <span class="org-builtin">open</span>(outfile, <span class="org-string">'w'</span>)
+
+<span class="org-keyword">for</span> number <span class="org-keyword">in</span> <span class="org-builtin">range</span>(3):
+    outfh.write(<span class="org-string">'this is line {}\n'</span>.<span class="org-builtin">format</span>(number))
+
+outfh.close()
+</pre>
+</div>
+
+<p>
+The would result in a file (<code>test-outfile.txt</code>) that looks like this:
+</p>
+
+<pre class="example">
+this is line 0
+this is line 1
+this is line 2
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-6" class="outline-2">
+<h2 id="unnumbered-6">A better way to close files</h2>
+<div class="outline-text-2" id="text-unnumbered-6">
+<p>
+In all the examples above, the file needs to be explicitly closed
+after opening it. Instead, we could've used a <code>with</code> statement, which
+provides a convenient way to deal with the opening and closing of
+files.
+</p>
+
+<p>
+This is how the <a href="#first-read-example">first read example</a> would look using a
+<code>with</code> statement.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">with</span> <span class="org-builtin">open</span>(infile) <span class="org-keyword">as</span> infh:
+    <span class="org-variable-name">file_content</span> = infh.read()
+</pre>
+</div>
+
+<p>
+The <code>with</code> takes care of closing the file once the current level
+(marked by indentation) is exited. If a <code>w</code> is passed to <code>open</code>, the
+exact same method can be used for writing files.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-7" class="outline-2">
+<h2 id="unnumbered-7">Tasks</h2>
+<div class="outline-text-2" id="text-unnumbered-7">
+</div><div id="outline-container-unnumbered-8" class="outline-3">
+<h3 id="unnumbered-8">Getting gene coordinates from a gencode file</h3>
+<div class="outline-text-3" id="text-unnumbered-8">
+<p>
+The file data/<a href="../data/gencode-v10-50random.gtf">gencode-v10-50random.gtf</a> contains 50 random protein-coding
+genes from gencode version 10. Another file, data/<a href="../data/genes-5random.txt">genes-5random.txt</a>,
+lists the names of 5 genes. Write a python script that reads in these
+genes of interest and finds the coordinates using the gencode gtf file.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-9" class="outline-3">
+<h3 id="unnumbered-9">Filter gene coordinates by size</h3>
+<div class="outline-text-3" id="text-unnumbered-9">
+<p>
+Write a script that prints out all genes in
+data/<a href="../data/gencode-v10-50random.gtf">gencode-v10-50random.gtf</a> that span more than 100 kb. If this is too
+easy, use <code>write</code> instead of print to save the gene coordinates to a
+file. If this gives you 14 genes, you're probably in good shape.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-10" class="outline-3">
+<h3 id="unnumbered-10">Merge program information</h3>
+<div class="outline-text-3" id="text-unnumbered-10">
+<p>
+(from Sirisha)
+</p>
+
+<p>
+data/<a href="../data/program-versions.csv">program-versions.csv</a> lists the names of a few programs and their
+current version. data/<a href="../data/program-dates.csv">program-dates.csv</a> lists the names of the same
+programs and their release date. Write a script that merges this
+information into a single file that has three columns. It would look
+something like this:
+</p>
+
+<pre class="example">
+Program,Date,Version
+Firefox,July,12
+...
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

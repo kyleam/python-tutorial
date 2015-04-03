@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Control constructs</title>
+<!-- 2015-03-30 Mon 01:46 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Control constructs</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">if statements</a>
+<ul>
+<li><a href="#unnumbered-2">Boolean operators</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-3">for loops</a>
+<ul>
+<li><a href="#unnumbered-4">Controlling for loops</a></li>
+</ul>
+</li>
+<li><a href="#unnumbered-5">while loops</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">if statements</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+<code>if</code> statements are used to execute code when a condition is true.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">is_rainy</span> = <span class="org-constant">True</span>
+<span class="org-keyword">if</span> is_rainy:
+    <span class="org-keyword">print</span>(<span class="org-string">'Bring your bumbershoot'</span>)
+</pre>
+</div>
+
+<pre class="example">
+Bring your bumbershoot
+</pre>
+
+<p>
+These can be followed up by an <code>else</code>:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">if</span> is_rainy:
+    <span class="org-keyword">print</span>(<span class="org-string">'Bring your bumbershoot'</span>)
+<span class="org-keyword">else</span>:
+    <span class="org-keyword">print</span>(<span class="org-string">'No rain'</span>)
+</pre>
+</div>
+
+<pre class="example">
+Bring your bumbershoot
+</pre>
+
+<div class="note">
+<p>
+<b>Note:</b> In Python, whitespace is used to define levels in the code. It
+is convention to use 4 spaces (not tabs) as the first level of
+indentation. The second level would be 4 more spaces (8 total) and so
+on.
+</p>
+
+</div>
+
+<p>
+If <code>is_rainy</code> to <code>False</code>, the code under the <code>else</code> statement is
+executed instead of the code under the <code>if</code> statement.
+</p>
+
+<p>
+More conditions can be added with <code>elif</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">if</span> is_rainy:
+    <span class="org-keyword">print</span>(<span class="org-string">'Bring your bumbershoot'</span>)
+<span class="org-keyword">elif</span> is_sunny:
+    <span class="org-keyword">print</span>(<span class="org-string">'Bring your hat'</span>)
+<span class="org-keyword">else</span>:
+    <span class="org-keyword">print</span>(<span class="org-string">'No rain, no sun'</span>)
+</pre>
+</div>
+
+<pre class="example">
+Bring your bumbershoot
+</pre>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-3">
+<h3 id="unnumbered-2">Boolean operators</h3>
+<div class="outline-text-3" id="text-unnumbered-2">
+<p>
+It is common to use boolean operators with <code>if</code> statements.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">some_number</span> = 9
+<span class="org-keyword">print</span>(some_number == 2)
+</pre>
+</div>
+
+<pre class="example">
+False
+</pre>
+
+<p>
+Start IPython by typing <code>ipython</code> in a terminal, and try out a few
+more comparisons.
+</p>
+
+<ul class="org-ul">
+<li><code>!=</code></li>
+<li><code>&lt;</code></li>
+<li><code>&gt;=</code></li>
+</ul>
+
+<div class="note">
+<p>
+<b>Note:</b> Above I am using <code>print</code> to see the results of the
+comparison, but if you're in IPython, you don't need to do this.
+</p>
+
+</div>
+
+<p>
+Using them within an <code>if</code> statement look like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">if</span> some_number &lt; 10:
+    <span class="org-keyword">print</span>(<span class="org-string">'There are less than 10'</span>)
+</pre>
+</div>
+
+<pre class="example">
+There are less than 10
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">for loops</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+<code>for</code> loops allow you to iterate over variables.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">genes</span> = [<span class="org-string">'DNJC..uh'</span>, <span class="org-string">'FOXP2'</span>, <span class="org-string">'MET7B'</span>]
+<span class="org-keyword">for</span> gene <span class="org-keyword">in</span> genes:
+    <span class="org-keyword">print</span>(<span class="org-string">'My favorite gene: '</span> + gene)
+</pre>
+</div>
+
+<pre class="example">
+My favorite gene: DNJC..uh
+My favorite gene: FOXP2
+My favorite gene: MET7B
+</pre>
+
+<p>
+<code>for</code> and <code>if</code> statments can be nested.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">for</span> gene <span class="org-keyword">in</span> genes:
+    <span class="org-keyword">if</span> gene != <span class="org-string">'MET7B'</span>:
+        <span class="org-keyword">print</span>(gene +  <span class="org-string">', what a dumb gene'</span>)
+</pre>
+</div>
+
+<pre class="example">
+DNJC..uh, what a dumb gene
+FOXP2, what a dumb gene
+</pre>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-3">
+<h3 id="unnumbered-4">Controlling for loops</h3>
+<div class="outline-text-3" id="text-unnumbered-4">
+<p>
+Once a <code>for</code> loop is running, you often want to change the behavior
+based on the current iteration. For example, if a certain value is
+encountered, skip to the next iteration. This can be done with
+<code>continue</code>, which means stop the current iteration of the loop right
+here and go to the next iteration. Using <code>continue</code>, we can produce
+the exact same results as the last block.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">for</span> gene <span class="org-keyword">in</span> genes:
+    <span class="org-keyword">if</span> gene == <span class="org-string">'MET7B'</span>:
+        <span class="org-keyword">continue</span>
+    <span class="org-keyword">print</span>(gene +  <span class="org-string">', what a dumb gene'</span>)
+</pre>
+</div>
+
+<pre class="example">
+DNJC..uh, what a dumb gene
+FOXP2, what a dumb gene
+</pre>
+
+<p>
+Another common behavior is to break out of the loop completely if some
+condition is met. <code>break</code> is the command to do this.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">lottery_numbers</span> = [888, 301, 405, 772, 332]
+<span class="org-variable-name">winning_number</span> = 405
+<span class="org-keyword">for</span> number <span class="org-keyword">in</span> lottery_numbers:
+    <span class="org-keyword">print</span>(number)
+    <span class="org-keyword">if</span> number == winning_number:
+        <span class="org-keyword">print</span>(<span class="org-string">'We have a winner'</span>)
+        <span class="org-keyword">break</span>
+</pre>
+</div>
+
+<pre class="example">
+888
+301
+405
+We have a winner
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">while loops</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+There are also <code>while</code> loops in python. These allow the code to
+continually be executed <b>while</b> a condition is met.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">number</span> = 1
+<span class="org-keyword">while</span> number &lt; 4:
+    <span class="org-keyword">print</span>(number)
+    <span class="org-variable-name">number</span> += 1
+</pre>
+</div>
+
+<pre class="example">
+1
+2
+3
+</pre>
+
+<div class="note">
+<p>
+<b>Note:</b> The <code>+=</code> is an assignment operator. It adds the value to the
+current value of the variable and then assigns the new value back to
+the variable. It is equivalent to <code>number = number + 1</code>. Similar
+operators exist for subtraction (<code>-=</code>), multiplication (<code>*=</code>), and
+division (<code>\=</code>).
+</p>
+
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

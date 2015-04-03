@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Functions</title>
+<!-- 2015-04-02 Thu 23:43 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Functions</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">The advantage of functions</a></li>
+<li><a href="#unnumbered-2">Defining functions</a></li>
+<li><a href="#unnumbered-3">Calling functions</a></li>
+<li><a href="#unnumbered-4">Keyword arguments</a></li>
+<li><a href="#unnumbered-5">Done</a></li>
+<li><a href="#unnumbered-6">Tasks</a>
+<ul>
+<li><a href="#unnumbered-7">GC content</a></li>
+<li><a href="#unnumbered-8">Reverse complement function</a></li>
+<li><a href="#unnumbered-9">Amino acid translation function</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">The advantage of functions</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+Functions allow you to created reusable pieces of code. In their
+purest form, functions take some input, do some calculation, and then
+return an output.
+</p>
+
+<p>
+Let's write a function that, given a gene's start position, returns a
+set of "promoter" coordinates. We'll coarsely define this as 1,000
+bases upstream and 500 bases downstream of the start position.
+</p>
+
+<p>
+So, if we have a set of coordinates for a gene of interest
+(chr7:73,095,248-73,097,781), we can get the start of the promoter by
+subtracting 1,000 from 73,095,248 and the end the promoter by adding 500
+to the same value. But we also need to consider the strand. Because this
+gene is on the negative strand, we should add 1,000 to 73,097,781 to get
+the start position of the promoter and subtract 500 from the same value
+to get the stop position.
+</p>
+
+<p>
+In code, this would look like this:
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-comment-delimiter">## </span><span class="org-comment">details for the specific gene</span>
+<span class="org-variable-name">genestart</span> = 73097781
+<span class="org-comment-delimiter">## </span><span class="org-comment">promoter calculation (for case of negative strand)</span>
+<span class="org-variable-name">promstart</span> = genestart + 1000
+<span class="org-variable-name">promend</span> = genestart - 500
+</pre>
+</div>
+
+<p>
+Functions allow us to separate out this calculation logic from the
+details of a specific case, give a name to it, and then apply it
+throughout the code by the name.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Defining functions</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+Let's create a function named <code>get_promoter</code>. This is done using <code>def</code>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_promoter</span>():
+    <span class="org-keyword">pass</span>  <span class="org-comment-delimiter">## </span><span class="org-comment">Placeholder until we fill in the code</span>
+</pre>
+</div>
+
+<p>
+At this point, the function doesn't do anything. It doesn't take any
+arguments and it doesn't return any values.
+</p>
+
+<p>
+A good place to start when defining a function is the docstring, which
+serves as documentation for what the function does.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_promoter</span>():
+    <span class="org-string">"""Return promoter of gene."""</span>
+    <span class="org-keyword">pass</span>  <span class="org-comment-delimiter">## </span><span class="org-comment">Placeholder until we fill in the code</span>
+</pre>
+</div>
+
+<p>
+Next, we should declare what arguments the function receives.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_promoter</span>(start, strand):
+    <span class="org-string">"""Return promoter of gene.</span>
+
+<span class="org-string">    Parameters</span>
+<span class="org-string">    ----------</span>
+<span class="org-string">    start : int</span>
+<span class="org-string">        Start coordinate of gene</span>
+<span class="org-string">    strand : str</span>
+<span class="org-string">        Strand direction indicated by + or -</span>
+<span class="org-string">    """</span>
+    <span class="org-keyword">pass</span>
+</pre>
+</div>
+
+<p>
+The arguments are specified between the parentheses (everything added
+between the triple quotes is documentation that, while often helpful, is
+not required).
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Calling functions</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+We can use the genestart defined above and the strand as input to our
+new function.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">get_promoter(genestart, <span class="org-string">'-'</span>)
+</pre>
+</div>
+
+<p>
+We have called the function, but it doesn't do anything yet. Let's add
+in the calculation.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_promoter</span>(start, strand):
+    <span class="org-string">"""Return promoter of gene.</span>
+
+<span class="org-string">    Parameters</span>
+<span class="org-string">    ----------</span>
+<span class="org-string">    start : int</span>
+<span class="org-string">        Start coordinate of gene</span>
+<span class="org-string">    strand : str</span>
+<span class="org-string">        Strand direction indicated by + or -</span>
+<span class="org-string">    """</span>
+    <span class="org-keyword">if</span> strand == <span class="org-string">'+'</span>:
+        <span class="org-variable-name">promstart</span> = start - 1000
+        <span class="org-variable-name">promend</span> = start + 500
+    <span class="org-keyword">elif</span> strand == <span class="org-string">'-'</span>:
+        <span class="org-variable-name">promstart</span> = start + 1000
+        <span class="org-variable-name">promend</span> = start - 500
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">print</span>(<span class="org-string">'Strand not recognized.'</span>)
+        <span class="org-comment-delimiter"># </span><span class="org-comment">REV: Why is handling a bad argument like this problematic?</span>
+        <span class="org-comment-delimiter">#      </span><span class="org-comment">What could be done instead?</span>
+    <span class="org-keyword">print</span>(promstart, promend)
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Now call it.</span>
+<span class="org-variable-name">promoter</span> = get_promoter(genestart, <span class="org-string">'-'</span>)
+<span class="org-keyword">print</span>(promoter)
+</pre>
+</div>
+
+<pre class="example">
+73098781 73097281
+None
+</pre>
+
+<p>
+Looks like it is performing the calculation, but at this point it is
+only printing out the values. We know this because when we print the
+return value (<code>promoter</code>), it is <code>None</code>.
+</p>
+
+<p>
+To get back the result, we can modify the function to include a return
+statement.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_promoter</span>(start, strand):
+    <span class="org-string">"""Return promoter of gene.</span>
+
+<span class="org-string">    Parameters</span>
+<span class="org-string">    ----------</span>
+<span class="org-string">    start : int</span>
+<span class="org-string">        Start coordinate of gene</span>
+<span class="org-string">    strand : str</span>
+<span class="org-string">        Strand direction indicated by + or -</span>
+<span class="org-string">    """</span>
+    <span class="org-keyword">if</span> strand == <span class="org-string">'+'</span>:
+        <span class="org-variable-name">promstart</span> = start - 1000
+        <span class="org-variable-name">promend</span> = start + 500
+    <span class="org-keyword">elif</span> strand == <span class="org-string">'-'</span>:
+        <span class="org-variable-name">promstart</span> = start + 1000
+        <span class="org-variable-name">promend</span> = start - 500
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">print</span>(<span class="org-string">'Strand not recognized.'</span>)
+        <span class="org-comment-delimiter"># </span><span class="org-comment">REV: Why is handling a bad argument like this problematic?</span>
+        <span class="org-comment-delimiter">#      </span><span class="org-comment">What could be done instead?</span>
+    <span class="org-keyword">return</span> promstart, promend
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Now call it.</span>
+<span class="org-variable-name">promoter</span> = get_promoter(genestart, <span class="org-string">'-'</span>)
+<span class="org-keyword">print</span>(promoter)
+</pre>
+</div>
+
+<pre class="example">
+(73098781, 73097281)
+</pre>
+
+<p>
+When we call the new function, the result is returned (because we've
+added the return statement at the end) and is no longer printed out
+(because we removed the print statement). The variable <code>promoter</code> now
+contains the returned results.
+</p>
+
+<div class="note">
+<p>
+<b>Note:</b> Due to how the return statement was specified, a tuple has
+been returned. Any type can be returned. If square brackets were given
+around the results (<code>return [promstart, promend]</code>), a list would have
+been returned instead. For now, tuples can be thought of as very
+similar to lists, though there are some very important differences
+(particularly in terms of mutability, which we have not discussed).
+</p>
+
+</div>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-2">
+<h2 id="unnumbered-4">Keyword arguments</h2>
+<div class="outline-text-2" id="text-unnumbered-4">
+<p>
+In the above example, we have two required arguments: <code>start</code> and
+<code>strand</code>. If we call the function without an argument, we get an
+error.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python">get_promoter(genestart)
+</pre>
+</div>
+
+<pre class="example">
+Traceback (most recent call last):
+...
+TypeError: get_promoter() missing 1 required positional argument: 'strand'
+</pre>
+
+<p>
+Required arguments are a good thing, but, in some cases, it is useful
+to allow optional arguments. For example, the 1,000 bases upstream and
+500 bases downstream used to define the promoter are parameters that
+should probably be tunable, so we can provide them as default values
+that can be overridden when the function is called.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">def</span> <span class="org-function-name">get_promoter</span>(start, strand, upstream=1000, downstream=500):
+    <span class="org-string">"""Return promoter of gene.</span>
+
+<span class="org-string">    Parameters</span>
+<span class="org-string">    ----------</span>
+<span class="org-string">    start : int</span>
+<span class="org-string">        Start coordinate of gene</span>
+<span class="org-string">    strand : str</span>
+<span class="org-string">        Strand direction indicated by + or -</span>
+<span class="org-string">    upstream, downstream : int</span>
+<span class="org-string">        Number of bases upstream/downstream of `start` used to</span>
+<span class="org-string">        define promoter</span>
+<span class="org-string">    """</span>
+    <span class="org-keyword">if</span> strand == <span class="org-string">'+'</span>:
+        <span class="org-variable-name">promstart</span> = start - upstream
+        <span class="org-variable-name">promend</span> = start + downstream
+    <span class="org-keyword">elif</span> strand == <span class="org-string">'-'</span>:
+        <span class="org-variable-name">promstart</span> = start + upstream
+        <span class="org-variable-name">promend</span> = start - downstream
+    <span class="org-keyword">else</span>:
+        <span class="org-keyword">print</span>(<span class="org-string">'Strand not recognized.'</span>)
+        <span class="org-comment-delimiter"># </span><span class="org-comment">REV: Why is handling a bad argument like this problematic?</span>
+        <span class="org-comment-delimiter">#      </span><span class="org-comment">What could be done instead?</span>
+    <span class="org-keyword">return</span> promstart, promend
+</pre>
+</div>
+
+<p>
+Now we can call the function as before and get the same results, as we
+do in the first call below. If we choose to, we can override the
+default values. For example, in the second call, we bring the upstream
+bases down to 500. In the third call, both optional arguments are
+tweaked at the same time.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">print</span>(get_promoter(genestart, <span class="org-string">'-'</span>))
+<span class="org-keyword">print</span>(get_promoter(genestart, <span class="org-string">'-'</span>, upstream=500))
+<span class="org-keyword">print</span>(get_promoter(genestart, <span class="org-string">'-'</span>, upstream=500, downstream=400))
+</pre>
+</div>
+
+<pre class="example">
+(73098781, 73097281)
+(73098281, 73097281)
+(73098281, 73097381)
+</pre>
+
+<p>
+In the above examples, we provide the keywords with the value, but they
+can also be given without the keywords as long as the order is
+preserved.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-keyword">print</span>(get_promoter(genestart, <span class="org-string">'-'</span>, 500, 400))
+</pre>
+</div>
+
+<pre class="example">
+(73098281, 73097381)
+</pre>
+
+<p>
+In this case, however, leaving out the keywords makes the function less
+readable.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">Done</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+We now have a function that is reusable throughout the code. In addition
+to simplifying our code, this makes it easier to modify the code later
+if needed because the code only has to be changed in one place. This
+function can also be shared with other python files. We'll talk about
+this more when we go over modules.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-6" class="outline-2">
+<h2 id="unnumbered-6">Tasks</h2>
+<div class="outline-text-2" id="text-unnumbered-6">
+</div><div id="outline-container-unnumbered-7" class="outline-3">
+<h3 id="unnumbered-7">GC content</h3>
+<div class="outline-text-3" id="text-unnumbered-7">
+<p>
+Write a function that calculates the GC content of a sequence. Then
+explore how to use <code>assert</code> to demonstrate that your function works as
+you expect.
+</p>
+
+<pre class="example">
+In [1]: calculate_gc_ratio('GCAA')
+0.5
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-8" class="outline-3">
+<h3 id="unnumbered-8">Reverse complement function</h3>
+<div class="outline-text-3" id="text-unnumbered-8">
+<p>
+Write a function that takes the reverse complement of a DNA sequence.
+</p>
+
+<p>
+It should work something like this:
+</p>
+
+<pre class="example">
+In [1]: reverse_complement('ATAATCG')
+CGATTAT
+</pre>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-9" class="outline-3">
+<h3 id="unnumbered-9">Amino acid translation function</h3>
+<div class="outline-text-3" id="text-unnumbered-9">
+<p>
+Write a function that translates a DNA sequence to an amino acid
+sequence.
+</p>
+
+<pre class="example">
+In [1]: translate('GTACCC')
+VP
+</pre>
+
+<p>
+It's up to you to decide how you want to deal with stop codons. I've
+already added a codon to amino acid dictionary in <code>codon_mapping.py</code>.
+You can access this in your script by importing it.
+</p>
+
+<p>
+Write tests (either with plain assert statements or py.test) to show
+that your code is working properly.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

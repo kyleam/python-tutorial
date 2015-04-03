@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Mutable and immutable objects</title>
+<!-- 2015-04-02 Thu 23:43 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<link rel="stylesheet" href="../css/theme.css" type="text/css"/>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Mutable and immutable objects</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#unnumbered-1">Is this what you expect?</a></li>
+<li><a href="#unnumbered-2">Variables in Python</a></li>
+<li><a href="#unnumbered-3">Mutability</a></li>
+<li><a href="#unnumbered-4">Mutability of some common types</a></li>
+<li><a href="#unnumbered-5">More information</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-1" class="outline-2">
+<h2 id="unnumbered-1">Is this what you expect?</h2>
+<div class="outline-text-2" id="text-unnumbered-1">
+<p>
+<a id="mutint-ex"></a>The result of the code below is probably what you expect.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">a</span> = 3
+<span class="org-variable-name">b</span> = a
+<span class="org-keyword">print</span>(a, b)
+<span class="org-variable-name">b</span> = b + 9
+<span class="org-keyword">print</span>(a, b)
+</pre>
+</div>
+
+<pre class="example">
+3 3
+3 12
+</pre>
+
+<p>
+<a id="mutlist-ex"></a>Here is similar code that uses lists instead, but the
+result might surprise you.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-python"><span class="org-variable-name">a</span> = [3, 4, 5]
+<span class="org-variable-name">b</span> = a
+<span class="org-keyword">print</span>(a, b)
+b.append(6)
+<span class="org-keyword">print</span>(a, b)
+</pre>
+</div>
+
+<pre class="example">
+[3, 4, 5] [3, 4, 5]
+[3, 4, 5, 6] [3, 4, 5, 6]
+</pre>
+
+<p>
+Notice that we changed <code>b</code> by appending <code>6</code>, yet the value of <code>a</code> has
+also changed. In order to understand these examples, we need to cover
+the concept of "variables" in Python and the concept of mutability.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-2" class="outline-2">
+<h2 id="unnumbered-2">Variables in Python</h2>
+<div class="outline-text-2" id="text-unnumbered-2">
+<p>
+The example above shows that <code>a</code> has to be linked in some way to <code>b</code>
+beyond just initially sharing values. In other words, assigning <code>a</code> to
+<code>b</code> doesn't just simply copy over the values of <code>a</code>. So what is
+happening?
+</p>
+
+<p>
+Variables can be thought of as names that are attached to a value. A
+name itself is not the value. For example, <code>a</code> above is not a list. At
+that point in time, it refers to a particular list.
+</p>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../img/one-variable-to-list.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+After we assign <code>b = a</code>, now <code>b</code> is another name that attached to the
+same list.
+</p>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../img/two-variables-to-list.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+The above diagrams should make it clear what is happening in the <a href="#mutlist-ex">example</a>
+with lists. The value of <code>a</code> changes when <code>b</code> is modified because they
+are referring to the same thing.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-3" class="outline-2">
+<h2 id="unnumbered-3">Mutability</h2>
+<div class="outline-text-2" id="text-unnumbered-3">
+<p>
+The logic above explains why <code>b</code> changes along with <code>a</code>, but why didn't
+the <a href="#mutint-ex">example</a> with integers behave the same way? This has to do with an
+important difference between integers and lists: lists are mutable while
+integers are not. Being mutable means that the value can be changed
+in-place. Let's walk through the integer scenario in diagrams.
+</p>
+
+<p>
+After both <code>a</code> is assigned to <code>3</code> and then <code>b</code> is assigned to <code>a</code>, it
+looks like this:
+</p>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../img/two-variables-to-int.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+Once we modify <code>b</code> by adding <code>9</code>, <code>b</code> now refers to a new value, while
+<code>a</code> is still bound to the original value.
+</p>
+
+
+<div class="figure">
+<p><object type="image/svg+xml" data="../img/two-variables-to-two-ints.svg" >
+Sorry, your browser does not support SVG.</object>
+</p>
+</div>
+
+<p>
+Notice that <code>3</code> still exists, unmodified. Now, a second value exists,
+and the name <code>b</code> is now bound to it, while <code>a</code> still refers to 3. This
+is very different than the list that we changed in-place. This is why we
+have write <code>b = b + 9</code> instead of just <code>b + 9</code>. In order to change the
+value of <code>b</code>, we need to <b>reassign</b> the name <code>a</code> because we can't change
+the underlying value.
+</p>
+</div>
+</div>
+
+<div id="outline-container-unnumbered-4" class="outline-2">
+<h2 id="unnumbered-4">Mutability of some common types</h2>
+<div class="outline-text-2" id="text-unnumbered-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides" class="table-centered">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">Type</th>
+<th scope="col" class="left">Mutable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">int</td>
+<td class="left">no</td>
+</tr>
+
+<tr>
+<td class="left">string</td>
+<td class="left">no</td>
+</tr>
+
+<tr>
+<td class="left">tuple</td>
+<td class="left">no</td>
+</tr>
+
+<tr>
+<td class="left">list</td>
+<td class="left">yes</td>
+</tr>
+
+<tr>
+<td class="left">dict</td>
+<td class="left">yes</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+<div id="outline-container-unnumbered-5" class="outline-2">
+<h2 id="unnumbered-5">More information</h2>
+<div class="outline-text-2" id="text-unnumbered-5">
+<p>
+Both of these articles provide great explanations (full of pretty
+diagrams) of assignments and mutability:
+</p>
+
+<ul class="org-ul">
+<li><a href="http://nedbatchelder.com/text/names.html">http://nedbatchelder.com/text/names.html</a></li>
+<li><a href="http://mail.python.org/pipermail/tutor/2001-February/003787.html">http://mail.python.org/pipermail/tutor/2001-February/003787.html</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="license">
+Released under a
+<a rel="license"
+href="http://creativecommons.org/licenses/by-sa/3.0/deed.en_US">
+Creative Commons Attribution-ShareAlike 3.0 Unported License</a>.
+</p>
+<p class="creator">Created with <a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.3beta)</p>
+<p class="xhtml-validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
