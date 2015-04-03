@@ -25,8 +25,8 @@ In code, this would look like this:
   ## details for the specific gene
   genestart = 73097781
   ## promoter calculation (for case of negative strand)
-  promstart = genestart - 1000
-  promend = genestart + 500
+  promstart = genestart + 1000
+  promend = genestart - 500
 #+end_src
 
 #+RESULTS[34cd5af35a20317f35a93c269a9f3ad5939aa3cd]:
